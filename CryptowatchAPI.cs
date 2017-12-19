@@ -1,17 +1,14 @@
-﻿using System;
+// Copyright(c) 2017 Stock84-dev
+// https://github.com/Stock84-dev/Cryptowatch-API
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web.Script.Serialization;
 using System.IO;
 using Newtonsoft.Json; // install Newtonsoft.Json nuGet package
 using Newtonsoft.Json.Linq;
 
-//	todo: make custom error that shows when you don't have enough allowance
-
-// https://docs.microsoft.com/en-us/dotnet/csharp/codedoc
 namespace Cryptowatch
 {
 	/// <summary>
@@ -27,7 +24,7 @@ namespace Cryptowatch
 		///<summary>
 		///You can always request this to query your allowance without any extra result - this request costs very little.
 		/// </summary>
-		/// <exception cref="OutOfAllowanceException"></exception>
+		
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -54,7 +51,6 @@ namespace Cryptowatch
 		/// <summary>
 		///Returns all assets(in no particular order)
 		/// </summary>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -84,7 +80,6 @@ namespace Cryptowatch
 		///Returns a single asset. Lists all markets which have this asset as a base or quote.
 		/// </summary>
 		/// <param name="route"> Asset specific url, e.g. https://api.cryptowat.ch/assets/btc </param>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -112,7 +107,6 @@ namespace Cryptowatch
 		/// <summary>
 		/// Returns all pairs (in no particular order).
 		/// </summary>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -141,7 +135,6 @@ namespace Cryptowatch
 		///	Returns a single pair. Lists all markets for this pair.
 		/// </summary>
 		/// <param name="route"> Pair specific url, e.g. https://api.cryptowat.ch/pairs/ethbtc </param>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -169,7 +162,6 @@ namespace Cryptowatch
 		/// <summary>
 		/// Returns a list of all supported exchanges.
 		/// </summary>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -198,7 +190,6 @@ namespace Cryptowatch
 		///	Returns a single exchange, with associated routes.
 		/// </summary>
 		/// <param name="route"> Exchange specific url, e.g. https://api.cryptowat.ch/exchanges/kraken </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -227,7 +218,6 @@ namespace Cryptowatch
 		/// Returns a list of all supported markets.
 		/// </summary>
 		/// <param name="route">You can also get the supported markets for only a specific exchange. e.g. https://api.cryptowat.ch/markets/kraken </param>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -256,7 +246,6 @@ namespace Cryptowatch
 		///	Returns a single market, with associated routes.
 		/// </summary>
 		/// <param name="route"> Market specific url, e.g. https://api.cryptowat.ch/markets/gdax/btcusd </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -288,7 +277,6 @@ namespace Cryptowatch
 		/// </para>
 		/// </summary>
 		/// <returns> dictionsry</returns>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -317,7 +305,6 @@ namespace Cryptowatch
 		///	Returns a market’s last price.
 		/// </summary>
 		/// <param name="route"> Price specific url, e.g. https://api.cryptowat.ch/markets/gdax/btcusd/price </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -349,7 +336,6 @@ namespace Cryptowatch
 		/// </para>
 		/// </summary>
 		/// <returns> dictionsry</returns>
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -378,7 +364,6 @@ namespace Cryptowatch
 		/// Returns a market’s last price as well as other stats based on a 24-hour sliding window: High price, Low price, % change, Absolute change, Volume
 		/// </summary>
 		/// <param name="route"> Summary specific url, e.g. https://api.cryptowat.ch/markets/gdax/btcusd/summary </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -409,7 +394,6 @@ namespace Cryptowatch
 		/// <param name="route"> Trade specific url, e.g. https://api.cryptowat.ch/markets/gdax/btcusd/trades </param> 
 		/// <param name="limit"> Limit amount of trades returned. If 0 returns all.</param> 
 		/// <param name="since"> Only return trades at or after this time. </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -456,7 +440,6 @@ namespace Cryptowatch
 		/// Returns a market’s order book.
 		/// </summary>
 		/// <param name="route"> OrderNook specific url, e.g. https://api.cryptowat.ch/markets/gdax/btcusd/orderbook </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -498,7 +481,6 @@ namespace Cryptowatch
 		/// <param name="timeFrame"> Candlestick timeframe.</param> 
 		/// <param name="after"> Only return candles opening after this time. If set to -1 max limit is 6000, otherwise it's 500.</param> 
 		/// <param name="before"> Only return candles opening before this time. </param> 
-		/// <exception cref="OutOfAllowanceException"></exception>
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -566,7 +548,7 @@ namespace Cryptowatch
 			
 		}
 
-		/// <exception cref="OutOfAllowanceException"></exception>
+		
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -585,8 +567,6 @@ namespace Cryptowatch
 			{
 				StreamReader sr = new StreamReader(GetResponseStream(url));
 				string response = sr.ReadToEnd();
-				if (response.Contains("{\"error\":\"Out of allowance\"}")) // {"error":"Out of allowance"}
-					throw new OutOfAllowanceException("Out of allowance, network connection is off. Wait for next hour to start.");
 				JObject jObject = JObject.Parse(response);
 				sr.Close();
 				return jObject;
@@ -597,7 +577,7 @@ namespace Cryptowatch
 			}
 		}
 
-		/// <exception cref="OutOfAllowanceException"></exception>
+		
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -641,7 +621,7 @@ namespace Cryptowatch
 			
 		}
 
-		/// <exception cref="OutOfAllowanceException"></exception>
+		
 		/// <exception cref="OutOfMemoryException"></exception>
 		/// <exception cref="IOException"></exception>
 		/// <exception cref="JsonReaderException"></exception>
@@ -714,5 +694,6 @@ namespace Cryptowatch
 		{
 			public double price { get; set; }
 		}
+
 	}
 }
