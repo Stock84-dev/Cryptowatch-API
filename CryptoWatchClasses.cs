@@ -1,8 +1,7 @@
-﻿using System;
+// Copyright(c) 2017 Stock84-dev
+// https://github.com/Stock84-dev/Cryptowatch-API
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Cryptowatch
@@ -130,7 +129,7 @@ namespace Cryptowatch
 		public bool active { get; set; }
 		public string route { get; set; }
 	}
-	// TODO: concatenate base/s and qoute/s classes
+
 	public class Base
 	{
 		public int id { get; set; }
@@ -259,20 +258,4 @@ namespace Cryptowatch
 		public long cost { get; set; }
 		public long remaining { get; set; }
 	}
-
-	/// <summary>
-	/// The exception that is thrown when calling a method, but remaining allowance is zero.
-	/// </summary>
-	public class OutOfAllowanceException : Exception
-	{
-		public OutOfAllowanceException(string message) : base(message)
-		{
-
-		}
-	}
 }
-
-
-
-
-
