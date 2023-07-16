@@ -4,8 +4,14 @@ namespace CryptoWatch.API.Types;
 
 public struct Candlestick
 {
-    private Candlestick(long closeTime, double openPrice, double highPrice, double lowPrice, double closePrice,
-        double volume)
+    private Candlestick(
+        long closeTime,
+        double openPrice,
+        double highPrice,
+        double lowPrice,
+        double closePrice,
+        double volume
+    )
     {
         CloseTime = closeTime;
         OpenPrice = openPrice;
@@ -22,10 +28,7 @@ public struct Candlestick
     public double OpenPrice { get; }
     public double Volume { get; }
 
-    public static Candlestick Deserialize()
-    {
-        return new Candlestick(0, 0, 0, 0, 0, 0);
-    }
+    public static Candlestick Deserialize() => new(0, 0, 0, 0, 0, 0);
 
     private struct SerializedCandlestick
     {

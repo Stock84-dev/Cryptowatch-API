@@ -5,7 +5,7 @@ namespace CryptoWatch.API.Tests.Integration;
 public class UnitTest1
 {
     private IHttpClientFactory _httpClientFactory;
-    
+
     [Fact]
     public void Test1()
     {

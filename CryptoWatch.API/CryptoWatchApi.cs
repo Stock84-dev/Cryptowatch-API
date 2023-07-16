@@ -11,8 +11,7 @@ public class CryptoWatchApi
     public CryptoWatchApi(string apiKey, IHttpClientFactory httpClientFactory) =>
         _apiConfiguration = new ApiConfiguration(apiKey, httpClientFactory);
 
-    public CryptoWatchApi(ApiConfiguration apiConfiguration) =>
-        _apiConfiguration = apiConfiguration;
+    public CryptoWatchApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
 
     public AssetsApi Assets => new(_apiConfiguration);
     public PairsApi Pairs => new(_apiConfiguration);
