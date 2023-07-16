@@ -1,7 +1,7 @@
 using System.Text;
 using CryptoWatch.API.Types;
 
-namespace CryptoWatch.API;
+namespace CryptoWatch.API.Paths;
 
 public readonly struct MarketsApi
 {

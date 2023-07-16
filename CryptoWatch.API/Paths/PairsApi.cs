@@ -1,4 +1,4 @@
-namespace CryptoWatch.API;
+namespace CryptoWatch.API.Paths;
 
 public readonly struct PairsApi
 {

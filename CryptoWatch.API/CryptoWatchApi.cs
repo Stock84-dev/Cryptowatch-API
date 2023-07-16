@@ -1,6 +1,8 @@
+using CryptoWatch.API.Paths;
+
 namespace CryptoWatch.API;
 
-public class CryptoWatchApi
+public readonly struct CryptoWatchApi
 {
     public const string RootUrl = "https://api.cryptowat.ch";
     private readonly ApiConfiguration _apiConfiguration;
