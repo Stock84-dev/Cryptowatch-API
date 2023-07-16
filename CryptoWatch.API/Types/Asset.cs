@@ -3,7 +3,7 @@ namespace CryptoWatch.API.Types;
 /// <summary>
 ///     An asset can be a crypto or fiat currency.
 /// </summary>
-public class Asset
+public struct Asset
 {
     public int id { get; set; }
     public string symbol { get; set; }

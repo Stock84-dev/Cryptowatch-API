@@ -3,7 +3,7 @@ namespace CryptoWatch.API.Types;
 /// <summary>
 ///     Exchanges are where all the action happens!
 /// </summary>
-public class Exchange
+public struct Exchange
 {
     public string symbol { get; set; }
     public string name { get; set; }

@@ -1,9 +1,9 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public class Markets1
+public struct Markets1
 {
-    [DataMember(Name = "base")] public Bases[] baseMarket { get; set; }
-    [DataMember(Name = "quote")] public Quotes[] quoteMarket { get; set; }
+    [JsonPropertyName("base")] public Bases[] baseMarket { get; set; }
+    [JsonPropertyName("quote")] public Quotes[] quoteMarket { get; set; }
 }

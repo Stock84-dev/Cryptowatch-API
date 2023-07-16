@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Routes
+public struct Routes
 {
     public string price { get; set; }
     public string summary { get; set; }

@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class SiteInformation
+public struct SiteInformation
 {
     public string revision { get; set; }
     public string uptime { get; set; }

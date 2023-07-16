@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Price
+public struct Price
 {
     public double last { get; set; }
     public double high { get; set; }

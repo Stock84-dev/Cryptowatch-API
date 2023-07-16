@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Quote
+public struct Quote
 {
     public int id { get; set; }
     public string route { get; set; }

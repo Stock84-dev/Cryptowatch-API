@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Bases
+public struct Bases
 {
     public int id { get; set; }
     public string exchange { get; set; }

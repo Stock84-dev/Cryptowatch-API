@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Order
+public struct Order
 {
     public double amount;
     public double price;

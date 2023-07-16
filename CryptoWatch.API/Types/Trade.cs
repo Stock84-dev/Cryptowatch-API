@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Trade
+public struct Trade
 {
     public Trade(int id, long timestamp, double price, double amount)
     {

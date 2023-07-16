@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class Change
+public struct Change
 {
     public double percentage { get; set; }
     public double absolute { get; set; }

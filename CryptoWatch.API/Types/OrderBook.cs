@@ -1,6 +1,6 @@
 namespace CryptoWatch.API.Types;
 
-public class OrderBook
+public struct OrderBook
 {
     public OrderBook()
     {
