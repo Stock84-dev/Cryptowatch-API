@@ -11,6 +11,10 @@ public readonly struct MarketsApi
 
     internal MarketsApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
 
+    public Task<HttpResponseMessage> Exchange(string exchange) => 
+        _apiConfiguration.CreateClient()
+            .GetAsync($"{Route}/{exchange}");
+
     public Task<HttpResponseMessage> List() => 
         _apiConfiguration.CreateClient()
             .GetAsync(Route);
