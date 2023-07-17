@@ -1,7 +1,10 @@
-﻿namespace CryptoWatch.API.Types;
+﻿using System.Text.Json.Serialization;
+
+namespace CryptoWatch.API.Types;
 
 public struct Allowance
 {
-    public long cost { get; set; }
-    public long remaining { get; set; }
+    [JsonPropertyName("cost")] public decimal Cost { get; set; }
+    [JsonPropertyName("remaining")] public decimal Remaining { get; set; }
+    [JsonPropertyName("upgrade")] public string Upgrade { get; set; }
 }

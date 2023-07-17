@@ -50,5 +50,11 @@ namespace CryptoWatch.API.Tests.Integration {
                 return ResourceManager.GetString("AssetsRootListingResponse", resourceCulture);
             }
         }
+        
+        internal static string MarketsRootListingResponse {
+            get {
+                return ResourceManager.GetString("MarketsRootListingResponse", resourceCulture);
+            }
+        }
     }
 }

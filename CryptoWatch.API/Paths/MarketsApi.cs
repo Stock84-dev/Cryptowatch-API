@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text;
 using CryptoWatch.API.Types;
 
@@ -15,19 +16,19 @@ public readonly struct MarketsApi
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}");
 
-    public Task<HttpResponseMessage> List() =>
+    public Task<MarketCollection> ListAsyncTask() =>
         _apiConfiguration.CreateClient()
-            .GetAsync(Route);
+            .GetFromJsonAsync<MarketCollection>(Route);
 
-    public Task<HttpResponseMessage> List(string cursor) =>
+    public Task<HttpResponseMessage> ListAsyncTask(string cursor) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}");
 
-    public Task<HttpResponseMessage> List(uint limit) =>
+    public Task<HttpResponseMessage> ListAsyncTask(uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> List(string cursor, uint limit) =>
+    public Task<HttpResponseMessage> ListAsyncTask(string cursor, uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
 

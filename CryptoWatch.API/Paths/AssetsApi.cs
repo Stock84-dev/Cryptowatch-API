@@ -1,3 +1,6 @@
+using System.Net.Http.Json;
+using CryptoWatch.API.Types;
+
 namespace CryptoWatch.API.Paths;
 
 public readonly struct AssetsApi
@@ -7,11 +10,11 @@ public readonly struct AssetsApi
 
     internal AssetsApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
 
-    public Task<HttpResponseMessage> List() =>
+    public Task<AssetCollection> ListAsyncTask() =>
         _apiConfiguration.CreateClient()
-            .GetAsync($"{Route}");
+            .GetFromJsonAsync<AssetCollection>($"{Route}");
 
-    public Task<HttpResponseMessage> List(uint limit) =>
+    public Task<HttpResponseMessage> ListAsyncTask(uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?limit={limit}");
 

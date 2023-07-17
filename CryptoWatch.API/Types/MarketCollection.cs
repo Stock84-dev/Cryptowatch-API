@@ -1,13 +1,27 @@
+using System.Text.Json.Serialization;
+
 namespace CryptoWatch.API.Types;
 
-/// <summary>
-///     A market is a pair listed on an exchange. For example, pair btceur on exchange kraken is a market.
-/// </summary>
 public struct MarketCollection
 {
-    public int id { get; set; }
-    public string exchange { get; set; }
-    public string pair { get; set; }
-    public bool active { get; set; }
-    public string route { get; set; }
+    [JsonPropertyName("result")]
+    public List<Collection> Result { get; set; }
+    [JsonPropertyName("cursor")]
+    public Cursor Cursor { get; set; }
+    [JsonPropertyName("allowance")]
+    public Allowance Allowance { get; set; }
+    
+    public struct Collection
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        [JsonPropertyName("exchange")]
+        public string Exchange { get; set; }
+        [JsonPropertyName("pair")]
+        public string Pair { get; set; }
+        [JsonPropertyName("active")]
+        public bool Active { get; set; }
+        [JsonPropertyName("route")]
+        public string Route { get; set; }
+    }
 }
