@@ -11,83 +11,83 @@ public readonly struct MarketsApi
 
     internal MarketsApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
 
-    public Task<HttpResponseMessage> Exchange(string exchange) => 
+    public Task<HttpResponseMessage> Exchange(string exchange) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}");
 
-    public Task<HttpResponseMessage> List() => 
+    public Task<HttpResponseMessage> List() =>
         _apiConfiguration.CreateClient()
             .GetAsync(Route);
 
-    public Task<HttpResponseMessage> List(string cursor) => 
+    public Task<HttpResponseMessage> List(string cursor) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}");
 
-    public Task<HttpResponseMessage> List(uint limit) => 
+    public Task<HttpResponseMessage> List(uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> List(string cursor, uint limit) => 
+    public Task<HttpResponseMessage> List(string cursor, uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> Details(string exchange, string pair) => 
+    public Task<HttpResponseMessage> Details(string exchange, string pair) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}");
 
-    public Task<HttpResponseMessage> Price() => 
+    public Task<HttpResponseMessage> Price() =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/prices");
 
-    public Task<HttpResponseMessage> Price(string cursor) => 
+    public Task<HttpResponseMessage> Price(string cursor) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/prices?cursor={cursor}");
 
-    public Task<HttpResponseMessage> Price(string cursor, uint limit) => 
+    public Task<HttpResponseMessage> Price(string cursor, uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> Price(string exchange, string pair) => 
+    public Task<HttpResponseMessage> Price(string exchange, string pair) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/price");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair) => 
+    public Task<HttpResponseMessage> Trades(string exchange, string pair) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair, uint since) => 
+    public Task<HttpResponseMessage> Trades(string exchange, string pair, uint since) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair, int since, uint limit) => 
+    public Task<HttpResponseMessage> Trades(string exchange, string pair, int since, uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}&limit={limit}");
 
-    public Task<HttpResponseMessage> Summary(string exchange, string pair) => 
+    public Task<HttpResponseMessage> Summary(string exchange, string pair) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/summary");
 
-    public Task<HttpResponseMessage> Summaries() => 
+    public Task<HttpResponseMessage> Summaries() =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/summaries");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy) => 
+    public Task<HttpResponseMessage> Summaries(string keyBy) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor) => 
+    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor, uint limit) => 
+    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor, uint limit) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair) => 
+    public Task<HttpResponseMessage> OrderBook(string exchange, string pair) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth) => 
+    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}");
 
@@ -95,7 +95,7 @@ public readonly struct MarketsApi
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, decimal span) => 
+    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, decimal span) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?span={span}");
 

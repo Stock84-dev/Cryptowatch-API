@@ -7,11 +7,11 @@ public struct ExchangesApi
 
     internal ExchangesApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
 
-    public Task<HttpResponseMessage> List() => 
+    public Task<HttpResponseMessage> List() =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}");
 
-    public Task<HttpResponseMessage> Details(string exchange) => 
+    public Task<HttpResponseMessage> Details(string exchange) =>
         _apiConfiguration.CreateClient()
             .GetAsync($"{Route}/{exchange}");
 }
