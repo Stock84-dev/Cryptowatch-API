@@ -46,25 +46,41 @@ public class CryptoWatchServerApi : IDisposable
         _wireMockServer.Dispose();
     }
 
-    public void SetupAssetsApi()
-    {
+    public void SetupUnauthenticatedAssetsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
-                .WithPath(AssetsRoute)
-                .UsingGet())
+                .UsingGet()
+                .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
-                .WithBody(MockedResponses.AssetsRootListingResponse)
                 .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.UnauthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
-    }
 
-    public void SetupMarketsApi()
-    {
+    public void SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
+                .WithPath(AssetsRoute))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.AuthenticatedAssetsDefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(AssetsRoute)
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupMarketsApi() =>
         _wireMockServer.Given(Request.Create()
                 .WithPath(MarketsRoute)
                 .UsingGet())
             .RespondWith(Response.Create()
-                .WithBody(MockedResponses.MarketsRootListingResponse)
                 .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.UnauthenticatedMarketsRootListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
-    }
 }

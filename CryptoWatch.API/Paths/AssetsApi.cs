@@ -6,23 +6,23 @@ namespace CryptoWatch.API.Paths;
 public readonly struct AssetsApi
 {
     private const string Route = "/assets";
-    private readonly ApiConfiguration _apiConfiguration;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    internal AssetsApi(ApiConfiguration apiConfiguration) => _apiConfiguration = apiConfiguration;
+    internal AssetsApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
     public Task<AssetCollection> ListAsyncTask() =>
-        _apiConfiguration.CreateClient()
+        _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetCollection>($"{Route}");
 
-    public Task<HttpResponseMessage> ListAsyncTask(uint limit) =>
-        _apiConfiguration.CreateClient()
-            .GetAsync($"{Route}?limit={limit}");
+    public Task<AssetCollection> ListAsyncTask(uint limit) =>
+        _httpClientFactory.CreateClient()
+            .GetFromJsonAsync<AssetCollection>($"{Route}?limit={limit}");
 
     public Task<HttpResponseMessage> Details(string asset) =>
-        _apiConfiguration.CreateClient()
+        _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{asset}");
 
     public Task<HttpResponseMessage> Details(string asset, uint limit) =>
-        _apiConfiguration.CreateClient()
+        _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{asset}?limit={limit}");
 }
