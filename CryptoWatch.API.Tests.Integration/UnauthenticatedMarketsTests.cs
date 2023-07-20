@@ -5,12 +5,12 @@ using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
 
-public class MarketsTests : IAsyncLifetime
+public class UnauthenticatedMarketsTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
 
-    public MarketsTests()
+    public UnauthenticatedMarketsTests()
     {
         var httpClient = new HttpClient
         {
@@ -37,6 +37,8 @@ public class MarketsTests : IAsyncLifetime
     [Fact]
     public async Task Asserts_CryptoWatchApiMarketsListing_JsonResponseDeserialization()
     {
+        _cryptoWatchServer.SetupMarketsApi();
+        
         var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsyncTask();
 
         marketListing.Should()
