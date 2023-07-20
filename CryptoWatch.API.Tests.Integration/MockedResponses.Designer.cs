@@ -68,5 +68,23 @@ namespace CryptoWatch.API.Tests.Integration {
                 return ResourceManager.GetString("AuthenticatedAssetsDefaultListingResponse", resourceCulture);
             }
         }
+        
+        internal static string AuthenticatedAssetsDefaultSpecificAmountListingResponse {
+            get {
+                return ResourceManager.GetString("AuthenticatedAssetsDefaultSpecificAmountListingResponse", resourceCulture);
+            }
+        }
+        
+        internal static string AuthenticatedAssetDetailResponse {
+            get {
+                return ResourceManager.GetString("AuthenticatedAssetDetailResponse", resourceCulture);
+            }
+        }
+        
+        internal static string AuthenticatedAssetDetailSpecificAmountListingResponse {
+            get {
+                return ResourceManager.GetString("AuthenticatedAssetDetailSpecificAmountListingResponse", resourceCulture);
+            }
+        }
     }
 }

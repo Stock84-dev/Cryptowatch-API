@@ -18,11 +18,11 @@ public readonly struct AssetsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetCollection>($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> Details(string asset) =>
+    public Task<AssetDetail> Details(string asset) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{asset}");
+            .GetFromJsonAsync<AssetDetail>($"{Route}/{asset}");
 
-    public Task<HttpResponseMessage> Details(string asset, uint limit) =>
+    public Task<AssetDetail> Details(string asset, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{asset}?limit={limit}");
+            .GetFromJsonAsync<AssetDetail>($"{Route}/{asset}?limit={limit}");
 }

@@ -55,6 +55,16 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MockedResponses.UnauthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(AssetsRoute)
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
@@ -65,14 +75,36 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MockedResponses.AuthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
-    public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
+    public void SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
                 .WithPath(AssetsRoute)
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithBody(MockedResponses.AuthenticatedAssetsDefaultSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupHeaderAuthenticatedAssetDetailRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
+                .WithPath($"{AssetsRoute}/btc"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.AuthenticatedAssetDetailResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
+                .WithPath($"{AssetsRoute}/btc")
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupMarketsApi() =>

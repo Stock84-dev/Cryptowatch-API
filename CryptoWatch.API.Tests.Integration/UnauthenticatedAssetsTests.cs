@@ -42,7 +42,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.Collection>();
+            .BeOfType<AssetCollection.ResultCollection>();
         assetListing.Result.Should()
             .HaveCount(4842);
         assetListing.Result.First()
@@ -89,7 +89,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.Collection>();
+            .BeOfType<AssetCollection.ResultCollection>();
         assetListing.Result.Should()
             .HaveCount(5);
         assetListing.Result.First()
@@ -101,5 +101,17 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
         assetListing.Result.First()
             .Id.Should()
             .Be(3);
+        assetListing.Allowance.Should()
+            .BeOfType<Allowance>();
+        assetListing.Allowance.Cost.Should()
+            .Be(0.002M);
+        assetListing.Allowance.Remaining.Should()
+            .Be(9.995M);
+        assetListing.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        assetListing.Cursor.HasMore.Should()
+            .BeTrue();
+        assetListing.Cursor.Last.Should()
+            .Be("jzNU_tLXCtblCCtyAVH8hik8Q4vGlFrydthCO9b4frYz1VV0WA9HGw");
     }
 }

@@ -4,13 +4,14 @@ namespace CryptoWatch.API.Types;
 
 public struct AssetCollection
 {
-    [JsonPropertyName("result")] public List<Collection> Result { get; set; }
+    [JsonPropertyName("result")] public List<ResultCollection> Result { get; set; }
     [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
 
-    public struct Collection
+    public struct ResultCollection
     {
         [JsonPropertyName("id")] public int Id { get; set; }
+        [JsonPropertyName("sid")] public string SymbolId { get; set; }
         [JsonPropertyName("symbol")] public string Symbol { get; set; }
         [JsonPropertyName("name")] public string Name { get; set; }
         [JsonPropertyName("fiat")] public bool Fiat { get; set; }
