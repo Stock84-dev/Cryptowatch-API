@@ -8,6 +8,7 @@ namespace CryptoWatch.API.Tests.Integration;
 public class CryptoWatchServerApi : IDisposable
 {
     private const string AssetsRoute = "/assets";
+    private const string ExchangesRoute = "/exchanges";
     private const string MarketsRoute = "/markets";
 
     private static readonly Dictionary<string, string> DefaultCurlHeaders = new()
@@ -105,6 +106,15 @@ public class CryptoWatchServerApi : IDisposable
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(MockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedExchangesDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(ExchangesRoute))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MockedResponses.UnauthenticatedExchangesDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupMarketsApi() =>

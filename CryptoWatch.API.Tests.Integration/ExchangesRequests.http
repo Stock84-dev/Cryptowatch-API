@@ -1,0 +1,6 @@
+### List every exchange
+GET https://api.cryptowat.ch/exchanges
+
+### Authenticated every exchange listing
+GET https://api.cryptowat.ch/exchanges
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
