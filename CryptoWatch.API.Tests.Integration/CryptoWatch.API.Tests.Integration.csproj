@@ -31,18 +31,36 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="MockedResponses.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>MockedResponses.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
+      <EmbeddedResource Update="Resources\AssetsMockedResponses.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AssetsMockedResponses.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\ExchangesMockedResponses.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ExchangesMockedResponses.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\MarketsMockedResponses.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MarketsMockedResponses.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="MockedResponses.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>MockedResponses.resx</DependentUpon>
-        </Compile>
+      <Compile Update="Resources\AssetsMockedResponses.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AssetsMockedResponses.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\ExchangesMockedResponses.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ExchangesMockedResponses.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\MarketsMockedResponses.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MarketsMockedResponses.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using System.Net;
+using CryptoWatch.API.Tests.Integration.Resources;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
@@ -53,7 +54,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.UnauthenticatedAssetsDefaultListingResponse)
+                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
@@ -63,7 +64,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint() =>
@@ -73,7 +74,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.AuthenticatedAssetsDefaultListingResponse)
+                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint() =>
@@ -84,7 +85,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.AuthenticatedAssetsDefaultSpecificAmountListingResponse)
+                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetDetailRestEndpoint() =>
@@ -94,7 +95,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath($"{AssetsRoute}/btc"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.AuthenticatedAssetDetailResponse)
+                .WithBody(AssetsMockedResponses.AuthenticatedAssetDetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint() =>
@@ -105,7 +106,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
+                .WithBody(AssetsMockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedExchangesDefaultListingRestEndpoint() =>
@@ -114,7 +115,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(ExchangesRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.UnauthenticatedExchangesDefaultListingResponse)
+                .WithBody(ExchangesMockedResponses.UnauthenticatedExchangesDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupMarketsApi() =>
@@ -123,6 +124,6 @@ public class CryptoWatchServerApi : IDisposable
                 .UsingGet())
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MockedResponses.UnauthenticatedMarketsRootListingResponse)
+                .WithBody(MarketsMockedResponses.UnauthenticatedMarketsRootListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 }
