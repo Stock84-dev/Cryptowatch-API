@@ -9,13 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.11.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
-        <PackageReference Include="Moq" Version="4.18.4" />
-        <PackageReference Include="WireMock.Net" Version="1.5.32" />
-        <PackageReference Include="WireMock.Net.FluentAssertions" Version="1.5.32" />
-        <PackageReference Include="WireMock.Net.xUnit" Version="1.5.32" />
-        <PackageReference Include="xunit" Version="2.5.0" />
+        <PackageReference Include="FluentAssertions" Version="6.11.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3"/>
+        <PackageReference Include="Moq" Version="4.18.4"/>
+        <PackageReference Include="WireMock.Net" Version="1.5.32"/>
+        <PackageReference Include="WireMock.Net.FluentAssertions" Version="1.5.32"/>
+        <PackageReference Include="WireMock.Net.xUnit" Version="1.5.32"/>
+        <PackageReference Include="xunit" Version="2.5.0"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -27,40 +27,40 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CryptoWatch.API\CryptoWatch.API.csproj" />
+        <ProjectReference Include="..\CryptoWatch.API\CryptoWatch.API.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Resources\AssetsMockedResponses.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>AssetsMockedResponses.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\ExchangesMockedResponses.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ExchangesMockedResponses.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\MarketsMockedResponses.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>MarketsMockedResponses.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Resources\AssetsMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>AssetsMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ExchangesMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>ExchangesMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\MarketsMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>MarketsMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Resources\AssetsMockedResponses.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>AssetsMockedResponses.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\ExchangesMockedResponses.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ExchangesMockedResponses.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\MarketsMockedResponses.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>MarketsMockedResponses.resx</DependentUpon>
-      </Compile>
+        <Compile Update="Resources\AssetsMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AssetsMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\ExchangesMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ExchangesMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\MarketsMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MarketsMockedResponses.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>

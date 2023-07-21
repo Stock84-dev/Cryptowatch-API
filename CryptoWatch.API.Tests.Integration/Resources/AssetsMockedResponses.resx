@@ -38775,7 +38775,7 @@
   }
 }</value>
     </data>
-  <data name="UnauthenticatedAssetsSpecificAmountListingResponse" xml:space="preserve">
+    <data name="UnauthenticatedAssetsSpecificAmountListingResponse" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -77606,7 +77606,7 @@
   }
 }</value>
   </data>
-  <data name="AuthenticatedAssetsDefaultSpecificAmountListingResponse" xml:space="preserve">
+    <data name="AuthenticatedAssetsDefaultSpecificAmountListingResponse" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -77662,7 +77662,7 @@
   }
 }</value>
   </data>
-  <data name="AuthenticatedAssetDetailResponse" xml:space="preserve">
+    <data name="AuthenticatedAssetDetailResponse" xml:space="preserve">
     <value>{
   "result": {
     "id": 60,
@@ -111026,7 +111026,7 @@
   }
 }</value>
   </data>
-  <data name="AuthenticatedAssetDetailSpecificAmountListingResponse" xml:space="preserve">
+    <data name="AuthenticatedAssetDetailSpecificAmountListingResponse" xml:space="preserve">
     <value>{
   "result": {
     "id": 60,

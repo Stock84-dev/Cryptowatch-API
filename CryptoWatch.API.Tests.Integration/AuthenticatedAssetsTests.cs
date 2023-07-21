@@ -82,7 +82,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     {
         const uint items = 5;
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint();
-        
+
         var assetListing = await new CryptoWatchApi(_httpClientFactory.Object).Assets
             .ListAsyncTask(items);
 

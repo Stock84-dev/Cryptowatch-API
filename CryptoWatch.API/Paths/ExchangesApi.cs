@@ -1,3 +1,6 @@
+using System.Net.Http.Json;
+using CryptoWatch.API.Types;
+
 namespace CryptoWatch.API.Paths;
 
 public readonly struct ExchangesApi
@@ -7,9 +10,9 @@ public readonly struct ExchangesApi
 
     internal ExchangesApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-    public Task<HttpResponseMessage> List() =>
+    public Task<Exchanges> List() =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}");
+            .GetFromJsonAsync<Exchanges>($"{Route}");
 
     public Task<HttpResponseMessage> Details(string exchange) =>
         _httpClientFactory.CreateClient()

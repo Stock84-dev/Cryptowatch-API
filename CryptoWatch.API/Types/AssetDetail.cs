@@ -7,7 +7,7 @@ public struct AssetDetail
     [JsonPropertyName("result")] public ResultCollection Result { get; set; }
     [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
-    
+
     public struct ResultCollection
     {
         [JsonPropertyName("id")] public int Id { get; set; }
@@ -17,13 +17,13 @@ public struct AssetDetail
         [JsonPropertyName("fiat")] public bool Fiat { get; set; }
         [JsonPropertyName("markets")] public Markets1 AssetMarkets { get; set; }
     }
-    
+
     public struct Markets1
     {
         [JsonPropertyName("base")] public List<Bases> BaseMarket { get; set; }
         [JsonPropertyName("quote")] public List<Bases> QuoteMarket { get; set; }
     }
-    
+
     public struct Bases
     {
         [JsonPropertyName("id")] public int Id { get; set; }

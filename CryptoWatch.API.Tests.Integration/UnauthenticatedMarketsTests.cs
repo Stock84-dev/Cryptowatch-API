@@ -23,7 +23,6 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
 
     public Task InitializeAsync()
     {
-        _cryptoWatchServer.SetupMarketsApi();
         return Task.CompletedTask;
     }
 
