@@ -48,25 +48,6 @@ public class CryptoWatchServerApi : IDisposable
         _wireMockServer.Dispose();
     }
 
-    public void SetupUnauthenticatedAssetsDefaultListingRestEndpoint() =>
-        _wireMockServer.Given(Request.Create()
-                .UsingGet()
-                .WithPath(AssetsRoute))
-            .RespondWith(Response.Create()
-                .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsDefaultListingResponse)
-                .WithStatusCode(HttpStatusCode.OK));
-
-    public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
-        _wireMockServer.Given(Request.Create()
-                .UsingGet()
-                .WithPath(AssetsRoute)
-                .WithParam("limit", "5"))
-            .RespondWith(Response.Create()
-                .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
-                .WithStatusCode(HttpStatusCode.OK));
-
     public void SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
@@ -109,6 +90,45 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(AssetsMockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupAuthenticatedExchangesDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
+                .WithPath(ExchangesRoute))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(ExchangesMockedResponses.AuthenticatedEveryExchangeListing)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF")
+                .WithPath($"{ExchangesRoute}/bitfinex"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(ExchangesMockedResponses.AuthenticatedSpecifiedExchangeDetailing)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAssetsDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(AssetsRoute))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsDefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(AssetsRoute)
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedExchangesDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
@@ -116,6 +136,15 @@ public class CryptoWatchServerApi : IDisposable
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(ExchangesMockedResponses.UnauthenticatedExchangesDefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{ExchangesRoute}/kraken"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(ExchangesMockedResponses.UnauthenticatedExchangesDefaultKrakenDetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupMarketsApi() =>

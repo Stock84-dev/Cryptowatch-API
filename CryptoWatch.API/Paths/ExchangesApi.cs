@@ -14,7 +14,7 @@ public readonly struct ExchangesApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Exchanges>($"{Route}");
 
-    public Task<HttpResponseMessage> Details(string exchange) =>
+    public Task<Exchange> Details(string exchange) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}");
+            .GetFromJsonAsync<Exchange>($"{Route}/{exchange}");
 }

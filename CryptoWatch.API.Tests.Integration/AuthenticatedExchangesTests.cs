@@ -5,26 +5,24 @@ using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
 
-public class UnauthenticatedExchangesTests : IAsyncLifetime
+public class AuthenticatedExchangesTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
 
-    public UnauthenticatedExchangesTests()
+    public AuthenticatedExchangesTests()
     {
         var httpClient = new HttpClient
         {
-            BaseAddress = new Uri(_cryptoWatchServer.Url)
+            BaseAddress = new Uri(_cryptoWatchServer.Url),
+            DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
         };
 
         _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
             .Returns(httpClient);
     }
 
-    public Task InitializeAsync()
-    {
-        return Task.CompletedTask;
-    }
+    public Task InitializeAsync() => Task.CompletedTask;
 
     public Task DisposeAsync()
     {
@@ -36,7 +34,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
     [Fact]
     public async Task Asserts_CryptoWatchApiExchangesListing_JsonResponseDeserialization()
     {
-        _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultListingRestEndpoint();
+        _cryptoWatchServer.SetupAuthenticatedExchangesDefaultListingRestEndpoint();
 
         var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.List();
 
@@ -55,46 +53,46 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         exchangeDefaultListing.Allowance.Should()
             .BeOfType<Allowance>();
         exchangeDefaultListing.Allowance.Cost.Should()
-            .Be(0.002M);
+            .Be(0.000M);
         exchangeDefaultListing.Allowance.Remaining.Should()
-            .Be(9.998M);
+            .Be(10.000M);
         exchangeDefaultListing.Allowance.RemainingPaid.Should()
-            .Be(0);
+            .Be(9999999999UL);
         exchangeDefaultListing.Allowance.Upgrade.Should()
-            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+            .BeNull();
     }
 
     [Fact]
     public async Task Asserts_CryptoWatchApiDefaultExchangeDetailing_JsonResponseDeserialization()
     {
-        const string exchange = "kraken";
-        _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
+        const string exchange = "bitfinex";
+        _cryptoWatchServer.SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
         var exchangeDefaultDetailing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.Details(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();
         exchangeDefaultDetailing.Result.Id.Should()
-            .Be(4);
+            .Be(1);
         exchangeDefaultDetailing.Result.Active.Should()
             .BeTrue();
         exchangeDefaultDetailing.Result.Name.Should()
-            .Be("Kraken");
+            .Be("Bitfinex");
         exchangeDefaultDetailing.Result.Routes.Should()
             .BeOfType<Route>();
         exchangeDefaultDetailing.Result.Routes.Markets.Should()
-            .Be("https://api.cryptowat.ch/markets/kraken");
+            .Be("https://api.cryptowat.ch/markets/bitfinex");
         exchangeDefaultDetailing.Result.Symbol.Should()
-            .Be("kraken");
+            .Be("bitfinex");
         exchangeDefaultDetailing.Allowance.Should()
             .BeOfType<Allowance>();
         exchangeDefaultDetailing.Allowance.Cost.Should()
-            .Be(0.002M);
+            .Be(0.000M);
         exchangeDefaultDetailing.Allowance.Remaining.Should()
-            .Be(9.996M);
+            .Be(10.000M);
         exchangeDefaultDetailing.Allowance.RemainingPaid.Should()
-            .Be(0);
+            .Be(9999999999UL);
         exchangeDefaultDetailing.Allowance.Upgrade.Should()
-            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+            .BeNull();
     }
 }

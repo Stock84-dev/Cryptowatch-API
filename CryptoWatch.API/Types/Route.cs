@@ -1,6 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace CryptoWatch.API.Types;
 
 public struct Route
 {
-    public string markets { get; set; }
+    [JsonPropertyName("markets")] public string Markets { get; set; }
 }

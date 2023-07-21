@@ -1,12 +1,18 @@
+using System.Text.Json.Serialization;
+
 namespace CryptoWatch.API.Types;
 
-/// <summary>
-///     Exchanges are where all the action happens!
-/// </summary>
 public struct Exchange
 {
-    public string symbol { get; set; }
-    public string name { get; set; }
-    public bool active { get; set; }
-    public Route routes { get; set; }
+    [JsonPropertyName("result")] public ResultDetail Result { get; set; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
+    
+    public struct ResultDetail
+    {
+        [JsonPropertyName("id")] public uint Id { get; set; }
+        [JsonPropertyName("symbol")] public string Symbol { get; set; }
+        [JsonPropertyName("name")] public string Name { get; set; }
+        [JsonPropertyName("active")] public bool Active { get; set; }
+        [JsonPropertyName("routes")] public Route Routes { get; set; }    
+    }
 }

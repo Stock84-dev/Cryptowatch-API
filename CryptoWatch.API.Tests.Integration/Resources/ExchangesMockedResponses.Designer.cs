@@ -50,5 +50,23 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("UnauthenticatedExchangesDefaultListingResponse", resourceCulture);
             }
         }
+        
+        internal static string UnauthenticatedExchangesDefaultKrakenDetailResponse {
+            get {
+                return ResourceManager.GetString("UnauthenticatedExchangesDefaultKrakenDetailResponse", resourceCulture);
+            }
+        }
+        
+        internal static string AuthenticatedEveryExchangeListing {
+            get {
+                return ResourceManager.GetString("AuthenticatedEveryExchangeListing", resourceCulture);
+            }
+        }
+        
+        internal static string AuthenticatedSpecifiedExchangeDetailing {
+            get {
+                return ResourceManager.GetString("AuthenticatedSpecifiedExchangeDetailing", resourceCulture);
+            }
+        }
     }
 }
