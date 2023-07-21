@@ -264,4 +264,23 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Allowance.Upgrade.Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task Asserts_CryptoWatchApiInvalidlyAuthenticated_Response()
+    {
+        _cryptoWatchServer.SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint();
+        var httpClient = new HttpClient
+        {
+            BaseAddress = new Uri(_cryptoWatchServer.Url),
+            DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
+        };
+        _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
+            .Returns(httpClient);
+
+        var invalidCall = async () => await new CryptoWatchApi(_httpClientFactory.Object).Assets.ListAsyncTask();
+
+        await invalidCall.Should()
+            .ThrowAsync<HttpRequestException>()
+            .WithMessage("Response status code does not indicate success: 400 (Bad Request).");
+    }
 }

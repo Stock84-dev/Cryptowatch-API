@@ -58,6 +58,16 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithHeader("X-CW-API-Key", "---")
+                .WithPath(AssetsRoute))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.BadRequest));
+
     public void SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
@@ -154,5 +164,14 @@ public class CryptoWatchServerApi : IDisposable
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(MarketsMockedResponses.UnauthenticatedMarketsRootListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath("/pairs"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(PairsMockedResponses.PairsDefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 }

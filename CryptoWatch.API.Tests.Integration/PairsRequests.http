@@ -1,0 +1,2 @@
+### List every pair
+GET https://api.cryptowat.ch/pairs

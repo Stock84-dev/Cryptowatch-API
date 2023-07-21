@@ -21,10 +21,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Returns(httpClient);
     }
 
-    public Task InitializeAsync()
-    {
-        return Task.CompletedTask;
-    }
+    public Task InitializeAsync() => Task.CompletedTask;
 
     public Task DisposeAsync()
     {
@@ -37,7 +34,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     public async Task Asserts_CryptoWatchApiMarketsListing_JsonResponseDeserialization()
     {
         _cryptoWatchServer.SetupMarketsApi();
-        
+
         var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsyncTask();
 
         marketListing.Should()

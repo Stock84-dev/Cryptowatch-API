@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
                 xmlns="">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -370,7 +371,7 @@
   }
 }</value>
   </data>
-  <data name="UnauthenticatedExchangesDefaultKrakenDetailResponse" xml:space="preserve">
+    <data name="UnauthenticatedExchangesDefaultKrakenDetailResponse" xml:space="preserve">
     <value>{
   "result": {
     "id": 4,
@@ -388,7 +389,7 @@
   }
 }</value>
   </data>
-  <data name="AuthenticatedEveryExchangeListing" xml:space="preserve">
+    <data name="AuthenticatedEveryExchangeListing" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -736,7 +737,7 @@
   }
 }</value>
   </data>
-  <data name="AuthenticatedSpecifiedExchangeDetailing" xml:space="preserve">
+    <data name="AuthenticatedSpecifiedExchangeDetailing" xml:space="preserve">
     <value>{
   "result": {
     "id": 1,

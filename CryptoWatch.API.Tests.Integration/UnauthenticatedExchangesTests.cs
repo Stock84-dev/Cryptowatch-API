@@ -21,10 +21,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
             .Returns(httpClient);
     }
 
-    public Task InitializeAsync()
-    {
-        return Task.CompletedTask;
-    }
+    public Task InitializeAsync() => Task.CompletedTask;
 
     public Task DisposeAsync()
     {
@@ -44,14 +41,21 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
             .BeOfType<List<Exchanges.ResultCollection>>();
         exchangeDefaultListing.Result.Should()
             .HaveCount(48);
-        exchangeDefaultListing.Result.First().Id.Should()
+        exchangeDefaultListing.Result.First()
+            .Id.Should()
             .Be(1);
         exchangeDefaultListing.Result.First()
             .Active.Should()
             .BeTrue();
-        exchangeDefaultListing.Result.First().Name.Should().Be("Bitfinex");
-        exchangeDefaultListing.Result.First().Route.Should().Be("https://api.cryptowat.ch/exchanges/bitfinex");
-        exchangeDefaultListing.Result.First().Symbol.Should().Be("bitfinex");
+        exchangeDefaultListing.Result.First()
+            .Name.Should()
+            .Be("Bitfinex");
+        exchangeDefaultListing.Result.First()
+            .Route.Should()
+            .Be("https://api.cryptowat.ch/exchanges/bitfinex");
+        exchangeDefaultListing.Result.First()
+            .Symbol.Should()
+            .Be("bitfinex");
         exchangeDefaultListing.Allowance.Should()
             .BeOfType<Allowance>();
         exchangeDefaultListing.Allowance.Cost.Should()
