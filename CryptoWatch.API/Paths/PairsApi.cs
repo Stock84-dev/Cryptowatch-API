@@ -13,14 +13,14 @@ public readonly struct PairsApi
     public Task<Pairs> List() => _httpClientFactory.CreateClient()
         .GetFromJsonAsync<Pairs>(Route);
 
-    public Task<HttpResponseMessage> List(uint limit) => _httpClientFactory.CreateClient()
-        .GetAsync($"{Route}?limit={limit}");
+    public Task<Pairs> List(uint limit) => _httpClientFactory.CreateClient()
+        .GetFromJsonAsync<Pairs>($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> List(string cursor) => _httpClientFactory.CreateClient()
-        .GetAsync($"{Route}?cursor={cursor}");
+    public Task<Pairs> List(string cursor) => _httpClientFactory.CreateClient()
+        .GetFromJsonAsync<Pairs>($"{Route}?cursor={cursor}");
 
-    public Task<HttpResponseMessage> List(uint limit, string cursor) => _httpClientFactory.CreateClient()
-        .GetAsync($"{Route}?limit={limit}&cursor={cursor}");
+    public Task<Pairs> List(uint limit, string cursor) => _httpClientFactory.CreateClient()
+        .GetFromJsonAsync<Pairs>($"{Route}?limit={limit}&cursor={cursor}");
 
     public Task<HttpResponseMessage> Details(string pair) => _httpClientFactory.CreateClient()
         .GetAsync($"{Route}/{pair}");

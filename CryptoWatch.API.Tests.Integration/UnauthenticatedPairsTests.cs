@@ -109,4 +109,249 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
     }
+
+    [Fact]
+    public async Task Asserts_CryptoWatchApiUnauthenticatedPairsSpecificAmountListing_JsonResponseDeserialization()
+    {
+        const int items = 5;
+        _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint();
+
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(items);
+
+        pairsListing.Should()
+            .BeOfType<Pairs>();
+        pairsListing.Result.Should()
+            .BeOfType<List<Pairs.ResultCollection>>();
+        pairsListing.Result.Should()
+            .HaveCount(5);
+        pairsListing.Result.First()
+            .BasePair.Should()
+            .BeOfType<Base>();
+        pairsListing.Result.First()
+            .BasePair.Fiat.Should()
+            .BeFalse();
+        pairsListing.Result.First()
+            .BasePair.Id.Should()
+            .Be(88);
+        pairsListing.Result.First()
+            .BasePair.Name.Should()
+            .Be("EOS");
+        pairsListing.Result.First()
+            .BasePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/eos");
+        pairsListing.Result.First()
+            .BasePair.Symbol.Should()
+            .Be("eos");
+        pairsListing.Result.First()
+            .FuturesContractPeriod.Should()
+            .BeNull();
+        pairsListing.Result.First()
+            .Id.Should()
+            .Be(4);
+        pairsListing.Result.First()
+            .QuotePair.Should()
+            .BeOfType<Quote>();
+        pairsListing.Result.First()
+            .QuotePair.Fiat.Should()
+            .BeTrue();
+        pairsListing.Result.First()
+            .QuotePair.Id.Should()
+            .Be(98);
+        pairsListing.Result.First()
+            .QuotePair.Name.Should()
+            .Be("United States Dollar");
+        pairsListing.Result.First()
+            .QuotePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/usd");
+        pairsListing.Result.First()
+            .QuotePair.Symbol.Should()
+            .Be("usd");
+        pairsListing.Result.First()
+            .Route.Should()
+            .Be("https://api.cryptowat.ch/pairs/eosusd");
+        pairsListing.Result.First()
+            .Symbol.Should()
+            .Be("eosusd");
+        pairsListing.Cursor.Should()
+            .BeOfType<Cursor>();
+        pairsListing.Cursor.Last.Should()
+            .Be("S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA");
+        pairsListing.Cursor.HasMore.Should()
+            .BeTrue();
+        pairsListing.Allowance.Should()
+            .BeOfType<Allowance>();
+        pairsListing.Allowance.Cost.Should()
+            .Be(0.003M);
+        pairsListing.Allowance.Remaining.Should()
+            .Be(9.997M);
+        pairsListing.Allowance.RemainingPaid.Should()
+            .Be(0);
+        pairsListing.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_CryptoWatchApiUnauthenticatedPairsListingWithCursor_JsonResponseDeserialization()
+    {
+        const string cursor = "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA";
+
+        _cryptoWatchServer.SetupUnauthenticatedPairsListingWithCursorRestEndpoint();
+
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(cursor);
+
+        pairsListing.Should()
+            .BeOfType<Pairs>();
+        pairsListing.Result.Should()
+            .BeOfType<List<Pairs.ResultCollection>>();
+        pairsListing.Result.Should()
+            .HaveCount(15_000);
+        pairsListing.Result.First()
+            .BasePair.Should()
+            .BeOfType<Base>();
+        pairsListing.Result.First()
+            .BasePair.Fiat.Should()
+            .BeFalse();
+        pairsListing.Result.First()
+            .BasePair.Id.Should()
+            .Be(7900);
+        pairsListing.Result.First()
+            .BasePair.Name.Should()
+            .Be("Stone");
+        pairsListing.Result.First()
+            .BasePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/0ne");
+        pairsListing.Result.First()
+            .BasePair.Symbol.Should()
+            .Be("0ne");
+        pairsListing.Result.First()
+            .FuturesContractPeriod.Should()
+            .BeNull();
+        pairsListing.Result.First()
+            .Id.Should()
+            .Be(185_927);
+        pairsListing.Result.First()
+            .QuotePair.Should()
+            .BeOfType<Quote>();
+        pairsListing.Result.First()
+            .QuotePair.Fiat.Should()
+            .BeFalse();
+        pairsListing.Result.First()
+            .QuotePair.Id.Should()
+            .Be(5080);
+        pairsListing.Result.First()
+            .QuotePair.Name.Should()
+            .Be("Wrapped Ether");
+        pairsListing.Result.First()
+            .QuotePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/weth");
+        pairsListing.Result.First()
+            .QuotePair.Symbol.Should()
+            .Be("weth");
+        pairsListing.Result.First()
+            .Route.Should()
+            .Be("https://api.cryptowat.ch/pairs/0neweth");
+        pairsListing.Result.First()
+            .Symbol.Should()
+            .Be("0neweth");
+        pairsListing.Cursor.Should()
+            .BeOfType<Cursor>();
+        pairsListing.Cursor.HasMore.Should()
+            .BeTrue();
+        pairsListing.Cursor.Last.Should()
+            .Be("gQkdFcNTdOhXSmWXDIDfywL0PbzdlCmfL_9nf7ra2ZcpLGVmPmmdBdRae_WG");
+        pairsListing.Allowance.Should()
+            .BeOfType<Allowance>();
+        pairsListing.Allowance.Cost.Should()
+            .Be(0.003M);
+        pairsListing.Allowance.Remaining.Should()
+            .Be(9.997M);
+        pairsListing.Allowance.RemainingPaid.Should()
+            .Be(0);
+        pairsListing.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_CryptoWatchApiUnauthenticatedPairsSpecificAmountWithCursorListing_JsonResponseDeserialization()
+    {
+        const int items = 2;
+        const string cursor = "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA";
+
+        _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint();
+
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(items, cursor);
+
+        pairsListing.Should()
+            .BeOfType<Pairs>();
+        pairsListing.Result.Should()
+            .BeOfType<List<Pairs.ResultCollection>>();
+        pairsListing.Result.Should()
+            .HaveCount(2);
+        pairsListing.Result.First()
+            .BasePair.Should()
+            .BeOfType<Base>();
+        pairsListing.Result.First()
+            .BasePair.Fiat.Should()
+            .BeFalse();
+        pairsListing.Result.First()
+            .BasePair.Id.Should()
+            .Be(72);
+        pairsListing.Result.First()
+            .BasePair.Name.Should()
+            .Be("Dash");
+        pairsListing.Result.First()
+            .BasePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/dash");
+        pairsListing.Result.First()
+            .BasePair.Symbol.Should()
+            .Be("dash");
+        pairsListing.Result.First()
+            .FuturesContractPeriod.Should()
+            .BeNull();
+        pairsListing.Result.First()
+            .Id.Should()
+            .Be(6);
+        pairsListing.Result.First()
+            .QuotePair.Should()
+            .BeOfType<Quote>();
+        pairsListing.Result.First()
+            .QuotePair.Fiat.Should()
+            .BeFalse();
+        pairsListing.Result.First()
+            .QuotePair.Id.Should()
+            .Be(60);
+        pairsListing.Result.First()
+            .QuotePair.Name.Should()
+            .Be("Bitcoin");
+        pairsListing.Result.First()
+            .QuotePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/btc");
+        pairsListing.Result.First()
+            .QuotePair.Symbol.Should()
+            .Be("btc");
+        pairsListing.Result.First()
+            .Route.Should()
+            .Be("https://api.cryptowat.ch/pairs/dashbtc");
+        pairsListing.Result.First()
+            .Symbol.Should()
+            .Be("dashbtc");
+        pairsListing.Cursor.Should()
+            .BeOfType<Cursor>();
+        pairsListing.Cursor.HasMore.Should()
+            .BeTrue();
+        pairsListing.Cursor.Last.Should()
+            .Be("AwnhW7dcktI47BJ5lFJA-cxAy8h_eM25nbc53pzwEAwNnOMPTKvjvw");
+        pairsListing.Allowance.Should()
+            .BeOfType<Allowance>();
+        pairsListing.Allowance.Cost.Should()
+            .Be(0.003M);
+        pairsListing.Allowance.Remaining.Should()
+            .Be(9.997M);
+        pairsListing.Allowance.RemainingPaid.Should()
+            .Be(0);
+        pairsListing.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
 }

@@ -172,6 +172,37 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath("/pairs"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.PairsDefaultListingResponse)
+                .WithBody(PairsMockedResponses.UnauthenticatedPairsDefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath("/pairs")
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(PairsMockedResponses.UnauthenticatedPairsSpecificAmountListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedPairsListingWithCursorRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath("/pairs")
+                .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(PairsMockedResponses.UnauthenticatedPairsListingWithCursorResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath("/pairs")
+                .WithParam("limit", "2")
+                .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(PairsMockedResponses.UnauthenticatedPairsSpecificAmountListingWithCursorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 }
