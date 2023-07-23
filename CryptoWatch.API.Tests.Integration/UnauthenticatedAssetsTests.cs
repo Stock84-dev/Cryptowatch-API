@@ -31,7 +31,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiUnauthenticatedAssetsDefaultListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetsDefaultListing_JsonResponseDeserialization()
     {
         _cryptoWatchServer.SetupUnauthenticatedAssetsDefaultListingRestEndpoint();
 
@@ -77,7 +77,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiUnauthenticatedAssetsSpecificAmountListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetsSpecificAmountListing_JsonResponseDeserialization()
     {
         const uint items = 5;
         _cryptoWatchServer.SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(items);

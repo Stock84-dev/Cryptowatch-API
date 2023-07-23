@@ -55,7 +55,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultListingResponse)
+                .WithBody(AssetsAuthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint() =>
@@ -65,7 +65,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultListingResponse)
+                .WithBody(AssetsAuthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.BadRequest));
 
     public void SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint() =>
@@ -76,7 +76,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.AuthenticatedAssetsDefaultSpecificAmountListingResponse)
+                .WithBody(AssetsAuthenticatedMockedResponses.DefaultSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetDetailRestEndpoint() =>
@@ -86,7 +86,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath($"{AssetsRoute}/btc"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.AuthenticatedAssetDetailResponse)
+                .WithBody(AssetsAuthenticatedMockedResponses.DetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint() =>
@@ -97,7 +97,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.AuthenticatedAssetDetailSpecificAmountListingResponse)
+                .WithBody(AssetsAuthenticatedMockedResponses.DetailSpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupAuthenticatedExchangesDefaultListingRestEndpoint() =>
@@ -107,7 +107,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(ExchangesRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(ExchangesMockedResponses.AuthenticatedEveryExchangeListing)
+                .WithBody(ExchangesAuthenticatedMockedResponses.ExchangesListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint() =>
@@ -117,7 +117,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath($"{ExchangesRoute}/bitfinex"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(ExchangesMockedResponses.AuthenticatedSpecifiedExchangeDetailing)
+                .WithBody(ExchangesAuthenticatedMockedResponses.SpecifiedExchangeDetailingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedAssetsDefaultListingRestEndpoint() =>
@@ -126,7 +126,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(AssetsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsDefaultListingResponse)
+                .WithBody(AssetsUnauthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(uint limit) =>
@@ -136,7 +136,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(AssetsMockedResponses.UnauthenticatedAssetsSpecificAmountListingResponse)
+                .WithBody(AssetsUnauthenticatedMockedResponses.SpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedExchangesDefaultListingRestEndpoint() =>
@@ -145,7 +145,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath(ExchangesRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(ExchangesMockedResponses.UnauthenticatedExchangesDefaultListingResponse)
+                .WithBody(ExchangesUnauthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint() =>
@@ -154,7 +154,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath($"{ExchangesRoute}/kraken"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(ExchangesMockedResponses.UnauthenticatedExchangesDefaultKrakenDetailResponse)
+                .WithBody(ExchangesUnauthenticatedMockedResponses.DefaultKrakenDetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupMarketsApi() =>
@@ -163,7 +163,7 @@ public class CryptoWatchServerApi : IDisposable
                 .UsingGet())
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MarketsMockedResponses.UnauthenticatedMarketsRootListingResponse)
+                .WithBody(MarketsUnauthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
@@ -172,7 +172,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath("/pairs"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.UnauthenticatedPairsDefaultListingResponse)
+                .WithBody(PairsUnauthenticatedMockedResponses.DefaultListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint() =>
@@ -182,7 +182,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.UnauthenticatedPairsSpecificAmountListingResponse)
+                .WithBody(PairsUnauthenticatedMockedResponses.SpecificAmountListingResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsListingWithCursorRestEndpoint() =>
@@ -192,7 +192,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.UnauthenticatedPairsListingWithCursorResponse)
+                .WithBody(PairsUnauthenticatedMockedResponses.ListingWithCursorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint() =>
@@ -203,7 +203,7 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.UnauthenticatedPairsSpecificAmountListingWithCursorResponse)
+                .WithBody(PairsUnauthenticatedMockedResponses.SpecificAmountListingWithCursorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultDetailRestEndpoint() =>
@@ -212,6 +212,6 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath("/pairs/0neweth"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(PairsMockedResponses.UnauthenticatedPairDetailResponse)
+                .WithBody(PairsUnauthenticatedMockedResponses.DetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 }

@@ -31,7 +31,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiExchangesListing_JsonResponseDeserialization()
+    public async Task Asserts_ExchangesListing_JsonResponseDeserialization()
     {
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultListingRestEndpoint();
 
@@ -69,7 +69,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiDefaultExchangeDetailing_JsonResponseDeserialization()
+    public async Task Asserts_ExchangeDetailing_JsonResponseDeserialization()
     {
         const string exchange = "kraken";
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint();

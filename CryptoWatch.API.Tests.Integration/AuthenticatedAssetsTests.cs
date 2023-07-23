@@ -32,7 +32,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiAuthenticatedAssetsDefaultListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetsDefaultListing_JsonResponseDeserialization()
     {
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint();
 
@@ -78,7 +78,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiAuthenticatedAssetsSpecificAmountListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetsSpecificAmountListing_JsonResponseDeserialization()
     {
         const uint items = 5;
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint();
@@ -117,7 +117,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiAuthenticatedAssetDetailListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetDetailListing_JsonResponseDeserialization()
     {
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetDetailRestEndpoint();
@@ -191,7 +191,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiAuthenticatedAssetSpecificAmountDetailListing_JsonResponseDeserialization()
+    public async Task Asserts_AssetSpecificAmountDetailListing_JsonResponseDeserialization()
     {
         const int items = 5;
         const string asset = "btc";
@@ -266,7 +266,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiInvalidlyAuthenticated_Response()
+    public async Task Asserts_InvalidlyAuthenticated_Response()
     {
         _cryptoWatchServer.SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint();
         var httpClient = new HttpClient

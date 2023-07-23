@@ -31,7 +31,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Asserts_CryptoWatchApiMarketsListing_JsonResponseDeserialization()
+    public async Task Asserts_MarketsListing_JsonResponseDeserialization()
     {
         _cryptoWatchServer.SetupMarketsApi();
 
