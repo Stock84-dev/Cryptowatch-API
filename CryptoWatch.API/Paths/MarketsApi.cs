@@ -11,127 +11,127 @@ public readonly struct MarketsApi
 
     internal MarketsApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-    public Task<HttpResponseMessage> Exchange(string exchange) =>
+    public Task<HttpResponseMessage> ExchangeAsync(string exchange) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}");
 
-    public Task<MarketCollection> ListAsyncTask() =>
+    public Task<MarketCollection> ListAsync() =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<MarketCollection>(Route);
 
-    public Task<HttpResponseMessage> ListAsyncTask(string cursor) =>
+    public Task<HttpResponseMessage> ListAsync(string cursor) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}");
 
-    public Task<HttpResponseMessage> ListAsyncTask(uint limit) =>
+    public Task<HttpResponseMessage> ListAsync(uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> ListAsyncTask(string cursor, uint limit) =>
+    public Task<HttpResponseMessage> ListAsync(string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> Details(string exchange, string pair) =>
+    public Task<HttpResponseMessage> DetailsAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}");
 
-    public Task<HttpResponseMessage> Price() =>
+    public Task<HttpResponseMessage> PriceAsync() =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/prices");
 
-    public Task<HttpResponseMessage> Price(string cursor) =>
+    public Task<HttpResponseMessage> PriceAsync(string cursor) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/prices?cursor={cursor}");
 
-    public Task<HttpResponseMessage> Price(string cursor, uint limit) =>
+    public Task<HttpResponseMessage> PriceAsync(string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> Price(string exchange, string pair) =>
+    public Task<HttpResponseMessage> PriceAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/price");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair) =>
+    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair, uint since) =>
+    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair, uint since) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}");
 
-    public Task<HttpResponseMessage> Trades(string exchange, string pair, int since, uint limit) =>
+    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair, int since, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}&limit={limit}");
 
-    public Task<HttpResponseMessage> Summary(string exchange, string pair) =>
+    public Task<HttpResponseMessage> SummaryAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/summary");
 
-    public Task<HttpResponseMessage> Summaries() =>
+    public Task<HttpResponseMessage> SummariesAsync() =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/summaries");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy) =>
+    public Task<HttpResponseMessage> SummariesAsync(string keyBy) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor) =>
+    public Task<HttpResponseMessage> SummariesAsync(string keyBy, string cursor) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}");
 
-    public Task<HttpResponseMessage> Summaries(string keyBy, string cursor, uint limit) =>
+    public Task<HttpResponseMessage> SummariesAsync(string keyBy, string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth, uint limit) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, decimal span) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, decimal span) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?span={span}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, decimal span, uint limit) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, decimal span, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?span={span}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth, decimal span) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, decimal span) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}");
 
-    public Task<HttpResponseMessage> OrderBook(string exchange, string pair, double depth, decimal span, uint limit) =>
+    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, decimal span, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookLiquidity(string exchange, string pair) =>
+    public Task<HttpResponseMessage> OrderBookLiquidityAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook/liquidity");
 
-    public Task<HttpResponseMessage> OrderBookCalculator(string exchange, string pair) =>
+    public Task<HttpResponseMessage> OrderBookCalculatorAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook/calculator");
 
-    public Task<HttpResponseMessage> OrderBookCalculator(string exchange, string pair, decimal amount) =>
+    public Task<HttpResponseMessage> OrderBookCalculatorAsync(string exchange, string pair, decimal amount) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook/calculator?amount={amount}");
 
-    public Task<HttpResponseMessage> OHLCCandlesticks(string exchange, string pair) =>
+    public Task<HttpResponseMessage> OHLCCandlesticksAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/ohlc");
 
-    public Task<HttpResponseMessage> OHLCCandlesticks(string exchange, string pair, long after) =>
+    public Task<HttpResponseMessage> OHLCCandlesticksAsync(string exchange, string pair, long after) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/ohlc?after={after}");
 
-    public Task<HttpResponseMessage> OHLCCandlesticks(
+    public Task<HttpResponseMessage> OHLCCandlesticksAsync(
         string exchange,
         string pair,
         long after,
@@ -140,7 +140,7 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/ohlc?after={after}&periods={ConcatPeriodArray(periods)}");
 
-    public Task<HttpResponseMessage> OHLCCandlesticks(
+    public Task<HttpResponseMessage> OHLCCandlesticksAsync(
         string exchange,
         string pair,
         long before,
@@ -153,5 +153,5 @@ public readonly struct MarketsApi
             );
 
     private static StringBuilder ConcatPeriodArray(IEnumerable<TimeFrame> periods) =>
-        new StringBuilder(50).AppendJoin(',', periods);
+        new StringBuilder(capacity: 50).AppendJoin(',', periods);
 }

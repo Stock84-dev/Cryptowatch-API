@@ -37,7 +37,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint();
 
         var assetListing = await new CryptoWatchApi(_httpClientFactory.Object).Assets
-            .ListAsyncTask();
+            .ListAsync();
 
         assetListing.Should()
             .BeOfType<AssetCollection>();
@@ -84,7 +84,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint();
 
         var assetListing = await new CryptoWatchApi(_httpClientFactory.Object).Assets
-            .ListAsyncTask(items);
+            .ListAsync(items);
 
         assetListing.Should()
             .BeOfType<AssetCollection>();
@@ -122,7 +122,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory.Object).Assets.Details(asset);
+        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory.Object).Assets.DetailsAsync(asset);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -197,7 +197,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory.Object).Assets.Details(asset, items);
+        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory.Object).Assets.DetailsAsync(asset, items);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -277,7 +277,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
             .Returns(httpClient);
 
-        var invalidCall = async () => await new CryptoWatchApi(_httpClientFactory.Object).Assets.ListAsyncTask();
+        var invalidCall = async () => await new CryptoWatchApi(_httpClientFactory.Object).Assets.ListAsync();
 
         await invalidCall.Should()
             .ThrowAsync<HttpRequestException>()

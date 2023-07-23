@@ -36,7 +36,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedPairsDefaultListingRestEndpoint();
 
         var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs
-            .List();
+            .ListAsync();
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -116,7 +116,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         const int items = 5;
         _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(items);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(items);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -198,7 +198,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
 
         _cryptoWatchServer.SetupUnauthenticatedPairsListingWithCursorRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(cursor);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(cursor);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -281,7 +281,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
 
         _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.List(items, cursor);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(items, cursor);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -361,7 +361,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         const string pair = "0neweth";
         _cryptoWatchServer.SetupUnauthenticatedPairsDefaultDetailRestEndpoint();
 
-        var pairDetails = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.Details(pair);
+        var pairDetails = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.DetailsAsync(pair);
 
         pairDetails.Should()
             .BeOfType<PairDetails>();

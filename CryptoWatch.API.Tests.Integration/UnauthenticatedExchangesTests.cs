@@ -35,7 +35,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultListingRestEndpoint();
 
-        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.List();
+        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
 
         exchangeDefaultListing.Result.Should()
             .BeOfType<List<Exchanges.ResultCollection>>();
@@ -74,7 +74,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         const string exchange = "kraken";
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
-        var exchangeDefaultDetailing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.Details(exchange);
+        var exchangeDefaultDetailing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();

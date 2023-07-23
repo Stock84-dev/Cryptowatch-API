@@ -10,19 +10,19 @@ public readonly struct AssetsApi
 
     internal AssetsApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-    public Task<AssetCollection> ListAsyncTask() =>
+    public Task<AssetCollection> ListAsync() =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetCollection>($"{Route}");
 
-    public Task<AssetCollection> ListAsyncTask(uint limit) =>
+    public Task<AssetCollection> ListAsync(uint limit) =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetCollection>($"{Route}?limit={limit}");
 
-    public Task<AssetDetail> Details(string asset) =>
+    public Task<AssetDetail> DetailsAsync(string asset) =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetDetail>($"{Route}/{asset}");
 
-    public Task<AssetDetail> Details(string asset, uint limit) =>
+    public Task<AssetDetail> DetailsAsync(string asset, uint limit) =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<AssetDetail>($"{Route}/{asset}?limit={limit}");
 }

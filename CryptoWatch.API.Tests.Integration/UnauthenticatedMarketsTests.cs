@@ -35,7 +35,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupMarketsApi();
 
-        var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsyncTask();
+        var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsync();
 
         marketListing.Should()
             .BeOfType<MarketCollection>();

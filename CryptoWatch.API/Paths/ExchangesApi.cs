@@ -10,11 +10,11 @@ public readonly struct ExchangesApi
 
     internal ExchangesApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-    public Task<Exchanges> List() =>
+    public Task<Exchanges> ListAsync() =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Exchanges>($"{Route}");
 
-    public Task<Exchange> Details(string exchange) =>
+    public Task<Exchange> DetailsAsync(string exchange) =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Exchange>($"{Route}/{exchange}");
 }

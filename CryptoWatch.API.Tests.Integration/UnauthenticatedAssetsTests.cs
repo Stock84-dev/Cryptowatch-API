@@ -36,7 +36,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedAssetsDefaultListingRestEndpoint();
 
         var assetListing = await new CryptoWatchApi(_httpClientFactory.Object).Assets
-            .ListAsyncTask();
+            .ListAsync();
 
         assetListing.Should()
             .BeOfType<AssetCollection>();
@@ -83,7 +83,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(items);
 
         var assetListing = await new CryptoWatchApi(_httpClientFactory.Object).Assets
-            .ListAsyncTask(items);
+            .ListAsync(items);
 
         assetListing.Should()
             .BeOfType<AssetCollection>();
