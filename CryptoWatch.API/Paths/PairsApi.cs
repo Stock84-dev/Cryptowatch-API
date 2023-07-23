@@ -22,6 +22,6 @@ public readonly struct PairsApi
     public Task<Pairs> List(uint limit, string cursor) => _httpClientFactory.CreateClient()
         .GetFromJsonAsync<Pairs>($"{Route}?limit={limit}&cursor={cursor}");
 
-    public Task<HttpResponseMessage> Details(string pair) => _httpClientFactory.CreateClient()
-        .GetAsync($"{Route}/{pair}");
+    public Task<PairDetails> Details(string pair) => _httpClientFactory.CreateClient()
+        .GetFromJsonAsync<PairDetails>($"{Route}/{pair}");
 }

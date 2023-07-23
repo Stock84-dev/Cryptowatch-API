@@ -39,9 +39,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
+        marketListing.Result.Should()
+            .BeOfType<List<MarketDetails>>();
         marketListing.Result.First()
             .Should()
-            .BeOfType<MarketCollection.Collection>();
+            .BeOfType<MarketDetails>();
         marketListing.Result.Should()
             .HaveCount(20_000);
         marketListing.Result.First()

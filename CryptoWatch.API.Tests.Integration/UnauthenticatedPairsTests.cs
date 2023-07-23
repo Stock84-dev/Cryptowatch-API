@@ -354,4 +354,67 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
     }
+
+    [Fact]
+    public async Task Asserts_CryptoWatchApiUnauthenticatedPairsDefaultDetail_JsonResponseDeserialization()
+    {
+        const string pair = "0neweth";
+        _cryptoWatchServer.SetupUnauthenticatedPairsDefaultDetailRestEndpoint();
+
+        var pairDetails = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.Details(pair);
+
+        pairDetails.Should()
+            .BeOfType<PairDetails>();
+        pairDetails.Result.Should()
+            .BeOfType<PairDetails.ResultCollection>();
+        pairDetails.Result.id.Should().Be(185_927);
+        pairDetails.Result.basePair.Should()
+            .BeOfType<Base>();
+        pairDetails.Result.basePair.Fiat.Should()
+            .BeFalse();
+        pairDetails.Result.basePair.Id.Should().Be(7_900);
+        pairDetails.Result.basePair.Name.Should().Be("Stone");
+        pairDetails.Result.basePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/0ne");
+        pairDetails.Result.basePair.Symbol.Should().Be("0ne");
+        pairDetails.Result.markets.Should()
+            .BeOfType<List<MarketDetails>>();
+        pairDetails.Result.markets.Should()
+            .HaveCount(1);
+        pairDetails.Result.markets.First()
+            .Active.Should()
+            .BeTrue();
+        pairDetails.Result.markets.First()
+            .Exchange.Should()
+            .Be("uniswap-v2");
+        pairDetails.Result.markets.First()
+            .Id.Should()
+            .Be(2_917_710);
+        pairDetails.Result.markets.First().Pair.Should().Be("0neweth");
+        pairDetails.Result.markets.First().Route.Should()
+            .Be("https://api.cryptowat.ch/markets/uniswap-v2/0neweth");
+        pairDetails.Result.quotePair.Should()
+            .BeOfType<Quote>();
+        pairDetails.Result.quotePair.Fiat.Should()
+            .BeFalse();
+        pairDetails.Result.quotePair.Id.Should()
+            .Be(5_080);
+        pairDetails.Result.quotePair.Name.Should().Be("Wrapped Ether");
+        pairDetails.Result.quotePair.Route.Should()
+            .Be("https://api.cryptowat.ch/assets/weth");
+        pairDetails.Result.quotePair.Symbol.Should().Be("weth");
+        pairDetails.Result.route.Should().Be("https://api.cryptowat.ch/pairs/0neweth");
+        pairDetails.Result.symbol.Should()
+            .Be("0neweth");
+        pairDetails.Allowance.Should()
+            .BeOfType<Allowance>();
+        pairDetails.Allowance.Cost.Should()
+            .Be(0.002M);
+        pairDetails.Allowance.Remaining.Should()
+            .Be(9.998M);
+        pairDetails.Allowance.RemainingPaid.Should()
+            .Be(0);
+        pairDetails.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
 }

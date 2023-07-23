@@ -205,4 +205,13 @@ public class CryptoWatchServerApi : IDisposable
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(PairsMockedResponses.UnauthenticatedPairsSpecificAmountListingWithCursorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedPairsDefaultDetailRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath("/pairs/0neweth"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(PairsMockedResponses.UnauthenticatedPairDetailResponse)
+                .WithStatusCode(HttpStatusCode.OK));
 }

@@ -68,5 +68,11 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("UnauthenticatedPairsListingWithCursorResponse", resourceCulture);
             }
         }
+        
+        internal static string UnauthenticatedPairDetailResponse {
+            get {
+                return ResourceManager.GetString("UnauthenticatedPairDetailResponse", resourceCulture);
+            }
+        }
     }
 }
