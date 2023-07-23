@@ -11,6 +11,7 @@ public class CryptoWatchServerApi : IDisposable
     private const string AssetsRoute = "/assets";
     private const string ExchangesRoute = "/exchanges";
     private const string MarketsRoute = "/markets";
+    private const string PairsRoute = "/pairs";
 
     private static readonly Dictionary<string, string> DefaultCurlHeaders = new()
     {
@@ -169,7 +170,7 @@ public class CryptoWatchServerApi : IDisposable
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
-                .WithPath("/pairs"))
+                .WithPath(PairsRoute))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(PairsUnauthenticatedMockedResponses.DefaultListingResponse)
@@ -178,7 +179,7 @@ public class CryptoWatchServerApi : IDisposable
     public void SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
-                .WithPath("/pairs")
+                .WithPath(PairsRoute)
                 .WithParam("limit", "5"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
@@ -188,7 +189,7 @@ public class CryptoWatchServerApi : IDisposable
     public void SetupUnauthenticatedPairsListingWithCursorRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
-                .WithPath("/pairs")
+                .WithPath(PairsRoute)
                 .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
@@ -198,7 +199,7 @@ public class CryptoWatchServerApi : IDisposable
     public void SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
-                .WithPath("/pairs")
+                .WithPath(PairsRoute)
                 .WithParam("limit", "2")
                 .WithParam("cursor", "S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA"))
             .RespondWith(Response.Create()
@@ -209,7 +210,7 @@ public class CryptoWatchServerApi : IDisposable
     public void SetupUnauthenticatedPairsDefaultDetailRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
-                .WithPath("/pairs/0neweth"))
+                .WithPath($"{PairsRoute}/0neweth"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(PairsUnauthenticatedMockedResponses.DetailResponse)
