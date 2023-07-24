@@ -1,0 +1,5 @@
+### List every market, paginating over 20_000 items
+GET https://api.cryptowat.ch/markets
+
+### List markets from cursor
+GET https://api.cryptowat.ch/markets?cursor=TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ

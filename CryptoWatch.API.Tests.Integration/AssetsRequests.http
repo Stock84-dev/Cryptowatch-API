@@ -1,0 +1,21 @@
+### List every asset, paginating over 20_000 items
+GET https://api.cryptowat.ch/assets
+
+### Authenticated every asset listing, paginating over 20_000 items
+GET https://api.cryptowat.ch/assets
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
+
+### List every asset, paginating over specified amount of items
+GET https://api.cryptowat.ch/assets?limit=5
+
+### List every asset, paginating over specified amount of items
+GET https://api.cryptowat.ch/assets?limit=5
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
+
+### Authenticated every asset details
+GET https://api.cryptowat.ch/assets/btc
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
+
+### Authenticated asset details, paginated over specified amount of times
+GET https://api.cryptowat.ch/assets/btc?limit=5
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF

@@ -1,0 +1,14 @@
+### Unauthenticated list every pair
+GET https://api.cryptowat.ch/pairs
+
+### Unauthenticated list five pairs
+GET https://api.cryptowat.ch/pairs?limit=5
+
+### Unauthenticated list pairs with cursor
+GET https://api.cryptowat.ch/pairs?cursor=S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA
+
+### Unauthenticated list two pairs with cursor
+GET https://api.cryptowat.ch/pairs?limit=2&cursor=S_v4gQoCByt1snk8oSuh670Q_QU1ZRSDlA9igxjER8lWsXXj6geogA
+
+### Unauthenticated detail pair
+GET https://api.cryptowat.ch/pairs/0neweth

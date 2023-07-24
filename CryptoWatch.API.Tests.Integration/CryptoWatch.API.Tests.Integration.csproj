@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.11.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+        <PackageReference Include="Moq" Version="4.18.4" />
+        <PackageReference Include="WireMock.Net" Version="1.5.32" />
+        <PackageReference Include="WireMock.Net.FluentAssertions" Version="1.5.32" />
+        <PackageReference Include="WireMock.Net.xUnit" Version="1.5.32" />
+        <PackageReference Include="xunit" Version="2.5.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="6.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CryptoWatch.API\CryptoWatch.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\AssetsAuthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>AssetsMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ExchangesAuthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>ExchangesMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\MarketsUnauthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>MarketsUnauthenticatedMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\PairsUnauthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>PairsMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\AssetsUnauthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>AssetsUnauthenticatedMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ExchangesUnauthenticatedMockedResponses.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>ExchangesUnauthenticatedMockedResponses.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Resources\AssetsAuthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AssetsAuthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\ExchangesAuthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ExchangesAuthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\MarketsUnauthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MarketsUnauthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\PairsUnauthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PairsUnauthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\AssetsUnauthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AssetsUnauthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\ExchangesUnauthenticatedMockedResponses.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ExchangesUnauthenticatedMockedResponses.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+</Project>

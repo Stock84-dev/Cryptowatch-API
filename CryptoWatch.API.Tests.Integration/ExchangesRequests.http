@@ -1,0 +1,13 @@
+### List every exchange
+GET https://api.cryptowat.ch/exchanges
+
+### Detail specified exchange
+GET https://api.cryptowat.ch/exchanges/kraken
+
+### Authenticated every exchange listing
+GET https://api.cryptowat.ch/exchanges
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
+
+### Authenticated specifiec exchange detailing
+GET https://api.cryptowat.ch/exchanges/bitfinex
+X-CW-API-Key: CXRJ2EJTOLGUF4RNY4CF
