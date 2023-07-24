@@ -41,7 +41,7 @@
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\MarketsUnauthenticatedMockedResponses.resx">
             <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>MarketsMockedResponses.Designer.cs</LastGenOutput>
+            <LastGenOutput>MarketsUnauthenticatedMockedResponses.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\PairsUnauthenticatedMockedResponses.resx">
             <Generator>ResXFileCodeGenerator</Generator>

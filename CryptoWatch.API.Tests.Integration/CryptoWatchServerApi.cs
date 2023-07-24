@@ -158,13 +158,23 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(ExchangesUnauthenticatedMockedResponses.DefaultKrakenDetailResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
-    public void SetupMarketsApi() =>
+    public void SetupUnauthenticatedDefaultListingMarketsRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .WithPath(MarketsRoute)
                 .UsingGet())
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(MarketsUnauthenticatedMockedResponses.DefaultListingResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketsListingFromCursorRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath(MarketsRoute)
+                .WithParam("cursor", "TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.ListingFromCursorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
