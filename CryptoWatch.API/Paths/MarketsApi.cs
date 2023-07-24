@@ -19,17 +19,17 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<MarketCollection>(Route);
 
-    public Task<HttpResponseMessage> ListAsync(string cursor) =>
+    public Task<MarketCollection> ListAsync(string cursor) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}?cursor={cursor}");
+            .GetFromJsonAsync<MarketCollection>($"{Route}?cursor={cursor}");
 
-    public Task<HttpResponseMessage> ListAsync(uint limit) =>
+    public Task<MarketCollection> ListAsync(uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}?limit={limit}");
+            .GetFromJsonAsync<MarketCollection>($"{Route}?limit={limit}");
 
-    public Task<HttpResponseMessage> ListAsync(string cursor, uint limit) =>
+    public Task<MarketCollection> ListAsync(string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
+            .GetFromJsonAsync<MarketCollection>($"{Route}?cursor={cursor}&limit={limit}");
 
     public Task<HttpResponseMessage> DetailsAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()

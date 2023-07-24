@@ -80,9 +80,10 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     [Fact]
     public async Task Asserts_MarketsListingFromCursor_JsonResponseDeserialization()
     {
+        const string cursor = "TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ";
         _cryptoWatchServer.SetupUnauthenticatedMarketsListingFromCursorRestEndpoint();
 
-        var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsync();
+        var marketListing = await new CryptoWatchApi(_httpClientFactory.Object).Markets.ListAsync(cursor);
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
@@ -92,28 +93,28 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Should()
             .BeOfType<MarketDetails>();
         marketListing.Result.Should()
-            .HaveCount(20_000);
+            .HaveCount(7_651);
         marketListing.Result.First()
             .Active.Should()
             .BeTrue();
         marketListing.Result.First()
             .Exchange.Should()
-            .Be("bitfinex");
+            .Be("kraken");
         marketListing.Result.First()
             .Id.Should()
-            .Be(1);
+            .Be(3_025_661);
         marketListing.Result.First()
             .Pair.Should()
-            .Be("btcusd");
+            .Be("egldusd");
         marketListing.Result.First()
             .Route.Should()
-            .Be("https://api.cryptowat.ch/markets/bitfinex/btcusd");
+            .Be("https://api.cryptowat.ch/markets/kraken/egldusd");
         marketListing.Cursor.Should()
             .BeOfType<Cursor>();
         marketListing.Cursor.HasMore.Should()
-            .BeTrue();
+            .BeFalse();
         marketListing.Cursor.Last.Should()
-            .Be("TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ");
+            .Be("BWgumN0awa71xjUYPqlzbIDvzN7sCIa85I9A4z-TUK-2amfy9co0x5cCw3ojbQ");
         marketListing.Allowance.Should()
             .BeOfType<Allowance>();
         marketListing.Allowance.Cost.Should()
