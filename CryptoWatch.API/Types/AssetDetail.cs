@@ -15,10 +15,10 @@ public struct AssetDetail
         [JsonPropertyName("symbol")] public string Symbol { get; set; }
         [JsonPropertyName("name")] public string Name { get; set; }
         [JsonPropertyName("fiat")] public bool Fiat { get; set; }
-        [JsonPropertyName("markets")] public Markets1 AssetMarkets { get; set; }
+        [JsonPropertyName("markets")] public Markets AssetMarkets { get; set; }
     }
 
-    public struct Markets1
+    public struct Markets
     {
         [JsonPropertyName("base")] public List<Bases> BaseMarket { get; set; }
         [JsonPropertyName("quote")] public List<Bases> QuoteMarket { get; set; }

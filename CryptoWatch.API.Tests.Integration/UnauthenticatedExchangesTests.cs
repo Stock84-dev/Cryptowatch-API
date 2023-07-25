@@ -74,7 +74,8 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         const string exchange = "kraken";
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
-        var exchangeDefaultDetailing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
+        var exchangeDefaultDetailing =
+            await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();

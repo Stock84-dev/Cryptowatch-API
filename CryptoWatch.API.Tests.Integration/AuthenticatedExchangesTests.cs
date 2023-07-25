@@ -75,7 +75,8 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
         const string exchange = "bitfinex";
         _cryptoWatchServer.SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
-        var exchangeDefaultDetailing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
+        var exchangeDefaultDetailing =
+            await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();

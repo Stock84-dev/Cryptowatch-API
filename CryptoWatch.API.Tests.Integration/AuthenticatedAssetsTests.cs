@@ -139,7 +139,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.SymbolId.Should()
             .Be("bitcoin");
         bitcoinAssetDetails.Result.AssetMarkets.Should()
-            .BeOfType<AssetDetail.Markets1>();
+            .BeOfType<AssetDetail.Markets>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
             .BeOfType<List<AssetDetail.Bases>>();
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
@@ -214,7 +214,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.SymbolId.Should()
             .Be("bitcoin");
         bitcoinAssetDetails.Result.AssetMarkets.Should()
-            .BeOfType<AssetDetail.Markets1>();
+            .BeOfType<AssetDetail.Markets>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
             .BeOfType<List<AssetDetail.Bases>>();
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()

@@ -31,25 +31,25 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<MarketCollection>($"{Route}?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> DetailsAsync(string exchange, string pair) =>
+    public Task<MarketPairDetail> DetailsAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}");
+            .GetFromJsonAsync<MarketPairDetail>($"{Route}/{exchange}/{pair}");
 
-    public Task<HttpResponseMessage> PriceAsync() =>
+    public Task<MarketPrices> PriceAsync() =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/prices");
+            .GetFromJsonAsync<MarketPrices>($"{Route}/prices");
 
-    public Task<HttpResponseMessage> PriceAsync(string cursor) =>
+    public Task<MarketPrices> PriceAsync(string cursor) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/prices?cursor={cursor}");
+            .GetFromJsonAsync<MarketPrices>($"{Route}/prices?cursor={cursor}");
 
-    public Task<HttpResponseMessage> PriceAsync(string cursor, uint limit) =>
+    public Task<MarketPrices> PriceAsync(string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}?cursor={cursor}&limit={limit}");
+            .GetFromJsonAsync<MarketPrices>($"{Route}/prices?cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> PriceAsync(string exchange, string pair) =>
+    public Task<MarketPairPrice> PriceAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/price");
+            .GetFromJsonAsync<MarketPairPrice>($"{Route}/{exchange}/{pair}/price");
 
     public Task<HttpResponseMessage> TradesAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
@@ -107,7 +107,13 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, decimal span, uint limit) =>
+    public Task<HttpResponseMessage> OrderBookAsync(
+        string exchange,
+        string pair,
+        double depth,
+        decimal span,
+        uint limit
+    ) =>
         _httpClientFactory.CreateClient()
             .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}&limit={limit}");
 
@@ -153,5 +159,5 @@ public readonly struct MarketsApi
             );
 
     private static StringBuilder ConcatPeriodArray(IEnumerable<TimeFrame> periods) =>
-        new StringBuilder(capacity: 50).AppendJoin(',', periods);
+        new StringBuilder(50).AppendJoin(',', periods);
 }

@@ -6,6 +6,7 @@ public struct PairDetails
 {
     [JsonPropertyName("result")] public ResultCollection Result { get; set; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
+
     public struct ResultCollection
     {
         [JsonPropertyName("id")] public int id { get; set; }

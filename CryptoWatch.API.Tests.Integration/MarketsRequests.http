@@ -3,3 +3,24 @@ GET https://api.cryptowat.ch/markets
 
 ### List markets from cursor
 GET https://api.cryptowat.ch/markets?cursor=TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ
+
+### List 3 markets
+GET https://api.cryptowat.ch/markets?limit=3
+
+### List 3 markets from cursor
+GET https://api.cryptowat.ch/markets?limit=3&cursor=SdgMYB9J1JiK7ejL21NoCqHcRT1eb6tTAIXZ12jGbKzEiPa-xpLZOg
+
+### Detail pair in a market
+GET https://api.cryptowat.ch/markets/kraken/btcusd
+
+### Detail pair price in a market
+GET https://api.cryptowat.ch/markets/kraken/btcusd/price
+
+### Detail prices in a market
+GET https://api.cryptowat.ch/markets/prices
+
+### Detail prices in a market with a cursor
+GET https://api.cryptowat.ch/markets/prices?cursor=BDj0fwwHBUM7Rz4YNJvyhM1vMO5PyygjB-AAht0UbizZZ7_VqEB1JA
+
+### Detail prices in a market with a cursor and a limit of 3
+GET https://api.cryptowat.ch/markets/prices?cursor=BDj0fwwHBUM7Rz4YNJvyhM1vMO5PyygjB-AAht0UbizZZ7_VqEB1JA&limit=3
