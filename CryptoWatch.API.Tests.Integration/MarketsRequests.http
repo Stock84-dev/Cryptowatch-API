@@ -24,3 +24,6 @@ GET https://api.cryptowat.ch/markets/prices?cursor=BDj0fwwHBUM7Rz4YNJvyhM1vMO5Py
 
 ### Detail prices in a market with a cursor and a limit of 3
 GET https://api.cryptowat.ch/markets/prices?cursor=BDj0fwwHBUM7Rz4YNJvyhM1vMO5PyygjB-AAht0UbizZZ7_VqEB1JA&limit=3
+
+### Detail btcusd trades in kraken snapshot
+GET https://api.cryptowat.ch/markets/kraken/btcusd/trades

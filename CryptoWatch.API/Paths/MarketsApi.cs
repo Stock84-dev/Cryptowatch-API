@@ -51,9 +51,9 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<MarketPairPrice>($"{Route}/{exchange}/{pair}/price");
 
-    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair) =>
+    public Task<MostRecentTrades> TradesAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/trades");
+            .GetFromJsonAsync<MostRecentTrades>($"{Route}/{exchange}/{pair}/trades");
 
     public Task<HttpResponseMessage> TradesAsync(string exchange, string pair, uint since) =>
         _httpClientFactory.CreateClient()

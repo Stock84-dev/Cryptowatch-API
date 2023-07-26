@@ -243,7 +243,16 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("limit", "3"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsPricesWithCursorResponse)
+                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsPricesWithCursorAndLimitOfThreeResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketMostRecentTradesOfAPairRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/trades"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenMostRecentTrades)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>

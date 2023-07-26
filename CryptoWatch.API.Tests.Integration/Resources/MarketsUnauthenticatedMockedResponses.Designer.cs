@@ -99,5 +99,11 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("MarketsPricesWithCursorAndLimitOfThreeResponse", resourceCulture);
             }
         }
+        
+        internal static string BtcUsdKrakenMostRecentTrades {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenMostRecentTrades", resourceCulture);
+            }
+        }
     }
 }
