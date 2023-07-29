@@ -2,19 +2,38 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct AssetCollection
+public readonly struct AssetCollection
 {
-    [JsonPropertyName("result")] public List<ResultCollection> Result { get; set; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
-
-    public struct ResultCollection
+    [JsonConstructor]
+    public AssetCollection(List<ResultCollection> result, Cursor cursor, Allowance allowance)
     {
-        [JsonPropertyName("id")] public int Id { get; set; }
-        [JsonPropertyName("sid")] public string SymbolId { get; set; }
-        [JsonPropertyName("symbol")] public string Symbol { get; set; }
-        [JsonPropertyName("name")] public string Name { get; set; }
-        [JsonPropertyName("fiat")] public bool Fiat { get; set; }
-        [JsonPropertyName("route")] public string Route { get; set; }
+        Result = result;
+        Cursor = cursor;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public List<ResultCollection> Result { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
+
+    public readonly struct ResultCollection
+    {
+        [JsonConstructor]
+        public ResultCollection(int id, string symbolId, string symbol, string name, bool fiat, string route)
+        {
+            Id = id;
+            SymbolId = symbolId;
+            Symbol = symbol;
+            Name = name;
+            Fiat = fiat;
+            Route = route;
+        }
+
+        [JsonPropertyName("id")] public int Id { get; }
+        [JsonPropertyName("sid")] public string SymbolId { get; }
+        [JsonPropertyName("symbol")] public string Symbol { get; }
+        [JsonPropertyName("name")] public string Name { get; }
+        [JsonPropertyName("fiat")] public bool Fiat { get; }
+        [JsonPropertyName("route")] public string Route { get; }
     }
 }

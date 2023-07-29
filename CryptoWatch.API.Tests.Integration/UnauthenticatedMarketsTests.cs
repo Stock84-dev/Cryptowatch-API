@@ -1,5 +1,3 @@
-using System.Dynamic;
-using System.Text.Json;
 using CryptoWatch.API.Types;
 using FluentAssertions;
 using Moq;
@@ -275,7 +273,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
         marketsPrices.Result.Should()
-            .BeOfType<ExpandoObject>();
+            .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
             .HaveCount(14_054);
         marketsPrices.Result.Should()
@@ -284,10 +282,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Key.Should()
             .Be("market:binance-us:1inchusdt");
         marketsPrices.Result.First()
-            .Value.Should()
-            .BeAssignableTo<JsonElement>()
-            .And.Subject.As<JsonElement>()
-            .GetDecimal()
+            .Should()
+            .BeAssignableTo<KeyValuePair<string, decimal>>()
+            .Which.Value
             .Should()
             .Be(0.306M);
         marketsPrices.Cursor.HasMore.Should()
@@ -315,7 +312,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
         marketsPrices.Result.Should()
-            .BeOfType<ExpandoObject>();
+            .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
             .HaveCount(14_060);
         marketsPrices.Result.Should()
@@ -324,10 +321,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Key.Should()
             .Be("market:binance-us:1inchusdt");
         marketsPrices.Result.First()
-            .Value.Should()
-            .BeAssignableTo<JsonElement>()
-            .And.Subject.As<JsonElement>()
-            .GetDecimal()
+            .Should()
+            .BeAssignableTo<KeyValuePair<string, decimal>>()
+            .Which.Value
             .Should()
             .Be(0.304M);
         marketsPrices.Cursor.HasMore.Should()
@@ -356,7 +352,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
         marketsPrices.Result.Should()
-            .BeOfType<ExpandoObject>();
+            .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
             .HaveCount(14_061);
         marketsPrices.Result.Should()
@@ -365,10 +361,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Key.Should()
             .Be("market:binance-us:1inchusdt");
         marketsPrices.Result.First()
-            .Value.Should()
-            .BeAssignableTo<JsonElement>()
-            .And.Subject.As<JsonElement>()
-            .GetDecimal()
+            .Should()
+            .BeAssignableTo<KeyValuePair<string, decimal>>()
+            .Which.Value
             .Should()
             .Be(0.304M);
         marketsPrices.Cursor.Should()
@@ -457,13 +452,13 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .BeEquivalentTo(mostRecentTrades.RecentTrades.First());
         mostRecentTrades[0]
             .Amount.Should()
-            .Be(0.00094620999999999995);
+            .Be(0.00094621M);
         mostRecentTrades[0]
             .Id.Should()
             .Be(0);
         mostRecentTrades[0]
             .Price.Should()
-            .Be(29135.099999999999);
+            .Be(29135.1M);
         mostRecentTrades[0]
             .Timestamp.Should()
             .Be(1690337054);
@@ -476,6 +471,253 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         mostRecentTrades.Allowance.RemainingPaid.Should()
             .Be(0);
         mostRecentTrades.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_MostRecentTradesWithTimestamp_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const int cursor = 1690337054;
+        _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampRestEndpoint();
+
+        var mostRecentTrades =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.TradesAsync(exchange, pair, cursor);
+
+        mostRecentTrades.Should()
+            .BeOfType<MostRecentTrades>();
+        mostRecentTrades.Result.Should()
+            .BeOfType<List<List<decimal>>>();
+        mostRecentTrades.RecentTrades.Should()
+            .BeOfType<List<RecentTrade>>();
+        mostRecentTrades.Count.Should()
+            .Be(50);
+        mostRecentTrades.RecentTrades.Should()
+            .HaveCount(50);
+        mostRecentTrades.Result.Should()
+            .HaveCount(50);
+        mostRecentTrades[0]
+            .Should()
+            .BeEquivalentTo(mostRecentTrades.RecentTrades.First());
+        mostRecentTrades[0]
+            .Amount.Should()
+            .Be(0.75689032M);
+        mostRecentTrades[0]
+            .Id.Should()
+            .Be(0);
+        mostRecentTrades[0]
+            .Price.Should()
+            .Be(0.06353M);
+        mostRecentTrades[0]
+            .Timestamp.Should()
+            .Be(1690408640);
+        mostRecentTrades.Allowance.Should()
+            .BeOfType<Allowance>()
+            .Which.Remaining.Should()
+            .Be(9.99M);
+        mostRecentTrades.Allowance.Cost.Should()
+            .Be(0.01M);
+        mostRecentTrades.Allowance.RemainingPaid.Should()
+            .Be(0);
+        mostRecentTrades.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_MostRecentTradesWithTimestampAndLimit_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const int cursor = 1690337054;
+        const int limit = 5;
+        _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampAndLimitRestEndpoint();
+
+        var mostRecentTrades =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.TradesAsync(exchange, pair, cursor, limit);
+
+        mostRecentTrades.Should()
+            .BeOfType<MostRecentTrades>();
+        mostRecentTrades.Result.Should()
+            .BeOfType<List<List<decimal>>>();
+        mostRecentTrades.RecentTrades.Should()
+            .BeOfType<List<RecentTrade>>();
+        mostRecentTrades.Count.Should()
+            .Be(5);
+        mostRecentTrades.RecentTrades.Should()
+            .HaveCount(5);
+        mostRecentTrades.Result.Should()
+            .HaveCount(5);
+        mostRecentTrades[0]
+            .Should()
+            .BeEquivalentTo(mostRecentTrades.RecentTrades.First());
+        mostRecentTrades[0]
+            .Amount.Should()
+            .Be(0.01246267M);
+        mostRecentTrades[0]
+            .Id.Should()
+            .Be(0);
+        mostRecentTrades[0]
+            .Price.Should()
+            .Be(1871.56M);
+        mostRecentTrades[0]
+            .Timestamp.Should()
+            .Be(1690417655);
+        mostRecentTrades.Allowance.Should()
+            .BeOfType<Allowance>()
+            .Which.Remaining.Should()
+            .Be(9.99M);
+        mostRecentTrades.Allowance.Cost.Should()
+            .Be(0.01M);
+        mostRecentTrades.Allowance.RemainingPaid.Should()
+            .Be(0);
+        mostRecentTrades.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public void Asserts_Summary_TypeConsistency()
+    {
+        typeof(Summary).Should()
+            .NotHaveDefaultConstructor();
+        typeof(Summary).Should()
+            .HaveProperty<Summary.ResultDetail>(nameof(Summary.Result))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summary.ResultDetail).Should()
+            .HaveProperty<Price>(nameof(Summary.ResultDetail.Price))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summary.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summary.ResultDetail.Volume))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summary.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summary.ResultDetail.VolumeQuote))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summary).Should()
+            .HaveProperty<Allowance>(nameof(Summary.Allowance))
+            .Which.Should()
+            .NotBeWritable();
+    }
+
+    [Fact]
+    public async Task Asserts_MarketPairSummary_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        _cryptoWatchServer.SetupUnauthenticatedMarketPairSummaryRestEndpoint();
+
+        var marketPairSummary =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummaryAsync(exchange, pair);
+
+        marketPairSummary.Should()
+            .BeOfType<Summary>();
+        marketPairSummary.Result.Should()
+            .BeOfType<Summary.ResultDetail>();
+        marketPairSummary.Result.Price.Change.Absolute.Should()
+            .Be(177);
+        marketPairSummary.Result.Price.Change.Percentage.Should()
+            .Be(0.0060699588477366251);
+        marketPairSummary.Result.Price.High.Should()
+            .Be(29678.299999999999);
+        marketPairSummary.Result.Price.Last.Should()
+            .Be(29337);
+        marketPairSummary.Result.Price.Low.Should()
+            .Be(29105.5);
+        marketPairSummary.Result.Volume.Should()
+            .Be(2047.7691799822398);
+        marketPairSummary.Result.VolumeQuote.Should()
+            .Be(60061803.852393046);
+        marketPairSummary.Allowance.Should()
+            .BeOfType<Allowance>();
+        marketPairSummary.Allowance.Cost.Should()
+            .Be(0.005M);
+        marketPairSummary.Allowance.Remaining.Should()
+            .Be(9.995M);
+        marketPairSummary.Allowance.RemainingPaid.Should()
+            .Be(0);
+        marketPairSummary.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public void Asserts_AllMarketsSummaries_TypeConsistency()
+    {
+        typeof(Summaries).Should()
+            .NotHaveDefaultConstructor();
+        typeof(Summaries).Should()
+            .HaveProperty<Dictionary<string, Summaries.ResultDetail>>(nameof(Summaries.Result))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries.ResultDetail).Should()
+            .HaveProperty<Price>(nameof(Summaries.ResultDetail.Price))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summaries.ResultDetail.Volume))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeBase))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeQuote))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries.ResultDetail).Should()
+            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeUsd))
+            .Which.Should()
+            .NotBeWritable();
+    }
+
+    [Fact]
+    public async Task Asserts_AllMarketsSummaries_JsonResponseDeserialization()
+    {
+        _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesRestEndpoint();
+
+        var allMarketsSummaries = await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync();
+
+        allMarketsSummaries.Should()
+            .BeOfType<Summaries>();
+        allMarketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(13_928);
+        allMarketsSummaries.Result.Should().ContainKey("binance-us:icpusdt");
+        allMarketsSummaries.Result.First().Key.Should()
+            .Be("binance-us:1inchusdt");
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(0.0020000000000000018);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(0.0066225165562913968);
+        allMarketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(0.308);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(0.30399999999999999);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(0.29699999999999999);
+        allMarketsSummaries.Result.First().Value.Volume.Should()
+            .Be(1_440.4999999999627);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(1_440.4999999999627);
+        allMarketsSummaries.Result.First().Value.VolumeQuote.Should()
+            .Be(437.85069999994812);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(437.86940701357082);
+        allMarketsSummaries.Allowance.Cost.Should().Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should().Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should().Be(0);
+        allMarketsSummaries.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
     }
 }

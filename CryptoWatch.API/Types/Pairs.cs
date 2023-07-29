@@ -2,21 +2,47 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct Pairs
+public readonly struct Pairs
 {
-    [JsonPropertyName("result")] public List<ResultCollection> Result { get; set; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
+    [JsonConstructor]
+    public Pairs(List<ResultCollection> result, Cursor cursor, Allowance allowance)
+    {
+        Result = result;
+        Cursor = cursor;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public List<ResultCollection> Result { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
     public struct ResultCollection
     {
-        [JsonPropertyName("id")] public int Id { get; set; }
-        [JsonPropertyName("symbol")] public string Symbol { get; set; }
-        [JsonPropertyName("base")] public Base BasePair { get; set; }
-        [JsonPropertyName("quote")] public Quote QuotePair { get; set; }
-        [JsonPropertyName("route")] public string Route { get; set; }
+        [JsonConstructor]
+        public ResultCollection(
+            int id,
+            string symbol,
+            Base basePair,
+            Quote quotePair,
+            string route,
+            string futuresContractPeriod
+        )
+        {
+            Id = id;
+            Symbol = symbol;
+            BasePair = basePair;
+            QuotePair = quotePair;
+            Route = route;
+            FuturesContractPeriod = futuresContractPeriod;
+        }
+
+        [JsonPropertyName("id")] public int Id { get; }
+        [JsonPropertyName("symbol")] public string Symbol { get; }
+        [JsonPropertyName("base")] public Base BasePair { get; }
+        [JsonPropertyName("quote")] public Quote QuotePair { get; }
+        [JsonPropertyName("route")] public string Route { get; }
 
         [JsonPropertyName("futuresContractPeriod")]
-        public string FuturesContractPeriod { get; set; }
+        public string FuturesContractPeriod { get; }
     }
 }

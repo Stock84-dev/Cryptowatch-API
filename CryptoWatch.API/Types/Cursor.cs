@@ -2,8 +2,15 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct Cursor
+public readonly struct Cursor
 {
-    [JsonPropertyName("last")] public string Last { get; set; }
-    [JsonPropertyName("hasMore")] public bool HasMore { get; set; }
+    [JsonConstructor]
+    public Cursor(string last, bool hasMore)
+    {
+        Last = last;
+        HasMore = hasMore;
+    }
+
+    [JsonPropertyName("last")] public string Last { get; }
+    [JsonPropertyName("hasMore")] public bool HasMore { get; }
 }

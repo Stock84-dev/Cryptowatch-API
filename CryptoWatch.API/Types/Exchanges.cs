@@ -2,18 +2,36 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct Exchanges
+public readonly struct Exchanges
 {
-    [JsonPropertyName("result")] public List<ResultCollection> Result { get; set; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
-
-    public struct ResultCollection
+    [JsonConstructor]
+    public Exchanges(List<ResultCollection> result, Cursor cursor, Allowance allowance)
     {
-        [JsonPropertyName("id")] public uint Id { get; set; }
-        [JsonPropertyName("symbol")] public string Symbol { get; set; }
-        [JsonPropertyName("name")] public string Name { get; set; }
-        [JsonPropertyName("route")] public string Route { get; set; }
-        [JsonPropertyName("active")] public bool Active { get; set; }
+        Result = result;
+        Cursor = cursor;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public List<ResultCollection> Result { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
+
+    public readonly struct ResultCollection
+    {
+        [JsonConstructor]
+        public ResultCollection(uint id, string symbol, string name, string route, bool active)
+        {
+            Id = id;
+            Symbol = symbol;
+            Name = name;
+            Route = route;
+            Active = active;
+        }
+
+        [JsonPropertyName("id")] public uint Id { get; }
+        [JsonPropertyName("symbol")] public string Symbol { get; }
+        [JsonPropertyName("name")] public string Name { get; }
+        [JsonPropertyName("route")] public string Route { get; }
+        [JsonPropertyName("active")] public bool Active { get; }
     }
 }

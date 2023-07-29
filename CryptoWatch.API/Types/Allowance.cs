@@ -4,8 +4,17 @@ namespace CryptoWatch.API.Types;
 
 public struct Allowance
 {
-    [JsonPropertyName("cost")] public decimal Cost { get; set; }
-    [JsonPropertyName("remaining")] public decimal Remaining { get; set; }
-    [JsonPropertyName("remainingPaid")] public ulong RemainingPaid { get; set; }
-    [JsonPropertyName("upgrade")] public string Upgrade { get; set; }
+    [JsonConstructor]
+    public Allowance(decimal cost, decimal remaining, ulong remainingPaid, string upgrade)
+    {
+        Cost = cost;
+        Remaining = remaining;
+        RemainingPaid = remainingPaid;
+        Upgrade = upgrade;
+    }
+
+    [JsonPropertyName("cost")] public decimal Cost { get; }
+    [JsonPropertyName("remaining")] public decimal Remaining { get; }
+    [JsonPropertyName("remainingPaid")] public ulong RemainingPaid { get; }
+    [JsonPropertyName("upgrade")] public string Upgrade { get; }
 }

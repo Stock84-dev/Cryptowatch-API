@@ -1,11 +1,18 @@
-using System.Dynamic;
 using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct MarketPrices
+public readonly struct MarketPrices
 {
-    [JsonPropertyName("result")] public ExpandoObject Result { get; set; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
+    [JsonConstructor]
+    public MarketPrices(Dictionary<string, decimal> result, Cursor cursor, Allowance allowance)
+    {
+        Result = result;
+        Cursor = cursor;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public Dictionary<string, decimal> Result { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 }

@@ -2,17 +2,34 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct MarketPairDetail
+public readonly struct MarketPairDetail
 {
-    [JsonPropertyName("result")] public Details Result { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
-
-    public struct Details
+    [JsonConstructor]
+    public MarketPairDetail(Details result, Allowance allowance)
     {
-        [JsonPropertyName("id")] public int Id { get; set; }
-        [JsonPropertyName("exchange")] public string Exchange { get; set; }
-        [JsonPropertyName("pair")] public string Pair { get; set; }
-        [JsonPropertyName("active")] public bool Active { get; set; }
-        [JsonPropertyName("routes")] public Routes Routes { get; set; }
+        Result = result;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public Details Result { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
+
+    public readonly struct Details
+    {
+        [JsonConstructor]
+        public Details(int id, string exchange, string pair, bool active, Routes routes)
+        {
+            Id = id;
+            Exchange = exchange;
+            Pair = pair;
+            Active = active;
+            Routes = routes;
+        }
+
+        [JsonPropertyName("id")] public int Id { get; }
+        [JsonPropertyName("exchange")] public string Exchange { get; }
+        [JsonPropertyName("pair")] public string Pair { get; }
+        [JsonPropertyName("active")] public bool Active { get; }
+        [JsonPropertyName("routes")] public Routes Routes { get; }
     }
 }

@@ -55,33 +55,33 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<MostRecentTrades>($"{Route}/{exchange}/{pair}/trades");
 
-    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair, uint since) =>
+    public Task<MostRecentTrades> TradesAsync(string exchange, string pair, uint since) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}");
+            .GetFromJsonAsync<MostRecentTrades>($"{Route}/{exchange}/{pair}/trades?since={since}");
 
-    public Task<HttpResponseMessage> TradesAsync(string exchange, string pair, int since, uint limit) =>
+    public Task<MostRecentTrades> TradesAsync(string exchange, string pair, int since, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/trades?since={since}&limit={limit}");
+            .GetFromJsonAsync<MostRecentTrades>($"{Route}/{exchange}/{pair}/trades?since={since}&limit={limit}");
 
-    public Task<HttpResponseMessage> SummaryAsync(string exchange, string pair) =>
+    public Task<Summary> SummaryAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/summary");
+            .GetFromJsonAsync<Summary>($"{Route}/{exchange}/{pair}/summary");
 
-    public Task<HttpResponseMessage> SummariesAsync() =>
+    public Task<Summaries> SummariesAsync() =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/summaries");
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries");
 
-    public Task<HttpResponseMessage> SummariesAsync(string keyBy) =>
+    public Task<Summaries> SummariesAsync(string keyBy) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/summaries?keyBy={keyBy}");
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries?keyBy={keyBy}");
 
-    public Task<HttpResponseMessage> SummariesAsync(string keyBy, string cursor) =>
+    public Task<Summaries> SummariesAsync(string keyBy, string cursor) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}");
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}");
 
-    public Task<HttpResponseMessage> SummariesAsync(string keyBy, string cursor, uint limit) =>
+    public Task<Summaries> SummariesAsync(string keyBy, string cursor, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}&limit={limit}");
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}&limit={limit}");
 
     public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()

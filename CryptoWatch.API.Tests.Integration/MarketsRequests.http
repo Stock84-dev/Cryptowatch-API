@@ -27,3 +27,18 @@ GET https://api.cryptowat.ch/markets/prices?cursor=BDj0fwwHBUM7Rz4YNJvyhM1vMO5Py
 
 ### Detail btcusd trades in kraken snapshot
 GET https://api.cryptowat.ch/markets/kraken/btcusd/trades
+
+### Detail ethbtc trades in kraken snapshot from timestamp
+GET https://api.cryptowat.ch/markets/kraken/ethbtc/trades?since=1690337054
+
+### Detail ethbtc trades in kraken snapshot from timestamp with limit of 3
+GET https://api.cryptowat.ch/markets/kraken/ethusd/trades?since=1690337054&limit=5
+
+### Detail btcusd summary in kraken snapshot
+GET https://api.cryptowat.ch/markets/kraken/btcusd/summary
+
+### Detail all kraken sumaries
+GET https://api.cryptowat.ch/markets/summaries
+
+### Detail all kraken sumaries
+GET https://api.cryptowat.ch/markets/summaries?keyBy=zonda:zecusdt

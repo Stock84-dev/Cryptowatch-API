@@ -2,11 +2,21 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct Base
+public readonly struct Base
 {
-    [JsonPropertyName("id")] public int Id { get; set; }
-    [JsonPropertyName("route")] public string Route { get; set; }
-    [JsonPropertyName("symbol")] public string Symbol { get; set; }
-    [JsonPropertyName("name")] public string Name { get; set; }
-    [JsonPropertyName("fiat")] public bool Fiat { get; set; }
+    [JsonConstructor]
+    public Base(int id, string route, string symbol, string name, bool fiat)
+    {
+        Id = id;
+        Route = route;
+        Symbol = symbol;
+        Name = name;
+        Fiat = fiat;
+    }
+
+    [JsonPropertyName("id")] public int Id { get; }
+    [JsonPropertyName("route")] public string Route { get; }
+    [JsonPropertyName("symbol")] public string Symbol { get; }
+    [JsonPropertyName("name")] public string Name { get; }
+    [JsonPropertyName("fiat")] public bool Fiat { get; }
 }

@@ -252,7 +252,47 @@ public class CryptoWatchServerApi : IDisposable
                 .WithPath($"{MarketsRoute}/kraken/btcusd/trades"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenMostRecentTrades)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenMostRecentTradesResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/trades")
+                .WithParam("since", "1690337054"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.EthUsdKrakenMostRecentTradesFromCursorResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampAndLimitRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/trades")
+                .WithParam("since", "1690337054")
+                .WithParam("limit", "5"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses
+                    .EthUsdKrakenMostRecentTradesWithTimestampAndLimitResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketPairSummaryRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/summary"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenSummaryResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAllMarketsSummariesRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.AllMarketsSummariesResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>

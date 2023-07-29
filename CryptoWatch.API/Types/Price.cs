@@ -1,9 +1,20 @@
+using System.Text.Json.Serialization;
+
 namespace CryptoWatch.API.Types;
 
-public struct Price
+public readonly struct Price
 {
-    public double last { get; set; }
-    public double high { get; set; }
-    public double low { get; set; }
-    public Change change { get; set; }
+    [JsonConstructor]
+    public Price(double last, double high, double low, Change change)
+    {
+        Last = last;
+        High = high;
+        Low = low;
+        Change = change;
+    }
+
+    [JsonPropertyName("last")] public double Last { get; }
+    [JsonPropertyName("high")] public double High { get; }
+    [JsonPropertyName("low")] public double Low { get; }
+    [JsonPropertyName("change")] public Change Change { get; }
 }

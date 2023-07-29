@@ -2,7 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct Route
+public readonly struct Route
 {
-    [JsonPropertyName("markets")] public string Markets { get; set; }
+    [JsonConstructor]
+    public Route(string markets) => Markets = markets;
+
+    [JsonPropertyName("markets")] public string Markets { get; }
 }

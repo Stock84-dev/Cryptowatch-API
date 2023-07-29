@@ -2,18 +2,43 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct PairDetails
+public readonly struct PairDetails
 {
-    [JsonPropertyName("result")] public ResultCollection Result { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
-
-    public struct ResultCollection
+    [JsonConstructor]
+    public PairDetails(ResultCollection result, Allowance allowance)
     {
-        [JsonPropertyName("id")] public int id { get; set; }
-        [JsonPropertyName("symbol")] public string symbol { get; set; }
-        [JsonPropertyName("base")] public Base basePair { get; set; }
-        [JsonPropertyName("quote")] public Quote quotePair { get; set; }
-        public string route { get; set; }
-        public List<MarketDetails> markets { get; set; }
+        Result = result;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public ResultCollection Result { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
+
+    public readonly struct ResultCollection
+    {
+        [JsonConstructor]
+        public ResultCollection(
+            int id,
+            string symbol,
+            Base basePair,
+            Quote quotePair,
+            string route,
+            List<MarketDetails> markets
+        )
+        {
+            this.id = id;
+            this.symbol = symbol;
+            this.basePair = basePair;
+            this.quotePair = quotePair;
+            this.route = route;
+            this.markets = markets;
+        }
+
+        [JsonPropertyName("id")] public int id { get; }
+        [JsonPropertyName("symbol")] public string symbol { get; }
+        [JsonPropertyName("base")] public Base basePair { get; }
+        [JsonPropertyName("quote")] public Quote quotePair { get; }
+        public string route { get; }
+        public List<MarketDetails> markets { get; }
     }
 }

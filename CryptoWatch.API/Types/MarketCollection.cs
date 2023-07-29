@@ -2,9 +2,17 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct MarketCollection
+public readonly struct MarketCollection
 {
-    [JsonPropertyName("result")] public List<MarketDetails> Result { get; set; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; set; }
-    [JsonPropertyName("allowance")] public Allowance Allowance { get; set; }
+    [JsonConstructor]
+    public MarketCollection(List<MarketDetails> result, Cursor cursor, Allowance allowance)
+    {
+        Result = result;
+        Cursor = cursor;
+        Allowance = allowance;
+    }
+
+    [JsonPropertyName("result")] public List<MarketDetails> Result { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 }

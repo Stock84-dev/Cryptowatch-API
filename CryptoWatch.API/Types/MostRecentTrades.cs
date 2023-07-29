@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace CryptoWatch.API.Types;
 
-public struct MostRecentTrades
+public readonly struct MostRecentTrades
 {
     [JsonInclude] [JsonPropertyName("result")]
-    public List<List<decimal>> Result;
+    public readonly List<List<decimal>> Result;
 
     [JsonConstructor]
     public MostRecentTrades(List<List<decimal>> result, Allowance allowance)

@@ -100,9 +100,33 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
             }
         }
         
-        internal static string BtcUsdKrakenMostRecentTrades {
+        internal static string BtcUsdKrakenMostRecentTradesResponse {
             get {
-                return ResourceManager.GetString("BtcUsdKrakenMostRecentTrades", resourceCulture);
+                return ResourceManager.GetString("BtcUsdKrakenMostRecentTradesResponse", resourceCulture);
+            }
+        }
+        
+        internal static string EthUsdKrakenMostRecentTradesFromCursorResponse {
+            get {
+                return ResourceManager.GetString("EthUsdKrakenMostRecentTradesFromCursorResponse", resourceCulture);
+            }
+        }
+        
+        internal static string EthUsdKrakenMostRecentTradesWithTimestampAndLimitResponse {
+            get {
+                return ResourceManager.GetString("EthUsdKrakenMostRecentTradesWithTimestampAndLimitResponse", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenSummaryResponse {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenSummaryResponse", resourceCulture);
+            }
+        }
+        
+        internal static string AllMarketsSummariesResponse {
+            get {
+                return ResourceManager.GetString("AllMarketsSummariesResponse", resourceCulture);
             }
         }
     }
