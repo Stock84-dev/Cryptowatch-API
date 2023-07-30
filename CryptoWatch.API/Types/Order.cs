@@ -1,13 +1,16 @@
+using System.Text.Json.Serialization;
+
 namespace CryptoWatch.API.Types;
 
-public struct Order
+public readonly struct Order
 {
-    public double amount;
-    public double price;
-
+    [JsonConstructor]
     public Order(double price, double amount)
     {
-        this.price = price;
-        this.amount = amount;
+        Price = price;
+        Amount = amount;
     }
+
+    public double Amount { get; }
+    public double Price { get; }
 }

@@ -349,6 +349,82 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MarketsUnauthenticatedMockedResponses.MarketsSummariesByIdFromCursorWithLimitOf3Response)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithLimitOf3RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("limit", "3"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookWithLimitOf3Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("depth", "60000"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookWithDepthOf60_000Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000AndLimitOf7RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("depth", "60000")
+                .WithParam("limit", "7"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses
+                    .BtcUsdKrakenOrderBookWithDepthOf60_000AndLimitOf7Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("span", "0.875"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookWithSpanOf0_875Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("span", "0.875")
+                .WithParam("depth", "13000"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses
+                    .BtcUsdKrakenOrderBookWithSpanOfDot875AndDepthOf13_000Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13AndLimitOf11_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook")
+                .WithParam("span", "0.875")
+                .WithParam("depth", "13000")
+                .WithParam("limit", "11"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses
+                    .BtcUsdKrakenOrderBookWithDepth13_000AndSpanOfDot875AndLimitOf11Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()

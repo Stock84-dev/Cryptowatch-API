@@ -1046,4 +1046,307 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsSummaries.Cursor.Last.Should()
             .Be("KAfnAmma0L8uTRua-a0hBPAEasjMlP_3ervpj3oT5DbsGaXcdodYwksVi7PkAw");
     }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBook_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookRestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(1_000)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29997, 0.00108198 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(1_000)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 28891.599999999999, 0.0074885500000000001 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_187_578);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithLimitOf3_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const uint limit = 3;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithLimitOf3RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, limit);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount((int)limit)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29375.599999999999, 0.18446777 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount((int)limit)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29374.700000000001, 0.087210889999999999 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_194_781);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithDepthOf60_000_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const double depth = 60_000;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, depth);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(1_000)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29326.200000000001, 0.010672289999999999 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(1_000)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 28636.5, 0.0047247399999999998 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_237_848);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithDepthOf60_000AndLimitOf7_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const double depth = 60_000;
+        const uint limit = 7;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000AndLimitOf7RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, depth, limit);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount((int)limit)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29193.099999999999, 3.4254742600000001 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount((int)limit)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29179, 0.00396 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_239_179);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithSpanOfDot875_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const decimal span = 0.875M;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, span);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(195)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_250.5, 10.256263369999999 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(249)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 28_976.900000000001, 0.0076563000000000004 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_241_204);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithSpanOfDot875AndLimitOf5_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const decimal span = 0.875M;
+        const uint limit = 5;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, span, limit);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(195)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_250.5, 10.256263369999999 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(249)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 28_976.900000000001, 0.0076563000000000004 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_241_204);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookWithSpanOfDot875AndDepthOf13_000_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const double depth = 13_000;
+        const decimal span = 0.875M;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13_000RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, depth, span);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(204)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_283.099999999999, 4.0499999999999998 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(244)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_033.400000000001, 0.0001 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_246_239);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_KrakenBtcUsdOrderBookWithSpanOfDot875AndDepthOf13_000AndLimitOf11_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const double depth = 13_000;
+        const decimal span = 0.875M;
+        const uint limit = 11;
+        _cryptoWatchServer
+            .SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13AndLimitOf11_000RestEndpoint();
+
+        var krakenBtcUsdOrderBook =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookAsync(exchange, pair, depth, span,
+                limit);
+
+        krakenBtcUsdOrderBook.Should()
+            .BeOfType<OrderBook>();
+        krakenBtcUsdOrderBook.Result.Asks.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(11)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_157.700000000001, 0.0051061199999999996 }));
+        krakenBtcUsdOrderBook.Result.Bids.Should()
+            .NotBeEmpty()
+            .And
+            .HaveCount(11)
+            .And
+            .Contain(x => x.SequenceEqual(new[] { 29_154.099999999999, 0.72060049000000004 }));
+        krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
+            .Be(28_247_929);
+        krakenBtcUsdOrderBook.Allowance.Cost.Should()
+            .Be(0.01M);
+        krakenBtcUsdOrderBook.Allowance.Remaining.Should()
+            .Be(9.99M);
+        krakenBtcUsdOrderBook.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
 }

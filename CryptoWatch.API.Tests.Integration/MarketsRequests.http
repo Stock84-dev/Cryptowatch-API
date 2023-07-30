@@ -60,3 +60,27 @@ GET https://api.cryptowat.ch/markets/summaries?keyBy=id&
 ### Detail sumaries by key from cursor with limit of 3
 GET https://api.cryptowat.ch/markets/summaries?keyBy=id&
     cursor=gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg&limit=3
+
+### Detail orderbook in kraken of btcusd snapshot
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook
+
+### Detail orderbook in kraken of btcusd snapshot with limit of 3
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?limit=3
+
+### Detail orderbook in kraken of btcusd snapshot with depth of 60_000
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?depth=60000
+
+### Detail orderbook in kraken of btcusd snapshot with depth of 60_000 and limit of 7
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?depth=60000&limit=7
+
+### Detail orderbook in kraken of btcusd snapshot with span of 0.875
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875
+
+### Detail orderbook in kraken of btcusd snapshot with span of 0.875 and limit of 5
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875&limit=5
+
+### Detail orderbook in kraken of btcusd snapshot with span of 0.875 and depth of 13_000
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875&depth=13000
+
+### Detail orderbook in kraken of btcusd snapshot with span of 0.875 and depth of 13_000 and limit of 11
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875&depth=13000&limit=11

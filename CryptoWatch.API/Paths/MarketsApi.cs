@@ -91,31 +91,35 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Summaries>($"{Route}/summaries?keyBy={keyBy}&cursor={cursor}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, uint limit) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, double depth) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&limit={limit}");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?depth={depth}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, decimal span) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, double depth, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?span={span}");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, decimal span, uint limit) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, decimal span) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?span={span}&limit={limit}");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?span={span}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(string exchange, string pair, double depth, decimal span) =>
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, decimal span, uint limit) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}");
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?span={span}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookAsync(
+    public Task<OrderBook> OrderBookAsync(string exchange, string pair, double depth, decimal span) =>
+        _httpClientFactory.CreateClient()
+            .GetFromJsonAsync<OrderBook>($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}");
+
+    public Task<OrderBook> OrderBookAsync(
         string exchange,
         string pair,
         double depth,
@@ -123,7 +127,8 @@ public readonly struct MarketsApi
         uint limit
     ) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}&limit={limit}");
+            .GetFromJsonAsync<
+                OrderBook>($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}&limit={limit}");
 
     public Task<HttpResponseMessage> OrderBookLiquidityAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()

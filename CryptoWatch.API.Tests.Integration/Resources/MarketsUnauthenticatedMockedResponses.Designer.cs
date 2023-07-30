@@ -159,5 +159,47 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("MarketsSummariesFromCursorWithLimitOf3Response", resourceCulture);
             }
         }
+        
+        internal static string BtcUsdKrakenOrderBookResponse {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookResponse", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithLimitOf3Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithLimitOf3Response", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithDepthOf60_000Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithDepthOf60_000Response", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithDepthOf60_000AndLimitOf7Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithDepthOf60_000AndLimitOf7Response", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithSpanOf0_875Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithSpanOf0.875Response", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithSpanOfDot875AndDepthOf13_000Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithSpanOfDot875AndDepthOf13_000Response", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookWithDepth13_000AndSpanOfDot875AndLimitOf11Response {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookWithDepth13_000AndSpanOfDot875AndLimitOf11Response", resourceCulture);
+            }
+        }
     }
 }
