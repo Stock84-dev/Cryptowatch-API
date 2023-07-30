@@ -295,6 +295,60 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MarketsUnauthenticatedMockedResponses.AllMarketsSummariesResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedMarketsSummariesWithLimitOf3RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries")
+                .WithParam("limit", "3"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsSummariesWithLimitOf3Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedMarketsSummariesFromCursorWithLimitOf3RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries")
+                .WithParam("cursor", "jYWBofYi7AbqxVQyHC3GQoguYnxKEL2vjPxTCJ3SAZEcXdzN6HDnSw")
+                .WithParam("limit", "3"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsSummariesFromCursorWithLimitOf3Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAllMarketsSummariesByIdRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries")
+                .WithParam("keyBy", "id"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.AllMarketsSummariesByIdResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAllMarketsSummariesByIdFromCursorRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries")
+                .WithParam("keyBy", "id")
+                .WithParam("cursor", "gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsSummariesByIdFromCursorResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedAllMarketsSummariesByIdFromCursorWithLimitOf3RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/summaries")
+                .WithParam("keyBy", "id")
+                .WithParam("cursor", "gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg")
+                .WithParam("limit", "3"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.MarketsSummariesByIdFromCursorWithLimitOf3Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()

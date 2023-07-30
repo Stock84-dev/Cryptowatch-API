@@ -129,5 +129,35 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("AllMarketsSummariesResponse", resourceCulture);
             }
         }
+        
+        internal static string AllMarketsSummariesByIdResponse {
+            get {
+                return ResourceManager.GetString("AllMarketsSummariesByIdResponse", resourceCulture);
+            }
+        }
+        
+        internal static string MarketsSummariesByIdFromCursorResponse {
+            get {
+                return ResourceManager.GetString("MarketsSummariesByIdFromCursorResponse", resourceCulture);
+            }
+        }
+        
+        internal static string MarketsSummariesByIdFromCursorWithLimitOf3Response {
+            get {
+                return ResourceManager.GetString("MarketsSummariesByIdFromCursorWithLimitOf3Response", resourceCulture);
+            }
+        }
+        
+        internal static string MarketsSummariesWithLimitOf3Response {
+            get {
+                return ResourceManager.GetString("MarketsSummariesWithLimitOf3Response", resourceCulture);
+            }
+        }
+        
+        internal static string MarketsSummariesFromCursorWithLimitOf3Response {
+            get {
+                return ResourceManager.GetString("MarketsSummariesFromCursorWithLimitOf3Response", resourceCulture);
+            }
+        }
     }
 }

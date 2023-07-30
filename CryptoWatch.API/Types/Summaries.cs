@@ -5,14 +5,16 @@ namespace CryptoWatch.API.Types;
 public readonly struct Summaries
 {
     [JsonConstructor]
-    public Summaries(Dictionary<string, ResultDetail> result, Allowance allowance)
+    public Summaries(Dictionary<string, ResultDetail> result, Allowance allowance, Cursor cursor)
     {
         Result = result;
         Allowance = allowance;
+        Cursor = cursor;
     }
 
     [JsonPropertyName("result")] public Dictionary<string, ResultDetail> Result { get; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
 
     public readonly struct ResultDetail
     {

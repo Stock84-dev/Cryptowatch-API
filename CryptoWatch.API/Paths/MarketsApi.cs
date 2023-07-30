@@ -71,6 +71,14 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Summaries>($"{Route}/summaries");
 
+    public Task<Summaries> SummariesAsync(uint limit) =>
+        _httpClientFactory.CreateClient()
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries?limit={limit}");
+
+    public Task<Summaries> SummariesAsync(string cursor, uint limit) =>
+        _httpClientFactory.CreateClient()
+            .GetFromJsonAsync<Summaries>($"{Route}/summaries?cursor={cursor}&limit={limit}");
+
     public Task<Summaries> SummariesAsync(string keyBy) =>
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<Summaries>($"{Route}/summaries?keyBy={keyBy}");

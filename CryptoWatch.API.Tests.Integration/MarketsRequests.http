@@ -37,8 +37,26 @@ GET https://api.cryptowat.ch/markets/kraken/ethusd/trades?since=1690337054&limit
 ### Detail btcusd summary in kraken snapshot
 GET https://api.cryptowat.ch/markets/kraken/btcusd/summary
 
-### Detail all kraken sumaries
+### Detail all sumaries
 GET https://api.cryptowat.ch/markets/summaries
 
-### Detail all kraken sumaries
-GET https://api.cryptowat.ch/markets/summaries?keyBy=zonda:zecusdt
+### Detail sumaries with limit of 3
+GET https://api.cryptowat.ch/markets/summaries?limit=3
+
+### Detail sumaries from cursor with limit of 3
+GET https://api.cryptowat.ch/markets/summaries?cursor=jYWBofYi7AbqxVQyHC3GQoguYnxKEL2vjPxTCJ3SAZEcXdzN6HDnSw&limit=3
+
+### Detail sumaries from cursor with limit of 3
+GET https://api.cryptowat.ch/markets/summaries?cursor=gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg&
+    limit=3
+
+### Detail all sumaries by key
+GET https://api.cryptowat.ch/markets/summaries?keyBy=id
+
+### Detail sumaries by key from cursor
+GET https://api.cryptowat.ch/markets/summaries?keyBy=id&
+    cursor=gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg
+
+### Detail sumaries by key from cursor with limit of 3
+GET https://api.cryptowat.ch/markets/summaries?keyBy=id&
+    cursor=gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg&limit=3

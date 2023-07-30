@@ -671,6 +671,14 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeUsd))
             .Which.Should()
             .NotBeWritable();
+        typeof(Summaries).Should()
+            .HaveProperty<Allowance>(nameof(Summaries.Allowance))
+            .Which.Should()
+            .NotBeWritable();
+        typeof(Summaries).Should()
+            .HaveProperty<Cursor>(nameof(Summaries.Cursor))
+            .Which.Should()
+            .NotBeWritable();
     }
 
     [Fact]
@@ -686,8 +694,10 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
             .Which.Should()
             .HaveCount(13_928);
-        allMarketsSummaries.Result.Should().ContainKey("binance-us:icpusdt");
-        allMarketsSummaries.Result.First().Key.Should()
+        allMarketsSummaries.Result.Should()
+            .ContainKey("binance-us:icpusdt");
+        allMarketsSummaries.Result.First()
+            .Key.Should()
             .Be("binance-us:1inchusdt");
         allMarketsSummaries.Result.First()
             .Value.Price.Change.Absolute.Should()
@@ -704,20 +714,336 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         allMarketsSummaries.Result.First()
             .Value.Price.Low.Should()
             .Be(0.29699999999999999);
-        allMarketsSummaries.Result.First().Value.Volume.Should()
+        allMarketsSummaries.Result.First()
+            .Value.Volume.Should()
             .Be(1_440.4999999999627);
         allMarketsSummaries.Result.First()
             .Value.VolumeBase.Should()
             .Be(1_440.4999999999627);
-        allMarketsSummaries.Result.First().Value.VolumeQuote.Should()
+        allMarketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
             .Be(437.85069999994812);
         allMarketsSummaries.Result.First()
             .Value.VolumeUsd.Should()
             .Be(437.86940701357082);
-        allMarketsSummaries.Allowance.Cost.Should().Be(0.015M);
-        allMarketsSummaries.Allowance.Remaining.Should().Be(9.985M);
-        allMarketsSummaries.Allowance.RemainingPaid.Should().Be(0);
+        allMarketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
         allMarketsSummaries.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        allMarketsSummaries.Cursor.HasMore.Should()
+            .BeFalse();
+        allMarketsSummaries.Cursor.Last.Should()
+            .Be("cl8nR6LCLsALNQGrz_1HbTbWfyBwkYhLWNUnY-faI5bCLr5QWC193gRm-1SmOg");
+    }
+
+    [Fact]
+    public async Task Asserts_MarketsSummariesWithLimitOf3_JsonResponseDeserialization()
+    {
+        const int limit = 3;
+        _cryptoWatchServer.SetupUnauthenticatedMarketsSummariesWithLimitOf3RestEndpoint();
+
+        var allMarketsSummaries = await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync(limit);
+
+        allMarketsSummaries.Should()
+            .BeOfType<Summaries>();
+        allMarketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(3);
+        allMarketsSummaries.Result.Should()
+            .ContainKey("bitfinex:ltcbtc");
+        allMarketsSummaries.Result.First()
+            .Key.Should()
+            .Be("bitfinex:btcusd");
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(-53);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(-0.0018020468532181837);
+        allMarketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(29_444);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(29_358);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(29_305);
+        allMarketsSummaries.Result.First()
+            .Value.Volume.Should()
+            .Be(149.79487410440294);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(149.79487410440294);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
+            .Be(4_397_565.4728781907);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(4_397_565.4728781907);
+        allMarketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
+        allMarketsSummaries.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        allMarketsSummaries.Cursor.HasMore.Should()
+            .BeTrue();
+        allMarketsSummaries.Cursor.Last.Should()
+            .Be("jYWBofYi7AbqxVQyHC3GQoguYnxKEL2vjPxTCJ3SAZEcXdzN6HDnSw");
+    }
+
+    [Fact]
+    public async Task Asserts_MarketsSummariesFromCursorWithLimitOf3_JsonResponseDeserialization()
+    {
+        const int limit = 3;
+        const string cursor = "jYWBofYi7AbqxVQyHC3GQoguYnxKEL2vjPxTCJ3SAZEcXdzN6HDnSw";
+        _cryptoWatchServer.SetupUnauthenticatedMarketsSummariesFromCursorWithLimitOf3RestEndpoint();
+
+        var allMarketsSummaries =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync(cursor, limit);
+
+        allMarketsSummaries.Should()
+            .BeOfType<Summaries>();
+        allMarketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(3);
+        allMarketsSummaries.Result.Should()
+            .ContainKey("bitfinex:ethbtc");
+        allMarketsSummaries.Result.First()
+            .Key.Should()
+            .Be("bitfinex:etcbtc");
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(4.8099999999999489E-06);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(0.0076513163127335544);
+        allMarketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(0.00063540999999999999);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(0.00063345999999999997);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(0.00062785);
+        allMarketsSummaries.Result.First()
+            .Value.Volume.Should()
+            .Be(498.58893223001542);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(498.58893223001542);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
+            .Be(0.31553935055387394);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(9_263.4347054919381);
+        allMarketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
+        allMarketsSummaries.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        allMarketsSummaries.Cursor.HasMore.Should()
+            .BeTrue();
+        allMarketsSummaries.Cursor.Last.Should()
+            .Be("U2a6cHlYunhmlcObd2lcQtZUg_jW9jLedi5oAY3v-6Xm7S4Y1rfPdQ");
+    }
+
+    [Fact]
+    public async Task Asserts_AllMarketsSummariesById_JsonResponseDeserialization()
+    {
+        const string keyBy = "id";
+        _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdRestEndpoint();
+
+        var allMarketsSummaries = await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync(keyBy);
+
+        allMarketsSummaries.Should()
+            .BeOfType<Summaries>();
+        allMarketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(13_908);
+        allMarketsSummaries.Result.Should()
+            .ContainKey("3147609");
+        allMarketsSummaries.Result.First()
+            .Key.Should()
+            .Be("1");
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(-21);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(-0.0007143100105445764);
+        allMarketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(29_444);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(29_378);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(29_305);
+        allMarketsSummaries.Result.First()
+            .Value.Volume.Should()
+            .Be(151.92321649440277);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(151.92321649440277);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
+            .Be(4_460_209.3021574402);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(4_460_209.3021574402);
+        allMarketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
+        allMarketsSummaries.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        allMarketsSummaries.Cursor.HasMore.Should()
+            .BeFalse();
+        allMarketsSummaries.Cursor.Last.Should()
+            .Be("N8Hl9uDjJ8EzouTNEg8UjpbjB4sKdfmdvAlDewqbD8ZX-qCANbfM8kcTs7_p9w");
+    }
+
+    [Fact]
+    public async Task Asserts_AllMarketsSummariesByIdFromCursor_JsonResponseDeserialization()
+    {
+        const string keyBy = "id";
+        const string cursor = "gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg";
+        _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdFromCursorRestEndpoint();
+
+        var allMarketsSummaries =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync(keyBy, cursor);
+
+        allMarketsSummaries.Should()
+            .BeOfType<Summaries>();
+        allMarketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(906);
+        allMarketsSummaries.Result.Should()
+            .ContainKey("4352733");
+        allMarketsSummaries.Result.First()
+            .Key.Should()
+            .Be("3763626");
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(0.088600000000000012);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(0.032721497950289918);
+        allMarketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(3.4790000000000001);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(2.7963);
+        allMarketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(2.6789000000000001);
+        allMarketsSummaries.Result.First()
+            .Value.Volume.Should()
+            .Be(1_813.4000000000426);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(1_813.4000000000426);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
+            .Be(5_868.8858699998536);
+        allMarketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(5_868.8858699998536);
+        allMarketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        allMarketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        allMarketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
+        allMarketsSummaries.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        allMarketsSummaries.Cursor.HasMore.Should()
+            .BeFalse();
+        allMarketsSummaries.Cursor.Last.Should()
+            .Be("5Wx-YozvuveC1ViauOeZDwoxb7eHxgCD9PKtzf90l4YdJbrWpQm5nXlGozpGaA");
+    }
+
+    [Fact]
+    public async Task Asserts_AllMarketsSummariesByIdFromCursorWithLimit_JsonResponseDeserialization()
+    {
+        const string keyBy = "id";
+        const string cursor = "gCLPH49ToTXjmDnq2VyXCtu5HtSV__AiJU7XjdF1hAwu48pFj0_G70zdGrrKvg";
+        const int limit = 3;
+        _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdFromCursorWithLimitOf3RestEndpoint();
+
+        var marketsSummaries =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.SummariesAsync(keyBy, cursor, limit);
+
+        marketsSummaries.Should()
+            .BeOfType<Summaries>();
+        marketsSummaries.Result.Should()
+            .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
+            .Which.Should()
+            .HaveCount(3);
+        marketsSummaries.Result.Should()
+            .ContainKey("3763781");
+        marketsSummaries.Result.First()
+            .Key.Should()
+            .Be("3763626");
+        marketsSummaries.Result.First()
+            .Value.Price.Change.Absolute.Should()
+            .Be(0.085700000000000109);
+        marketsSummaries.Result.First()
+            .Value.Price.Change.Percentage.Should()
+            .Be(0.031662171648132453);
+        marketsSummaries.Result.First()
+            .Value.Price.High.Should()
+            .Be(3.4790000000000001);
+        marketsSummaries.Result.First()
+            .Value.Price.Last.Should()
+            .Be(2.7924000000000002);
+        marketsSummaries.Result.First()
+            .Value.Price.Low.Should()
+            .Be(2.6789000000000001);
+        marketsSummaries.Result.First()
+            .Value.Volume.Should()
+            .Be(1_813.2000000000428);
+        marketsSummaries.Result.First()
+            .Value.VolumeBase.Should()
+            .Be(1_813.2000000000428);
+        marketsSummaries.Result.First()
+            .Value.VolumeQuote.Should()
+            .Be(5_868.641839999852);
+        marketsSummaries.Result.First()
+            .Value.VolumeUsd.Should()
+            .Be(5_868.641839999852);
+        marketsSummaries.Allowance.Cost.Should()
+            .Be(0.015M);
+        marketsSummaries.Allowance.Remaining.Should()
+            .Be(9.985M);
+        marketsSummaries.Allowance.RemainingPaid.Should()
+            .Be(0);
+        marketsSummaries.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+        marketsSummaries.Cursor.HasMore.Should()
+            .BeTrue();
+        marketsSummaries.Cursor.Last.Should()
+            .Be("KAfnAmma0L8uTRua-a0hBPAEasjMlP_3ervpj3oT5DbsGaXcdodYwksVi7PkAw");
     }
 }
