@@ -425,6 +425,25 @@ public class CryptoWatchServerApi : IDisposable
                     .BtcUsdKrakenOrderBookWithDepth13_000AndSpanOfDot875AndLimitOf11Response)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookLiquidity_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook/liquidity"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookLiquidityResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOrderBookCalculator_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/orderbook/calculator")
+                .WithParam("amount", "3.7"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookCalculatorResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()

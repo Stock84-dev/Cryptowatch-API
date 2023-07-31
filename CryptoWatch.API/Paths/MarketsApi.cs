@@ -130,17 +130,13 @@ public readonly struct MarketsApi
             .GetFromJsonAsync<
                 OrderBook>($"{Route}/{exchange}/{pair}/orderbook?depth={depth}&span={span}&limit={limit}");
 
-    public Task<HttpResponseMessage> OrderBookLiquidityAsync(string exchange, string pair) =>
+    public Task<OrderBookLiquidity> OrderBookLiquidityAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook/liquidity");
+            .GetFromJsonAsync<OrderBookLiquidity>($"{Route}/{exchange}/{pair}/orderbook/liquidity");
 
-    public Task<HttpResponseMessage> OrderBookCalculatorAsync(string exchange, string pair) =>
+    public Task<OrderBookCalculator> OrderBookCalculatorAsync(string exchange, string pair, double amount) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook/calculator");
-
-    public Task<HttpResponseMessage> OrderBookCalculatorAsync(string exchange, string pair, decimal amount) =>
-        _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/orderbook/calculator?amount={amount}");
+            .GetFromJsonAsync<OrderBookCalculator>($"{Route}/{exchange}/{pair}/orderbook/calculator?amount={amount}");
 
     public Task<HttpResponseMessage> OHLCCandlesticksAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()

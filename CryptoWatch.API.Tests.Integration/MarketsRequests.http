@@ -84,3 +84,9 @@ GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875&depth=13
 
 ### Detail orderbook in kraken of btcusd snapshot with span of 0.875 and depth of 13_000 and limit of 11
 GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook?span=0.875&depth=13000&limit=11
+
+### Detail orderbook in kraken of btcusd liquidity snapshot
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook/liquidity
+
+### Detail orderbook in kraken of btcusd calculator snapshot
+GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook/calculator?amount=3.7

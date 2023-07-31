@@ -201,5 +201,17 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("BtcUsdKrakenOrderBookWithDepth13_000AndSpanOfDot875AndLimitOf11Response", resourceCulture);
             }
         }
+        
+        internal static string BtcUsdKrakenOrderBookLiquidityResponse {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookLiquidityResponse", resourceCulture);
+            }
+        }
+        
+        internal static string BtcUsdKrakenOrderBookCalculatorResponse {
+            get {
+                return ResourceManager.GetString("BtcUsdKrakenOrderBookCalculatorResponse", resourceCulture);
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ public readonly struct Exchanges
     }
 
     [JsonPropertyName("result")] public ResultDetails[] Result { get; }
-    [JsonPropertyName("cursor")] public Cursor Cursor { get; }
+    [JsonPropertyName("cursor")] public Cursor Cursor { get; } // TODO: add test
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
     public readonly struct ResultDetails

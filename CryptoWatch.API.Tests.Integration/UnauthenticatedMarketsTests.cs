@@ -1349,4 +1349,106 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         krakenBtcUsdOrderBook.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
     }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookLiquidity_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookLiquidity_000RestEndpoint();
+
+        var krakenBtcUsdOrderBookLiquidity =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OrderBookLiquidityAsync(exchange, pair);
+
+        krakenBtcUsdOrderBookLiquidity.Should()
+            .BeOfType<OrderBookLiquidity>();
+        krakenBtcUsdOrderBookLiquidity.Result.Should()
+            .BeOfType<OrderBookLiquidity.ResultDetails>();
+        krakenBtcUsdOrderBookLiquidity.Result.Asks.Should()
+            .BeOfType<Dictionary<string, Dictionary<int, double>>>()
+            .And.HaveCount(2)
+            .And.ContainKeys("base", "quote")
+            .And.Subject.Values.Should()
+            .Subject.SelectMany(x => x)
+            .Should()
+            .Contain(x => x.Key == 300 && Math.Abs(x.Value - 672.97948774999998) < 0.0000000001)
+            .And
+            .Contain(x => x.Key == 400 && Math.Abs(x.Value - 21_255_370.468907736) < 0.0000000001);
+        krakenBtcUsdOrderBookLiquidity.Result.Bids.Should()
+            .BeOfType<Dictionary<string, Dictionary<int, double>>>()
+            .And.HaveCount(2)
+            .And.ContainKeys("base", "quote")
+            .And.Subject.Values.Should()
+            .Subject.SelectMany(x => x)
+            .Should()
+            .Contain(x => x.Key == 300 && Math.Abs(x.Value - 518.01191123000001) < 0.0000000001)
+            .And
+            .Contain(x => x.Key == 400 && Math.Abs(x.Value - 19_399_484.588133283) < 0.0000000001);
+        krakenBtcUsdOrderBookLiquidity.Allowance.Cost.Should()
+            .Be(0.005M);
+        krakenBtcUsdOrderBookLiquidity.Allowance.Remaining.Should()
+            .Be(9.995M);
+        krakenBtcUsdOrderBookLiquidity.Allowance.RemainingPaid.Should()
+            .Be(0);
+        krakenBtcUsdOrderBookLiquidity.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOrderBookCalculator_JsonResponseDeserialization()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const double amount = 3.7;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookCalculator_000RestEndpoint();
+
+        var orderBookCalculatorAsync =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets
+                .OrderBookCalculatorAsync(exchange, pair, amount);
+
+        orderBookCalculatorAsync.Should()
+            .BeOfType<OrderBookCalculator>()
+            .Subject.Result.Should()
+            .BeOfType<OrderBookCalculator.ResultDetail>();
+        orderBookCalculatorAsync.Result.Buy.Should()
+            .BeOfType<OrderBookCalculator.BuyTransaction>();
+        orderBookCalculatorAsync.Result.Sell.Should()
+            .BeOfType<OrderBookCalculator.SellTransaction>();
+        orderBookCalculatorAsync.Result.Buy.AverageBps.Should()
+            .Be(1);
+        orderBookCalculatorAsync.Result.Buy.AverageDelta.Should()
+            .Be(3.8496747256756758);
+        orderBookCalculatorAsync.Result.Buy.AveragePrice.Should()
+            .Be(29_462.149674725675);
+        orderBookCalculatorAsync.Result.Buy.ReachDelta.Should()
+            .Be(5.9000000000000004);
+        orderBookCalculatorAsync.Result.Buy.ReachDeltaBps.Should()
+            .Be(2);
+        orderBookCalculatorAsync.Result.Buy.ReachPrice.Should()
+            .Be(29_464.200000000001);
+        orderBookCalculatorAsync.Result.Buy.Spend.Should()
+            .Be(109_009.953796485);
+        orderBookCalculatorAsync.Result.Sell.AverageBps.Should()
+            .Be(0);
+        orderBookCalculatorAsync.Result.Sell.AverageDelta.Should()
+            .Be(0);
+        orderBookCalculatorAsync.Result.Sell.AveragePrice.Should()
+            .Be(29458.200000000001);
+        orderBookCalculatorAsync.Result.Sell.ReachDelta.Should()
+            .Be(0);
+        orderBookCalculatorAsync.Result.Sell.ReachDeltaBps.Should()
+            .Be(0);
+        orderBookCalculatorAsync.Result.Sell.ReachPrice.Should()
+            .Be(29_458.200000000001);
+        orderBookCalculatorAsync.Result.Sell.Receive.Should()
+            .Be(108_995.34);
+        orderBookCalculatorAsync.Allowance.Cost.Should()
+            .Be(0.015M);
+        orderBookCalculatorAsync.Allowance.Remaining.Should()
+            .Be(9.985M);
+        orderBookCalculatorAsync.Allowance.RemainingPaid.Should()
+            .Be(0);
+        orderBookCalculatorAsync.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
 }
