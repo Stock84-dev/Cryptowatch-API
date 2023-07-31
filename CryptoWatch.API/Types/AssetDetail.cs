@@ -5,21 +5,21 @@ namespace CryptoWatch.API.Types;
 public readonly struct AssetDetail
 {
     [JsonConstructor]
-    public AssetDetail(ResultCollection result, Cursor cursor, Allowance allowance)
+    public AssetDetail(ResultDetails result, Cursor cursor, Allowance allowance)
     {
         Result = result;
         Cursor = cursor;
         Allowance = allowance;
     }
 
-    [JsonPropertyName("result")] public ResultCollection Result { get; }
+    [JsonPropertyName("result")] public ResultDetails Result { get; }
     [JsonPropertyName("cursor")] public Cursor Cursor { get; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
-    public readonly struct ResultCollection
+    public readonly struct ResultDetails
     {
         [JsonConstructor]
-        public ResultCollection(int id, string symbolId, string symbol, string name, bool fiat, Markets assetMarkets)
+        public ResultDetails(int id, string symbolId, string symbol, string name, bool fiat, Markets assetMarkets)
         {
             Id = id;
             SymbolId = symbolId;
@@ -40,14 +40,14 @@ public readonly struct AssetDetail
     public readonly struct Markets
     {
         [JsonConstructor]
-        public Markets(List<Bases> baseMarket, List<Bases> quoteMarket)
+        public Markets(Bases[] baseMarket, Bases[] quoteMarket)
         {
             BaseMarket = baseMarket;
             QuoteMarket = quoteMarket;
         }
 
-        [JsonPropertyName("base")] public List<Bases> BaseMarket { get; }
-        [JsonPropertyName("quote")] public List<Bases> QuoteMarket { get; }
+        [JsonPropertyName("base")] public Bases[] BaseMarket { get; }
+        [JsonPropertyName("quote")] public Bases[] QuoteMarket { get; }
     }
 
     public readonly struct Bases

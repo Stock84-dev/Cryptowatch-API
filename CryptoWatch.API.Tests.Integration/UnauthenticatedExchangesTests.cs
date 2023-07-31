@@ -38,7 +38,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
 
         exchangeDefaultListing.Result.Should()
-            .BeOfType<List<Exchanges.ResultCollection>>();
+            .BeOfType<List<Exchanges.ResultDetails>>();
         exchangeDefaultListing.Result.Should()
             .HaveCount(48);
         exchangeDefaultListing.Result.First()

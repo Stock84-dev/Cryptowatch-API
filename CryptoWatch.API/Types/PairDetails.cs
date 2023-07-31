@@ -5,40 +5,40 @@ namespace CryptoWatch.API.Types;
 public readonly struct PairDetails
 {
     [JsonConstructor]
-    public PairDetails(ResultCollection result, Allowance allowance)
+    public PairDetails(ResultDetails result, Allowance allowance)
     {
         Result = result;
         Allowance = allowance;
     }
 
-    [JsonPropertyName("result")] public ResultCollection Result { get; }
+    [JsonPropertyName("result")] public ResultDetails Result { get; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
-    public readonly struct ResultCollection
+    public readonly struct ResultDetails
     {
         [JsonConstructor]
-        public ResultCollection(
+        public ResultDetails(
             int id,
             string symbol,
             Base basePair,
             Quote quotePair,
             string route,
-            List<MarketDetails> markets
+            MarketDetails[] markets
         )
         {
-            this.id = id;
-            this.symbol = symbol;
-            this.basePair = basePair;
-            this.quotePair = quotePair;
-            this.route = route;
-            this.markets = markets;
+            Id = id;
+            Symbol = symbol;
+            BasePair = basePair;
+            QuotePair = quotePair;
+            Route = route;
+            Markets = markets;
         }
 
-        [JsonPropertyName("id")] public int id { get; }
-        [JsonPropertyName("symbol")] public string symbol { get; }
-        [JsonPropertyName("base")] public Base basePair { get; }
-        [JsonPropertyName("quote")] public Quote quotePair { get; }
-        public string route { get; }
-        public List<MarketDetails> markets { get; }
+        [JsonPropertyName("id")] public int Id { get; }
+        [JsonPropertyName("symbol")] public string Symbol { get; }
+        [JsonPropertyName("base")] public Base BasePair { get; }
+        [JsonPropertyName("quote")] public Quote QuotePair { get; }
+        public string Route { get; }
+        public MarketDetails[] Markets { get; }
     }
 }

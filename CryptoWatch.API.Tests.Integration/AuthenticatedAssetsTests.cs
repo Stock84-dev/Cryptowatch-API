@@ -43,7 +43,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultCollection>();
+            .BeOfType<AssetCollection.ResultDetails>();
         assetListing.Result.Should()
             .HaveCount(4845);
         assetListing.Result.First()
@@ -90,7 +90,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultCollection>();
+            .BeOfType<AssetCollection.ResultDetails>();
         assetListing.Result.Should()
             .HaveCount(5);
         assetListing.Result.First()
@@ -127,7 +127,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
         bitcoinAssetDetails.Result.Should()
-            .BeOfType<AssetDetail.ResultCollection>();
+            .BeOfType<AssetDetail.ResultDetails>();
         bitcoinAssetDetails.Result.Fiat.Should()
             .BeFalse();
         bitcoinAssetDetails.Result.Id.Should()
@@ -202,7 +202,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
         bitcoinAssetDetails.Result.Should()
-            .BeOfType<AssetDetail.ResultCollection>();
+            .BeOfType<AssetDetail.ResultDetails>();
         bitcoinAssetDetails.Result.Fiat.Should()
             .BeFalse();
         bitcoinAssetDetails.Result.Id.Should()

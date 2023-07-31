@@ -5,17 +5,21 @@ namespace CryptoWatch.API.Types;
 public readonly struct MostRecentTrades
 {
     [JsonInclude] [JsonPropertyName("result")]
-    public readonly List<List<decimal>> Result;
+    public readonly decimal[][] Result;
 
     [JsonConstructor]
-    public MostRecentTrades(List<List<decimal>> result, Allowance allowance)
+    public MostRecentTrades(decimal[][] result, Allowance allowance)
     {
         Result = result;
         Allowance = allowance;
     }
 
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
-    [JsonIgnore] public List<RecentTrade> RecentTrades => new(Result.Select(x => new RecentTrade(x)));
+
+    [JsonIgnore]
+    public RecentTrade[] RecentTrades => Result.Select(x => new RecentTrade(x))
+        .ToArray();
+
     [JsonIgnore] public RecentTrade this[int index] => new(Result[index]);
-    [JsonIgnore] public int Count => Result.Count;
+    [JsonIgnore] public int Count => Result.Length;
 }

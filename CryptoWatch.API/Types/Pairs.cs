@@ -5,21 +5,21 @@ namespace CryptoWatch.API.Types;
 public readonly struct Pairs
 {
     [JsonConstructor]
-    public Pairs(List<ResultCollection> result, Cursor cursor, Allowance allowance)
+    public Pairs(ResultDetails[] result, Cursor cursor, Allowance allowance)
     {
         Result = result;
         Cursor = cursor;
         Allowance = allowance;
     }
 
-    [JsonPropertyName("result")] public List<ResultCollection> Result { get; }
+    [JsonPropertyName("result")] public ResultDetails[] Result { get; }
     [JsonPropertyName("cursor")] public Cursor Cursor { get; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
-    public struct ResultCollection
+    public struct ResultDetails
     {
         [JsonConstructor]
-        public ResultCollection(
+        public ResultDetails(
             int id,
             string symbol,
             Base basePair,
