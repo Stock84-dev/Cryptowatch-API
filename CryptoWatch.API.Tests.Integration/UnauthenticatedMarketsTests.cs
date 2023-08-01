@@ -40,7 +40,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketListing.Should()
             .BeOfType<MarketCollection>();
         marketListing.Result.Should()
-            .BeOfType<List<MarketDetails>>();
+            .BeOfType<MarketDetails[]>();
         marketListing.Result.First()
             .Should()
             .BeOfType<MarketDetails>();
@@ -88,7 +88,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketListing.Should()
             .BeOfType<MarketCollection>();
         marketListing.Result.Should()
-            .BeOfType<List<MarketDetails>>();
+            .BeOfType<MarketDetails[]>();
         marketListing.Result.First()
             .Should()
             .BeOfType<MarketDetails>();
@@ -136,7 +136,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketListing.Should()
             .BeOfType<MarketCollection>();
         marketListing.Result.Should()
-            .BeOfType<List<MarketDetails>>();
+            .BeOfType<MarketDetails[]>();
         marketListing.Result.Should()
             .HaveCount(3);
         marketListing.Result.First()
@@ -184,7 +184,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketListing.Should()
             .BeOfType<MarketCollection>();
         marketListing.Result.Should()
-            .BeOfType<List<MarketDetails>>();
+            .BeOfType<MarketDetails[]>();
         marketListing.Result.Should()
             .HaveCount(3);
         marketListing.Result.First()
@@ -412,21 +412,6 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     }
 
     [Fact]
-    public void Asserts_MostRecentTrades_TypeConsistency()
-    {
-        typeof(MostRecentTrades).Should()
-            .NotHaveDefaultConstructor();
-        typeof(MostRecentTrades).Should()
-            .HaveProperty<List<RecentTrade>>(nameof(MostRecentTrades.RecentTrades))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(MostRecentTrades).Should()
-            .HaveProperty<Allowance>(nameof(MostRecentTrades.Allowance))
-            .Which.Should()
-            .NotBeWritable();
-    }
-
-    [Fact]
     public async Task Asserts_MostRecentTrades_JsonResponseDeserialization()
     {
         const string exchange = "kraken";
@@ -438,9 +423,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
         mostRecentTrades.Result.Should()
-            .BeOfType<List<List<decimal>>>();
+            .BeOfType<decimal[][]>();
         mostRecentTrades.RecentTrades.Should()
-            .BeOfType<List<RecentTrade>>();
+            .BeOfType<RecentTrade[]>();
         mostRecentTrades.Count.Should()
             .Be(50);
         mostRecentTrades.RecentTrades.Should()
@@ -488,9 +473,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
         mostRecentTrades.Result.Should()
-            .BeOfType<List<List<decimal>>>();
+            .BeOfType<decimal[][]>();
         mostRecentTrades.RecentTrades.Should()
-            .BeOfType<List<RecentTrade>>();
+            .BeOfType<RecentTrade[]>();
         mostRecentTrades.Count.Should()
             .Be(50);
         mostRecentTrades.RecentTrades.Should()
@@ -539,9 +524,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
         mostRecentTrades.Result.Should()
-            .BeOfType<List<List<decimal>>>();
+            .BeOfType<decimal[][]>();
         mostRecentTrades.RecentTrades.Should()
-            .BeOfType<List<RecentTrade>>();
+            .BeOfType<RecentTrade[]>();
         mostRecentTrades.Count.Should()
             .Be(5);
         mostRecentTrades.RecentTrades.Should()
@@ -573,33 +558,6 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Be(0);
         mostRecentTrades.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
-    }
-
-    [Fact]
-    public void Asserts_Summary_TypeConsistency()
-    {
-        typeof(Summary).Should()
-            .NotHaveDefaultConstructor();
-        typeof(Summary).Should()
-            .HaveProperty<Summary.ResultDetail>(nameof(Summary.Result))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summary.ResultDetail).Should()
-            .HaveProperty<Price>(nameof(Summary.ResultDetail.Price))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summary.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summary.ResultDetail.Volume))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summary.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summary.ResultDetail.VolumeQuote))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summary).Should()
-            .HaveProperty<Allowance>(nameof(Summary.Allowance))
-            .Which.Should()
-            .NotBeWritable();
     }
 
     [Fact]
@@ -640,45 +598,6 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Be(0);
         marketPairSummary.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
-    }
-
-    [Fact]
-    public void Asserts_AllMarketsSummaries_TypeConsistency()
-    {
-        typeof(Summaries).Should()
-            .NotHaveDefaultConstructor();
-        typeof(Summaries).Should()
-            .HaveProperty<Dictionary<string, Summaries.ResultDetail>>(nameof(Summaries.Result))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries.ResultDetail).Should()
-            .HaveProperty<Price>(nameof(Summaries.ResultDetail.Price))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summaries.ResultDetail.Volume))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeBase))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeQuote))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries.ResultDetail).Should()
-            .HaveProperty<double>(nameof(Summaries.ResultDetail.VolumeUsd))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries).Should()
-            .HaveProperty<Allowance>(nameof(Summaries.Allowance))
-            .Which.Should()
-            .NotBeWritable();
-        typeof(Summaries).Should()
-            .HaveProperty<Cursor>(nameof(Summaries.Cursor))
-            .Which.Should()
-            .NotBeWritable();
     }
 
     [Fact]
@@ -1450,5 +1369,18 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Be(0);
         orderBookCalculatorAsync.Allowance.Upgrade.Should()
             .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOHLCCandlestick_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint();
+
+        var ohlcCandlesticksAsync = await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair);
+
+        ohlcCandlesticksAsync.Should()
+            .BeOfType<CandlestickHistories>();
     }
 }

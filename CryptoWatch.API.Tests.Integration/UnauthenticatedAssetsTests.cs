@@ -42,7 +42,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultDetails>();
+            .BeOfType<Asset>();
         assetListing.Result.Should()
             .HaveCount(4842);
         assetListing.Result.First()
@@ -89,7 +89,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultDetails>();
+            .BeOfType<Asset>();
         assetListing.Result.Should()
             .HaveCount(5);
         assetListing.Result.First()

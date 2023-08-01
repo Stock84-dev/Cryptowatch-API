@@ -138,9 +138,9 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<OrderBookCalculator>($"{Route}/{exchange}/{pair}/orderbook/calculator?amount={amount}");
 
-    public Task<HttpResponseMessage> OHLCCandlesticksAsync(string exchange, string pair) =>
+    public Task<CandlestickHistories> OHLCCandlesticksAsync(string exchange, string pair) =>
         _httpClientFactory.CreateClient()
-            .GetAsync($"{Route}/{exchange}/{pair}/ohlc");
+            .GetFromJsonAsync<CandlestickHistories>($"{Route}/{exchange}/{pair}/ohlc");
 
     public Task<HttpResponseMessage> OHLCCandlesticksAsync(string exchange, string pair, long after) =>
         _httpClientFactory.CreateClient()

@@ -40,20 +40,20 @@ public readonly struct AssetDetail
     public readonly struct Markets
     {
         [JsonConstructor]
-        public Markets(Bases[] baseMarket, Bases[] quoteMarket)
+        public Markets(Base[] baseMarket, Base[] quoteMarket)
         {
             BaseMarket = baseMarket;
             QuoteMarket = quoteMarket;
         }
 
-        [JsonPropertyName("base")] public Bases[] BaseMarket { get; }
-        [JsonPropertyName("quote")] public Bases[] QuoteMarket { get; }
+        [JsonPropertyName("base")] public Base[] BaseMarket { get; }
+        [JsonPropertyName("quote")] public Base[] QuoteMarket { get; }
     }
 
-    public readonly struct Bases
+    public readonly struct Base
     {
         [JsonConstructor]
-        public Bases(int id, string exchange, string pair, bool active, string route)
+        public Base(int id, string exchange, string pair, bool active, string route)
         {
             Id = id;
             Exchange = exchange;

@@ -5,19 +5,19 @@ namespace CryptoWatch.API.Types;
 public readonly struct MarketPairDetail
 {
     [JsonConstructor]
-    public MarketPairDetail(Details result, Allowance allowance)
+    public MarketPairDetail(ResultDetails result, Allowance allowance)
     {
         Result = result;
         Allowance = allowance;
     }
 
-    [JsonPropertyName("result")] public Details Result { get; }
+    [JsonPropertyName("result")] public ResultDetails Result { get; }
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
-    public readonly struct Details
+    public readonly struct ResultDetails
     {
         [JsonConstructor]
-        public Details(int id, string exchange, string pair, bool active, Routes routes)
+        public ResultDetails(int id, string exchange, string pair, bool active, Routes routes)
         {
             Id = id;
             Exchange = exchange;

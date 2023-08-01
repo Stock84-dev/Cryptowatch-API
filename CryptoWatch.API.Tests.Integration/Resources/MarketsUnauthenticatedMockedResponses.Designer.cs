@@ -213,5 +213,11 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("BtcUsdKrakenOrderBookCalculatorResponse", resourceCulture);
             }
         }
+        
+        internal static string KrakenBtcUsdOHCLResponse {
+            get {
+                return ResourceManager.GetString("KrakenBtcUsdOHCLResponse", resourceCulture);
+            }
+        }
     }
 }

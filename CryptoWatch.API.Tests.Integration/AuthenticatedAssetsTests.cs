@@ -43,7 +43,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultDetails>();
+            .BeOfType<Asset>();
         assetListing.Result.Should()
             .HaveCount(4845);
         assetListing.Result.First()
@@ -90,7 +90,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .BeOfType<AssetCollection>();
         assetListing.Result.First()
             .Should()
-            .BeOfType<AssetCollection.ResultDetails>();
+            .BeOfType<Asset>();
         assetListing.Result.Should()
             .HaveCount(5);
         assetListing.Result.First()
@@ -102,6 +102,15 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         assetListing.Result.First()
             .Id.Should()
             .Be(3);
+        assetListing.Result.First()
+            .Name.Should()
+            .Be("GridCoin");
+        assetListing.Result.First()
+            .Symbol.Should()
+            .Be("grc");
+        assetListing.Result.First()
+            .SymbolId.Should()
+            .Be("gridcoin-research");
         assetListing.Allowance.Should()
             .BeOfType<Allowance>();
         assetListing.Allowance.Cost.Should()
@@ -141,9 +150,9 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.AssetMarkets.Should()
             .BeOfType<AssetDetail.Markets>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
-            .BeOfType<List<AssetDetail.Bases>>();
+            .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
-            .BeOfType<List<AssetDetail.Bases>>();
+            .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
             .HaveCount(900);
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.First()
@@ -216,9 +225,9 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.AssetMarkets.Should()
             .BeOfType<AssetDetail.Markets>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
-            .BeOfType<List<AssetDetail.Bases>>();
+            .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
-            .BeOfType<List<AssetDetail.Bases>>();
+            .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
             .HaveCount(900);
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.First()

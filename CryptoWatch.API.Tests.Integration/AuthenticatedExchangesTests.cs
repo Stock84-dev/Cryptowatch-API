@@ -38,8 +38,10 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
 
         var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
 
+        exchangeDefaultListing.Should()
+            .BeOfType<Exchanges>();
         exchangeDefaultListing.Result.Should()
-            .BeOfType<List<Exchanges.ResultDetails>>();
+            .BeOfType<Exchanges.ResultDetails[]>();
         exchangeDefaultListing.Result.Should()
             .HaveCount(48);
         exchangeDefaultListing.Result.First()

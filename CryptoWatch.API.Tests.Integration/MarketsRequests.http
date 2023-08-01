@@ -90,3 +90,6 @@ GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook/liquidity
 
 ### Detail orderbook in kraken of btcusd calculator snapshot
 GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook/calculator?amount=3.7
+
+### Detail orderbook in kraken of btcusd OHLC
+GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc

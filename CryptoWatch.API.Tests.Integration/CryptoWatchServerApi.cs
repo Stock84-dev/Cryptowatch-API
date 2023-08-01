@@ -444,6 +444,15 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookCalculatorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOHCLResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()

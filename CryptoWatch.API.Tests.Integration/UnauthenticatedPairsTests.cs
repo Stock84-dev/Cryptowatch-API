@@ -41,50 +41,50 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Should()
             .BeOfType<Pairs>();
         pairsListing.Result.Should()
-            .BeOfType<List<Pairs.ResultDetails>>();
+            .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
             .HaveCount(15_000);
         pairsListing.Result.First()
             .Id.Should()
             .Be(185_927);
         pairsListing.Result.First()
-            .BasePair.Should()
-            .BeOfType<Base>();
+            .Base.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .BasePair.Fiat.Should()
+            .Base.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .BasePair.Id.Should()
+            .Base.Id.Should()
             .Be(7_900);
         pairsListing.Result.First()
-            .BasePair.Name.Should()
+            .Base.Name.Should()
             .Be("Stone");
         pairsListing.Result.First()
-            .BasePair.Route.Should()
+            .Base.Route.Should()
             .Be("https://api.cryptowat.ch/assets/0ne");
         pairsListing.Result.First()
-            .BasePair.Symbol.Should()
+            .Base.Symbol.Should()
             .Be("0ne");
         pairsListing.Result.First()
             .FuturesContractPeriod.Should()
             .BeNull();
         pairsListing.Result.First()
-            .QuotePair.Should()
-            .BeOfType<Quote>();
+            .Quote.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .QuotePair.Fiat.Should()
+            .Quote.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .QuotePair.Id.Should()
+            .Quote.Id.Should()
             .Be(5_080);
         pairsListing.Result.First()
-            .QuotePair.Name.Should()
+            .Quote.Name.Should()
             .Be("Wrapped Ether");
         pairsListing.Result.First()
-            .QuotePair.Route.Should()
+            .Quote.Route.Should()
             .Be("https://api.cryptowat.ch/assets/weth");
         pairsListing.Result.First()
-            .QuotePair.Symbol.Should()
+            .Quote.Symbol.Should()
             .Be("weth");
         pairsListing.Result.First()
             .Route.Should()
@@ -121,26 +121,26 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Should()
             .BeOfType<Pairs>();
         pairsListing.Result.Should()
-            .BeOfType<List<Pairs.ResultDetails>>();
+            .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
             .HaveCount(5);
         pairsListing.Result.First()
-            .BasePair.Should()
-            .BeOfType<Base>();
+            .Base.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .BasePair.Fiat.Should()
+            .Base.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .BasePair.Id.Should()
+            .Base.Id.Should()
             .Be(88);
         pairsListing.Result.First()
-            .BasePair.Name.Should()
+            .Base.Name.Should()
             .Be("EOS");
         pairsListing.Result.First()
-            .BasePair.Route.Should()
+            .Base.Route.Should()
             .Be("https://api.cryptowat.ch/assets/eos");
         pairsListing.Result.First()
-            .BasePair.Symbol.Should()
+            .Base.Symbol.Should()
             .Be("eos");
         pairsListing.Result.First()
             .FuturesContractPeriod.Should()
@@ -149,22 +149,22 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
             .Id.Should()
             .Be(4);
         pairsListing.Result.First()
-            .QuotePair.Should()
-            .BeOfType<Quote>();
+            .Quote.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .QuotePair.Fiat.Should()
+            .Quote.Fiat.Should()
             .BeTrue();
         pairsListing.Result.First()
-            .QuotePair.Id.Should()
+            .Quote.Id.Should()
             .Be(98);
         pairsListing.Result.First()
-            .QuotePair.Name.Should()
+            .Quote.Name.Should()
             .Be("United States Dollar");
         pairsListing.Result.First()
-            .QuotePair.Route.Should()
+            .Quote.Route.Should()
             .Be("https://api.cryptowat.ch/assets/usd");
         pairsListing.Result.First()
-            .QuotePair.Symbol.Should()
+            .Quote.Symbol.Should()
             .Be("usd");
         pairsListing.Result.First()
             .Route.Should()
@@ -203,26 +203,26 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Should()
             .BeOfType<Pairs>();
         pairsListing.Result.Should()
-            .BeOfType<List<Pairs.ResultDetails>>();
+            .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
             .HaveCount(15_000);
         pairsListing.Result.First()
-            .BasePair.Should()
-            .BeOfType<Base>();
+            .Base.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .BasePair.Fiat.Should()
+            .Base.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .BasePair.Id.Should()
+            .Base.Id.Should()
             .Be(7900);
         pairsListing.Result.First()
-            .BasePair.Name.Should()
+            .Base.Name.Should()
             .Be("Stone");
         pairsListing.Result.First()
-            .BasePair.Route.Should()
+            .Base.Route.Should()
             .Be("https://api.cryptowat.ch/assets/0ne");
         pairsListing.Result.First()
-            .BasePair.Symbol.Should()
+            .Base.Symbol.Should()
             .Be("0ne");
         pairsListing.Result.First()
             .FuturesContractPeriod.Should()
@@ -231,22 +231,22 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
             .Id.Should()
             .Be(185_927);
         pairsListing.Result.First()
-            .QuotePair.Should()
-            .BeOfType<Quote>();
+            .Quote.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .QuotePair.Fiat.Should()
+            .Quote.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .QuotePair.Id.Should()
+            .Quote.Id.Should()
             .Be(5080);
         pairsListing.Result.First()
-            .QuotePair.Name.Should()
+            .Quote.Name.Should()
             .Be("Wrapped Ether");
         pairsListing.Result.First()
-            .QuotePair.Route.Should()
+            .Quote.Route.Should()
             .Be("https://api.cryptowat.ch/assets/weth");
         pairsListing.Result.First()
-            .QuotePair.Symbol.Should()
+            .Quote.Symbol.Should()
             .Be("weth");
         pairsListing.Result.First()
             .Route.Should()
@@ -286,26 +286,26 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Should()
             .BeOfType<Pairs>();
         pairsListing.Result.Should()
-            .BeOfType<List<Pairs.ResultDetails>>();
+            .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
             .HaveCount(2);
         pairsListing.Result.First()
-            .BasePair.Should()
-            .BeOfType<Base>();
+            .Base.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .BasePair.Fiat.Should()
+            .Base.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .BasePair.Id.Should()
+            .Base.Id.Should()
             .Be(72);
         pairsListing.Result.First()
-            .BasePair.Name.Should()
+            .Base.Name.Should()
             .Be("Dash");
         pairsListing.Result.First()
-            .BasePair.Route.Should()
+            .Base.Route.Should()
             .Be("https://api.cryptowat.ch/assets/dash");
         pairsListing.Result.First()
-            .BasePair.Symbol.Should()
+            .Base.Symbol.Should()
             .Be("dash");
         pairsListing.Result.First()
             .FuturesContractPeriod.Should()
@@ -314,22 +314,22 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
             .Id.Should()
             .Be(6);
         pairsListing.Result.First()
-            .QuotePair.Should()
-            .BeOfType<Quote>();
+            .Quote.Should()
+            .BeOfType<Asset>();
         pairsListing.Result.First()
-            .QuotePair.Fiat.Should()
+            .Quote.Fiat.Should()
             .BeFalse();
         pairsListing.Result.First()
-            .QuotePair.Id.Should()
+            .Quote.Id.Should()
             .Be(60);
         pairsListing.Result.First()
-            .QuotePair.Name.Should()
+            .Quote.Name.Should()
             .Be("Bitcoin");
         pairsListing.Result.First()
-            .QuotePair.Route.Should()
+            .Quote.Route.Should()
             .Be("https://api.cryptowat.ch/assets/btc");
         pairsListing.Result.First()
-            .QuotePair.Symbol.Should()
+            .Quote.Symbol.Should()
             .Be("btc");
         pairsListing.Result.First()
             .Route.Should()
@@ -370,7 +370,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairDetails.Result.Id.Should()
             .Be(185_927);
         pairDetails.Result.BasePair.Should()
-            .BeOfType<Base>();
+            .BeOfType<Asset>();
         pairDetails.Result.BasePair.Fiat.Should()
             .BeFalse();
         pairDetails.Result.BasePair.Id.Should()
@@ -382,7 +382,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairDetails.Result.BasePair.Symbol.Should()
             .Be("0ne");
         pairDetails.Result.Markets.Should()
-            .BeOfType<List<MarketDetails>>();
+            .BeOfType<MarketDetails[]>();
         pairDetails.Result.Markets.Should()
             .HaveCount(1);
         pairDetails.Result.Markets.First()
@@ -401,7 +401,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
             .Route.Should()
             .Be("https://api.cryptowat.ch/markets/uniswap-v2/0neweth");
         pairDetails.Result.QuotePair.Should()
-            .BeOfType<Quote>();
+            .BeOfType<Asset>();
         pairDetails.Result.QuotePair.Fiat.Should()
             .BeFalse();
         pairDetails.Result.QuotePair.Id.Should()

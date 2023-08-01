@@ -20,8 +20,8 @@ public readonly struct PairDetails
         public ResultDetails(
             int id,
             string symbol,
-            Base basePair,
-            Quote quotePair,
+            Asset basePair,
+            Asset quotePair,
             string route,
             MarketDetails[] markets
         )
@@ -36,8 +36,8 @@ public readonly struct PairDetails
 
         [JsonPropertyName("id")] public int Id { get; }
         [JsonPropertyName("symbol")] public string Symbol { get; }
-        [JsonPropertyName("base")] public Base BasePair { get; }
-        [JsonPropertyName("quote")] public Quote QuotePair { get; }
+        [JsonPropertyName("base")] public Asset BasePair { get; }
+        [JsonPropertyName("quote")] public Asset QuotePair { get; }
         public string Route { get; }
         public MarketDetails[] Markets { get; }
     }

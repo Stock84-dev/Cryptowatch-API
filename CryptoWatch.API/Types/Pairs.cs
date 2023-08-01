@@ -22,24 +22,24 @@ public readonly struct Pairs
         public ResultDetails(
             int id,
             string symbol,
-            Base basePair,
-            Quote quotePair,
+            Asset @base,
+            Asset quote,
             string route,
             string futuresContractPeriod
         )
         {
             Id = id;
             Symbol = symbol;
-            BasePair = basePair;
-            QuotePair = quotePair;
+            Base = @base;
+            Quote = quote;
             Route = route;
             FuturesContractPeriod = futuresContractPeriod;
         }
 
         [JsonPropertyName("id")] public int Id { get; }
         [JsonPropertyName("symbol")] public string Symbol { get; }
-        [JsonPropertyName("base")] public Base BasePair { get; }
-        [JsonPropertyName("quote")] public Quote QuotePair { get; }
+        [JsonPropertyName("base")] public Asset Base { get; }
+        [JsonPropertyName("quote")] public Asset Quote { get; }
         [JsonPropertyName("route")] public string Route { get; }
 
         [JsonPropertyName("futuresContractPeriod")]

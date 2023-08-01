@@ -37,8 +37,10 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
 
         var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
 
+        exchangeDefaultListing.Should()
+            .BeOfType<Exchanges>();
         exchangeDefaultListing.Result.Should()
-            .BeOfType<List<Exchanges.ResultDetails>>();
+            .BeOfType<Exchanges.ResultDetails[]>();
         exchangeDefaultListing.Result.Should()
             .HaveCount(48);
         exchangeDefaultListing.Result.First()
@@ -56,6 +58,12 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         exchangeDefaultListing.Result.First()
             .Symbol.Should()
             .Be("bitfinex");
+        exchangeDefaultListing.Cursor.Should()
+            .BeOfType<Cursor>();
+        exchangeDefaultListing.Cursor.HasMore.Should()
+            .BeFalse();
+        exchangeDefaultListing.Cursor.Last.Should()
+            .BeNull();
         exchangeDefaultListing.Allowance.Should()
             .BeOfType<Allowance>();
         exchangeDefaultListing.Allowance.Cost.Should()
