@@ -45,7 +45,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Should()
             .BeOfType<MarketDetails>();
         marketListing.Result.Should()
-            .HaveCount(20_000);
+            .HaveCount(2);
         marketListing.Result.First()
             .Active.Should()
             .BeTrue();
@@ -93,7 +93,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .Should()
             .BeOfType<MarketDetails>();
         marketListing.Result.Should()
-            .HaveCount(7_651);
+            .HaveCount(2);
         marketListing.Result.First()
             .Active.Should()
             .BeTrue();
@@ -275,9 +275,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Result.Should()
             .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
-            .HaveCount(14_054);
+            .HaveCount(8);
         marketsPrices.Result.Should()
-            .ContainKey("market:binance-us:aptusdt");
+            .ContainKey("market:binance-us:adausdt");
         marketsPrices.Result.First()
             .Key.Should()
             .Be("market:binance-us:1inchusdt");
@@ -314,7 +314,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Result.Should()
             .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
-            .HaveCount(14_060);
+            .HaveCount(24);
         marketsPrices.Result.Should()
             .ContainKey("market:binance-us:avaxusdt");
         marketsPrices.Result.First()
@@ -354,9 +354,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         marketsPrices.Result.Should()
             .BeOfType<Dictionary<string, decimal>>();
         marketsPrices.Result.Should()
-            .HaveCount(14_061);
+            .HaveCount(20);
         marketsPrices.Result.Should()
-            .ContainKey("market:binance-us:avaxusdt");
+            .ContainKey("market:binance-us:avaxbtc");
         marketsPrices.Result.First()
             .Key.Should()
             .Be("market:binance-us:1inchusdt");
@@ -612,9 +612,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         allMarketsSummaries.Result.Should()
             .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
             .Which.Should()
-            .HaveCount(13_928);
+            .HaveCount(2);
         allMarketsSummaries.Result.Should()
-            .ContainKey("binance-us:icpusdt");
+            .ContainKey("binance-us:aaveusdt");
         allMarketsSummaries.Result.First()
             .Key.Should()
             .Be("binance-us:1inchusdt");
@@ -794,9 +794,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         allMarketsSummaries.Result.Should()
             .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
             .Which.Should()
-            .HaveCount(13_908);
+            .HaveCount(2);
         allMarketsSummaries.Result.Should()
-            .ContainKey("3147609");
+            .ContainKey("100");
         allMarketsSummaries.Result.First()
             .Key.Should()
             .Be("1");
@@ -856,9 +856,9 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         allMarketsSummaries.Result.Should()
             .BeOfType<Dictionary<string, Summaries.ResultDetail>>()
             .Which.Should()
-            .HaveCount(906);
+            .HaveCount(3);
         allMarketsSummaries.Result.Should()
-            .ContainKey("4352733");
+            .ContainKey("3763781");
         allMarketsSummaries.Result.First()
             .Key.Should()
             .Be("3763626");
@@ -981,15 +981,15 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         krakenBtcUsdOrderBook.Result.Asks.Should()
             .NotBeEmpty()
             .And
-            .HaveCount(1_000)
+            .HaveCount(2)
             .And
-            .Contain(x => x.SequenceEqual(new[] { 29997, 0.00108198 }));
+            .Contain(x => x.SequenceEqual(new[] { 29_380.900000000001, 0.022814609999999999 }));
         krakenBtcUsdOrderBook.Result.Bids.Should()
             .NotBeEmpty()
             .And
-            .HaveCount(1_000)
+            .HaveCount(2)
             .And
-            .Contain(x => x.SequenceEqual(new[] { 28891.599999999999, 0.0074885500000000001 }));
+            .Contain(x => x.SequenceEqual(new[] { 29_380.299999999999, 4.6533219399999997 }));
         krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
             .Be(28_187_578);
         krakenBtcUsdOrderBook.Allowance.Cost.Should()
@@ -1055,15 +1055,15 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         krakenBtcUsdOrderBook.Result.Asks.Should()
             .NotBeEmpty()
             .And
-            .HaveCount(1_000)
+            .HaveCount(4)
             .And
-            .Contain(x => x.SequenceEqual(new[] { 29326.200000000001, 0.010672289999999999 }));
+            .Contain(x => x.SequenceEqual(new[] { 29_207.099999999999, 0.02352125 }));
         krakenBtcUsdOrderBook.Result.Bids.Should()
             .NotBeEmpty()
             .And
-            .HaveCount(1_000)
+            .HaveCount(4)
             .And
-            .Contain(x => x.SequenceEqual(new[] { 28636.5, 0.0047247399999999998 }));
+            .Contain(x => x.SequenceEqual(new[] { 29_206.200000000001, 2.5679428799999999 }));
         krakenBtcUsdOrderBook.Result.SequenceNumber.Should()
             .Be(28_237_848);
         krakenBtcUsdOrderBook.Allowance.Cost.Should()
@@ -1378,7 +1378,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint();
 
-        var ohlcCandlesticksAsync = await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair);
+        var ohlcCandlesticksAsync =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair);
 
         ohlcCandlesticksAsync.Should()
             .BeOfType<CandlestickHistories>();

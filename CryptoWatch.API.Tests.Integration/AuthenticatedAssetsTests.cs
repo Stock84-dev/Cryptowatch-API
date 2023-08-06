@@ -45,7 +45,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .Should()
             .BeOfType<Asset>();
         assetListing.Result.Should()
-            .HaveCount(4845);
+            .HaveCount(4);
         assetListing.Result.First()
             .Fiat.Should()
             .BeFalse();
@@ -154,7 +154,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
             .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
-            .HaveCount(900);
+            .HaveCount(10);
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.First()
             .Id.Should()
             .Be(1);
@@ -171,7 +171,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .Route.Should()
             .Be("https://api.cryptowat.ch/markets/bitfinex/btcusd");
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
-            .HaveCount(3863);
+            .HaveCount(7);
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.First()
             .Id.Should()
             .Be(3);
@@ -229,7 +229,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
             .BeOfType<AssetDetail.Base[]>();
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.Should()
-            .HaveCount(900);
+            .HaveCount(9);
         bitcoinAssetDetails.Result.AssetMarkets.BaseMarket.First()
             .Id.Should()
             .Be(1);
@@ -246,7 +246,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
             .Route.Should()
             .Be("https://api.cryptowat.ch/markets/bitfinex/btcusd");
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.Should()
-            .HaveCount(3863);
+            .HaveCount(13);
         bitcoinAssetDetails.Result.AssetMarkets.QuoteMarket.First()
             .Id.Should()
             .Be(3);

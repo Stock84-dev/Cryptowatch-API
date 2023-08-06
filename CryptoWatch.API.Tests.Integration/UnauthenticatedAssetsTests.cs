@@ -44,7 +44,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
             .Should()
             .BeOfType<Asset>();
         assetListing.Result.Should()
-            .HaveCount(4842);
+            .HaveCount(12);
         assetListing.Result.First()
             .Fiat.Should()
             .BeFalse();

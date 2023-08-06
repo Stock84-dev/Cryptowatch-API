@@ -43,7 +43,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Result.Should()
             .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
-            .HaveCount(15_000);
+            .HaveCount(14);
         pairsListing.Result.First()
             .Id.Should()
             .Be(185_927);
@@ -205,7 +205,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         pairsListing.Result.Should()
             .BeOfType<Pairs.ResultDetails[]>();
         pairsListing.Result.Should()
-            .HaveCount(15_000);
+            .HaveCount(21);
         pairsListing.Result.First()
             .Base.Should()
             .BeOfType<Asset>();
