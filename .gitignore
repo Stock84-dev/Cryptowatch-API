@@ -1,3 +1,6 @@
+### Fleet stuff
+.fleet/*
+
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
@@ -610,4 +613,3 @@ FodyWeavers.xsd
 *.msp
 
 # JetBrains Rider
-
