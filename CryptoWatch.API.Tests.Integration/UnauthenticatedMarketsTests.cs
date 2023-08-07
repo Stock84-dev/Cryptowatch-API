@@ -1378,10 +1378,39 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint();
 
-        var ohlcCandlesticksAsync =
+        var ohlcCandlesticks =
             await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair);
 
-        ohlcCandlesticksAsync.Should()
+        ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.Result.Should()
+            .HaveCount(14)
+            .And.BeOfType<Dictionary<string, double[][]>>()
+            .And.ContainKeys(
+                Enum.GetValuesAsUnderlyingType<TimeFrame>()
+                    .Cast<int>()
+                    .Select(x => x.ToString())
+            );
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(14)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int) x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+            });
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
     }
 }

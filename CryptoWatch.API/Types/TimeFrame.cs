@@ -14,5 +14,6 @@ public enum TimeFrame
     h12 = 43200,
     d1 = 86400,
     d3 = 259200,
-    w1 = 604800
+    w1 = 604800,
+    mondayWeek = 604800
 }

@@ -21,6 +21,14 @@ public readonly struct CandlestickHistories
     public TimeBasedCandlestickHistory[] TimeBasedCandlestickHistories => Result.Select(x =>
         {
             x.Deconstruct(out var timeFrameStr, out var candles);
+            
+            if (timeFrameStr is "604800_Monday")
+                return new TimeBasedCandlestickHistory(
+                    TimeFrame.mondayWeek, candles
+                        .Select(candle => new OpenHighLowCloseCandle(candle))
+                        .ToArray()
+                );
+            
             if (Enum.TryParse<TimeFrame>(timeFrameStr, out var timeFrame))
                 return new TimeBasedCandlestickHistory(
                     timeFrame,
@@ -48,7 +56,7 @@ public readonly struct CandlestickHistories
     {
         public OpenHighLowCloseCandle(IReadOnlyList<double> ohlc)
         {
-            CloseTime = (long)ohlc[0];
+            CloseTime = DateTimeOffset.FromUnixTimeSeconds((long)ohlc[0]);
             OpenPrice = ohlc[1];
             HighPrice = ohlc[2];
             LowPrice = ohlc[3];
@@ -57,7 +65,7 @@ public readonly struct CandlestickHistories
             QuoteVolume = ohlc[6];
         }
 
-        public long CloseTime { get; }
+        public DateTimeOffset CloseTime { get; }
         public double OpenPrice { get; }
         public double HighPrice { get; }
         public double LowPrice { get; }
