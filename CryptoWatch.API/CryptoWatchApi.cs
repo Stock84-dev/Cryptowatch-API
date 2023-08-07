@@ -2,7 +2,7 @@ using CryptoWatch.API.Paths;
 
 namespace CryptoWatch.API;
 
-public readonly struct CryptoWatchApi
+public class CryptoWatchApi
 {
     public const string RootUrl = "https://api.cryptowat.ch";
     private readonly IHttpClientFactory _httpClientFactory;
