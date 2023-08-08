@@ -93,3 +93,15 @@ GET https://api.cryptowat.ch/markets/kraken/btcusd/orderbook/calculator?amount=3
 
 ### Detail orderbook in kraken of btcusd OHLC
 GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc
+
+### Detail orderbook in kraken of btcusd OHLC with only 5 minute candles
+GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc?periods=300
+
+### Detail orderbook in kraken of btcusd OHLC after 01/01/2023
+GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc?after=1672610151
+
+### Detail orderbook in kraken of btcusd OHLC after 01/01/2023 and only 1 minute candles
+GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc?after=1672610151&periods=60
+
+### Detail orderbook in kraken of btcusd OHLC after 01/01/2023 and only 1 minute candles
+GET https://api.cryptowat.ch/markets/kraken/btcusd/ohlc?after=1672542000&before=1672628400&periods=3600

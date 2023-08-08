@@ -1376,7 +1376,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     {
         const string exchange = "kraken";
         const string pair = "btcusd";
-        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint();
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCRestEndpoint();
 
         var ohlcCandlesticks =
             await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair);
@@ -1396,14 +1396,514 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
             .And.AllSatisfy(x =>
             {
-                var candleTimeDelta = TimeSpan.FromSeconds((int) x.TimeFrame);
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
                 var closeTime = x.OpenHighLowCloseCandles.First()
                     .CloseTime;
                 foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
                     openHighLowCloseCandle.CloseTime.Subtract(closeTime)
                         .Should()
                         .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
             });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(24588.75);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(24875.25);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(24411.2);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(24821.2);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(793.150604525);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(19526849.608053513);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdFiveMinuteOHLCCandlestick_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const TimeFrame timeFrame = TimeFrame.min5;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcFiveMinuteOHLCRestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets
+                .OHLCCandlesticksAsync(exchange, pair, timeFrame);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(1)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(29203.841935483877);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(29216.396774193552);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(29196.916129032255);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(29207.245161290324);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(5.752224367741936);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(168152.674565141);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOHLCCandlestickAfter01_01_2023Long_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const int after = 1672610151;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, after);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.Result.Should()
+            .HaveCount(14)
+            .And.BeOfType<Dictionary<string, double[][]>>()
+            .And.ContainKeys(
+                Enum.GetValuesAsUnderlyingType<TimeFrame>()
+                    .Cast<int>()
+                    .Select(x => x.ToString())
+            );
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(14)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(16772.121875);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(16820.000000000004);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(16729.434374999997);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(16783.246875);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(288.22511906281244);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(4836929.181191225);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOHLCCandlestickAfter01_01_2023DateTimeOffset_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        var after = DateTimeOffset.FromUnixTimeSeconds(1672610151);
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, after);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.Result.Should()
+            .HaveCount(14)
+            .And.BeOfType<Dictionary<string, double[][]>>()
+            .And.ContainKeys(
+                Enum.GetValuesAsUnderlyingType<TimeFrame>()
+                    .Cast<int>()
+                    .Select(x => x.ToString())
+            );
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(14)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(16772.121875);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(16820.000000000004);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(16729.434374999997);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(16783.246875);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(288.22511906281244);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(4836929.181191225);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task Asserts_KrakenBtcUsdOneMinuteOHLCCandlestickAfter01_01_2023Long_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const int after = 1672610151;
+        const TimeFrame timeFrame = TimeFrame.min1;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, after,
+                timeFrame);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(1)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(29156.707692307693);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(29158.823076923083);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(29156.553846153845);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(29158.59230769231);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(4.610501832307692);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(134378.79769660032);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_KrakenBtcUsdOneMinuteOHLCCandlestickAfter01_01_2023DateTimeOffset_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        var after = DateTimeOffset.FromUnixTimeSeconds(1672610151);
+        const TimeFrame timeFrame = TimeFrame.min1;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, after,
+                timeFrame);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(1)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(29156.707692307693);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(29158.823076923083);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(29156.553846153845);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(29158.59230769231);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(4.610501832307692);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(134378.79769660032);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_KrakenBtcUsdOneHourOHLCCandlestickAfter01_01_2023Before02_01_2023Long_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        const int after = 1672531200;
+        const int before = 1672617600;
+        const TimeFrame timeFrame = TimeFrame.h1;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, before,
+                after, timeFrame);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(1)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(16553.756);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(16565.036);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(16542.56);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(16555.168);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(50.8506891136);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(841059.8006089081);
+        ohlcCandlesticks.Allowance.Cost.Should()
+            .Be(0.015M);
+        ohlcCandlesticks.Allowance.Remaining.Should()
+            .Be(9.985M);
+        ohlcCandlesticks.Allowance.RemainingPaid.Should()
+            .Be(0);
+        ohlcCandlesticks.Allowance.Upgrade.Should()
+            .Be("For unlimited API access, create an account at https://cryptowat.ch");
+    }
+
+    [Fact]
+    public async Task
+        Asserts_KrakenBtcUsdOneHourOHLCCandlestickAfter01_01_2023Before02_01_2023DateTimeOffset_JsonDeserializationResponse()
+    {
+        const string exchange = "kraken";
+        const string pair = "btcusd";
+        var after =
+            new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(1672531200);
+        var before = 
+            new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(1672617600);
+        const TimeFrame timeFrame = TimeFrame.h1;
+        _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
+
+        var ohlcCandlesticks =
+            await new CryptoWatchApi(_httpClientFactory.Object).Markets.OHLCCandlesticksAsync(exchange, pair, before,
+                after, timeFrame);
+
+        ohlcCandlesticks.Should()
+            .BeOfType<CandlestickHistories>();
+        ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
+            .HaveCount(1)
+            .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
+            .And.AllSatisfy(x =>
+            {
+                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                var closeTime = x.OpenHighLowCloseCandles.First()
+                    .CloseTime;
+                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                {
+                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                        .Should()
+                        .Be(candleTimeDelta);
+                    closeTime = openHighLowCloseCandle.CloseTime;
+                }
+            });
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
+            .Should()
+            .Be(16553.756);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.HighPrice)
+            .Should()
+            .Be(16565.036);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.LowPrice)
+            .Should()
+            .Be(16542.56);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.ClosePrice)
+            .Should()
+            .Be(16555.168);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.Volume)
+            .Should()
+            .Be(50.8506891136);
+        ohlcCandlesticks.TimeBasedCandlestickHistories[0]
+            .OpenHighLowCloseCandles.Average(x => x.QuoteVolume)
+            .Should()
+            .Be(841059.8006089081);
         ohlcCandlesticks.Allowance.Cost.Should()
             .Be(0.015M);
         ohlcCandlesticks.Allowance.Remaining.Should()

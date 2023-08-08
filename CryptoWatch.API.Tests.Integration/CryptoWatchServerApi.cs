@@ -444,13 +444,56 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MarketsUnauthenticatedMockedResponses.BtcUsdKrakenOrderBookCalculatorResponse)
                 .WithStatusCode(HttpStatusCode.OK));
 
-    public void SetupUnauthenticatedKrakenUsdBtcOHLC_000RestEndpoint() =>
+    public void SetupUnauthenticatedKrakenUsdBtcOHLCRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
                 .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
                 .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOHCLResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("after", "1672610151"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOHLCAfter01_01_2023Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcFiveMinuteOHLCRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("periods", "300"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdFiveMinuteOHLCResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("after", "1672610151")
+                .WithParam("periods", "60"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOneMinuteOHLCAfter01_01_2023Response)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("before", "1672617600")
+                .WithParam("after", "1672531200")
+                .WithParam("periods", "3600"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOneHourOHLCAfter01_01_2023Before02_01_2023Response)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
