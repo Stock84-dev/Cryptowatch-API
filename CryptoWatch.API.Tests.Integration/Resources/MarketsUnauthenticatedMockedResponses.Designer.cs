@@ -243,5 +243,17 @@ namespace CryptoWatch.API.Tests.Integration.Resources {
                 return ResourceManager.GetString("KrakenBtcUsdOneHourOHLCAfter01-01-2023Before02-01-2023Response", resourceCulture);
             }
         }
+        
+        internal static string KrakenBtcUsdFiveMinutesAndTwoHourOHLCResponse {
+            get {
+                return ResourceManager.GetString("KrakenBtcUsdFiveMinutesAndTwoHourOHLCResponse", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidTimeFrameKrakenBtcUsdOHLCResponse {
+            get {
+                return ResourceManager.GetString("InvalidTimeFrameKrakenBtcUsdOHLCResponse", resourceCulture);
+            }
+        }
     }
 }

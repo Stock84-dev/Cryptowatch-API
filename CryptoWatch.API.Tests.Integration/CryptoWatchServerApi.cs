@@ -496,6 +496,26 @@ public class CryptoWatchServerApi : IDisposable
                 .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOneHourOHLCAfter01_01_2023Before02_01_2023Response)
                 .WithStatusCode(HttpStatusCode.OK));
 
+    public void SetupUnauthenticatedKrakenUsdBtcFiveMinuteTwoHourOHLCRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("periods", "300", "7200"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdFiveMinutesAndTwoHourOHLCResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
+    public void SetupUnauthenticatedInvalidKrakenUsdBtcOHLCRestEndpoint() =>
+        _wireMockServer.Given(Request.Create()
+                .UsingGet()
+                .WithPath($"{MarketsRoute}/kraken/btcusd/ohlc")
+                .WithParam("periods", "300"))
+            .RespondWith(Response.Create()
+                .WithHeaders(DefaultCurlHeaders)
+                .WithBody(MarketsUnauthenticatedMockedResponses.InvalidTimeFrameKrakenBtcUsdOHLCResponse)
+                .WithStatusCode(HttpStatusCode.OK));
+
     public void SetupUnauthenticatedPairsDefaultListingRestEndpoint() =>
         _wireMockServer.Given(Request.Create()
                 .UsingGet()
