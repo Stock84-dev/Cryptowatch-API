@@ -11,7 +11,7 @@
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.11.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.0" />
-        <PackageReference Include="Moq" Version="4.18.4" />
+        <PackageReference Include="NSubstitute" Version="5.0.0" />
         <PackageReference Include="WireMock.Net" Version="1.5.34" />
         <PackageReference Include="WireMock.Net.FluentAssertions" Version="1.5.34" />
         <PackageReference Include="WireMock.Net.xUnit" Version="1.5.34" />

@@ -1,6 +1,6 @@
 using CryptoWatch.API.Types;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
@@ -8,18 +8,14 @@ namespace CryptoWatch.API.Tests.Integration;
 public class UnauthenticatedExchangesTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
+    private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
 
-    public UnauthenticatedExchangesTests()
-    {
-        var httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(_cryptoWatchServer.Url)
-        };
-
-        _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
-            .Returns(httpClient);
-    }
+    public UnauthenticatedExchangesTests() =>
+        _httpClientFactory.CreateClient(string.Empty)
+            .Returns(new HttpClient
+            {
+                BaseAddress = new Uri(_cryptoWatchServer.Url)
+            });
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -35,7 +31,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultListingRestEndpoint();
 
-        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
+        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory).Exchanges.ListAsync();
 
         exchangeDefaultListing.Should()
             .BeOfType<Exchanges>();
@@ -83,7 +79,7 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
         var exchangeDefaultDetailing =
-            await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
+            await new CryptoWatchApi(_httpClientFactory).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();
