@@ -1,5 +1,6 @@
 using System.ComponentModel;
-using CryptoWatch.API.Types;
+using CryptoWatch.REST.API;
+using CryptoWatch.REST.API.Types;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;

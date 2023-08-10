@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CryptoWatch.API\CryptoWatch.API.csproj" />
+        <ProjectReference Include="..\CryptoWatch.REST.API\CryptoWatch.REST.API.csproj" />
     </ItemGroup>
 
     <ItemGroup>
