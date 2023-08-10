@@ -21,14 +21,14 @@ public readonly struct CandlestickHistories
     public TimeBasedCandlestickHistory[] TimeBasedCandlestickHistories => Result.Select(x =>
         {
             x.Deconstruct(out var timeFrameStr, out var candles);
-            
+
             if (timeFrameStr is "604800_Monday")
                 return new TimeBasedCandlestickHistory(
                     TimeFrame.mondayWeek, candles
                         .Select(candle => new OpenHighLowCloseCandle(candle))
                         .ToArray()
                 );
-            
+
             if (Enum.TryParse<TimeFrame>(timeFrameStr, out var timeFrame))
                 return new TimeBasedCandlestickHistory(
                     timeFrame,

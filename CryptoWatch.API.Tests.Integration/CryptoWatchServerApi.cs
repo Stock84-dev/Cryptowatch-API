@@ -493,7 +493,8 @@ public class CryptoWatchServerApi : IDisposable
                 .WithParam("periods", "3600"))
             .RespondWith(Response.Create()
                 .WithHeaders(DefaultCurlHeaders)
-                .WithBody(MarketsUnauthenticatedMockedResponses.KrakenBtcUsdOneHourOHLCAfter01_01_2023Before02_01_2023Response)
+                .WithBody(MarketsUnauthenticatedMockedResponses
+                    .KrakenBtcUsdOneHourOHLCAfter01_01_2023Before02_01_2023Response)
                 .WithStatusCode(HttpStatusCode.OK));
 
     public void SetupUnauthenticatedKrakenUsdBtcFiveMinuteTwoHourOHLCRestEndpoint() =>

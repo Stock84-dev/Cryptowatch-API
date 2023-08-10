@@ -24,7 +24,7 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-  <data name="DefaultListingResponse" xml:space="preserve">
+    <data name="DefaultListingResponse" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -456,7 +456,7 @@
   }
 }</value>
   </data>
-  <data name="SpecificAmountListingWithCursorResponse" xml:space="preserve">
+    <data name="SpecificAmountListingWithCursorResponse" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -513,7 +513,7 @@
   }
 }</value>
   </data>
-  <data name="ListingWithCursorResponse" xml:space="preserve">
+    <data name="ListingWithCursorResponse" xml:space="preserve">
     <value>{
   "result": [
     {
@@ -972,7 +972,7 @@
   }
 }</value>
   </data>
-  <data name="DetailResponse" xml:space="preserve">
+    <data name="DetailResponse" xml:space="preserve">
     <value>{
   "result": {
     "id": 185927,

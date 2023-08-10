@@ -10,16 +10,12 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
     private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
 
-    public UnauthenticatedPairsTests()
-    {
-        var httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(_cryptoWatchServer.Url)
-        };
-
+    public UnauthenticatedPairsTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(httpClient);
-    }
+            .Returns(new HttpClient
+            {
+                BaseAddress = new Uri(_cryptoWatchServer.Url)
+            });
 
     public Task InitializeAsync() => Task.CompletedTask;
 

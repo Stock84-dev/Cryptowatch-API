@@ -12,10 +12,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
 
     public UnauthenticatedMarketsTests() =>
-        _httpClientFactory.CreateClient(string.Empty).Returns(new HttpClient
-        {
-            BaseAddress = new Uri(_cryptoWatchServer.Url)
-        });
+        _httpClientFactory.CreateClient(string.Empty)
+            .Returns(new HttpClient
+            {
+                BaseAddress = new Uri(_cryptoWatchServer.Url)
+            });
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -1849,7 +1850,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         var after =
             new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(1672531200);
-        var before = 
+        var before =
             new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(1672617600);
         const TimeFrame timeFrame = TimeFrame.h1;
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();

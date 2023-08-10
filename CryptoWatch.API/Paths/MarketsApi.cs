@@ -146,7 +146,7 @@ public readonly struct MarketsApi
         _httpClientFactory.CreateClient()
             .GetFromJsonAsync<CandlestickHistories>($"{Route}/{exchange}/{pair}/ohlc?after={after}");
 
-    public Task<CandlestickHistories> OHLCCandlesticksAsync(string exchange, string pair, DateTimeOffset after) => 
+    public Task<CandlestickHistories> OHLCCandlesticksAsync(string exchange, string pair, DateTimeOffset after) =>
         OHLCCandlesticksAsync(exchange, pair, after.ToUnixTimeSeconds());
 
     public Task<CandlestickHistories> OHLCCandlesticksAsync(
@@ -155,7 +155,8 @@ public readonly struct MarketsApi
         params TimeFrame[] periods
     ) =>
         _httpClientFactory.CreateClient()
-            .GetFromJsonAsync<CandlestickHistories>($"{Route}/{exchange}/{pair}/ohlc?periods={ConcatPeriodArray(periods)}");
+            .GetFromJsonAsync<CandlestickHistories>(
+                $"{Route}/{exchange}/{pair}/ohlc?periods={ConcatPeriodArray(periods)}");
 
     public Task<CandlestickHistories> OHLCCandlesticksAsync(
         string exchange,
@@ -164,7 +165,8 @@ public readonly struct MarketsApi
         params TimeFrame[] periods
     ) =>
         _httpClientFactory.CreateClient()
-            .GetFromJsonAsync<CandlestickHistories>($"{Route}/{exchange}/{pair}/ohlc?after={after}&periods={ConcatPeriodArray(periods)}");
+            .GetFromJsonAsync<CandlestickHistories>(
+                $"{Route}/{exchange}/{pair}/ohlc?after={after}&periods={ConcatPeriodArray(periods)}");
 
     public Task<CandlestickHistories> OHLCCandlesticksAsync(
         string exchange,
@@ -196,5 +198,5 @@ public readonly struct MarketsApi
         OHLCCandlesticksAsync(exchange, pair, before.ToUnixTimeSeconds(), after.ToUnixTimeSeconds(), periods);
 
     private static StringBuilder ConcatPeriodArray(IEnumerable<TimeFrame> periods) =>
-        new StringBuilder(50).AppendJoin(',', periods.Select(x => (int) x));
+        new StringBuilder(50).AppendJoin(',', periods.Select(x => (int)x));
 }
