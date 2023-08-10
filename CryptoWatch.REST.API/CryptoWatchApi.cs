@@ -2,12 +2,12 @@ using CryptoWatch.REST.API.Paths;
 
 namespace CryptoWatch.REST.API;
 
-public class CryptoWatchApi
+public class CryptoWatchRestApi
 {
     public const string RootUrl = "https://api.cryptowat.ch";
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public CryptoWatchApi(IHttpClientFactory httpClientFactory) =>
+    public CryptoWatchRestApi(IHttpClientFactory httpClientFactory) =>
         _httpClientFactory = httpClientFactory;
 
     public AssetsApi Assets => new(_httpClientFactory);
