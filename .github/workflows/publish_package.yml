@@ -1,0 +1,36 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  DOTNET_VERSION: '7.0.x'
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  PROJECT_PATH: './CryptoWatch.REST.API/CryptoWatch.REST.API.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+
+jobs:
+  build:
+
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Pack
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      - name: Push
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -api-key ${{ secrets.NUGET_API }} --source ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
