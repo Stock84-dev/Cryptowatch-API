@@ -1,6 +1,6 @@
 using CryptoWatch.API.Types;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
@@ -8,7 +8,7 @@ namespace CryptoWatch.API.Tests.Integration;
 public sealed class UnauthenticatedPairsTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
+    private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
 
     public UnauthenticatedPairsTests()
     {
@@ -17,7 +17,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
             BaseAddress = new Uri(_cryptoWatchServer.Url)
         };
 
-        _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
+        _httpClientFactory.CreateClient(string.Empty)
             .Returns(httpClient);
     }
 
@@ -35,7 +35,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedPairsDefaultListingRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory).Pairs
             .ListAsync();
 
         pairsListing.Should()
@@ -116,7 +116,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         const int items = 5;
         _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountListingRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(items);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory).Pairs.ListAsync(items);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -198,7 +198,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
 
         _cryptoWatchServer.SetupUnauthenticatedPairsListingWithCursorRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(cursor);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory).Pairs.ListAsync(cursor);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -281,7 +281,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
 
         _cryptoWatchServer.SetupUnauthenticatedPairsSpecificAmountWithCursorListingRestEndpoint();
 
-        var pairsListing = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.ListAsync(items, cursor);
+        var pairsListing = await new CryptoWatchApi(_httpClientFactory).Pairs.ListAsync(items, cursor);
 
         pairsListing.Should()
             .BeOfType<Pairs>();
@@ -361,7 +361,7 @@ public sealed class UnauthenticatedPairsTests : IAsyncLifetime
         const string pair = "0neweth";
         _cryptoWatchServer.SetupUnauthenticatedPairsDefaultDetailRestEndpoint();
 
-        var pairDetails = await new CryptoWatchApi(_httpClientFactory.Object).Pairs.DetailsAsync(pair);
+        var pairDetails = await new CryptoWatchApi(_httpClientFactory).Pairs.DetailsAsync(pair);
 
         pairDetails.Should()
             .BeOfType<PairDetails>();

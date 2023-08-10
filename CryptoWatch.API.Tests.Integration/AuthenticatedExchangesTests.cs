@@ -1,6 +1,6 @@
 using CryptoWatch.API.Types;
 using FluentAssertions;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
@@ -8,19 +8,15 @@ namespace CryptoWatch.API.Tests.Integration;
 public class AuthenticatedExchangesTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
+    private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
 
-    public AuthenticatedExchangesTests()
-    {
-        var httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(_cryptoWatchServer.Url),
-            DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
-        };
-
-        _httpClientFactory.Setup(x => x.CreateClient(string.Empty))
-            .Returns(httpClient);
-    }
+    public AuthenticatedExchangesTests() =>
+        _httpClientFactory.CreateClient(string.Empty)
+            .Returns(new HttpClient
+            {
+                BaseAddress = new Uri(_cryptoWatchServer.Url),
+                DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
+            });
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -36,7 +32,7 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupAuthenticatedExchangesDefaultListingRestEndpoint();
 
-        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.ListAsync();
+        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory).Exchanges.ListAsync();
 
         exchangeDefaultListing.Should()
             .BeOfType<Exchanges>();
@@ -78,7 +74,7 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
         _cryptoWatchServer.SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
         var exchangeDefaultDetailing =
-            await new CryptoWatchApi(_httpClientFactory.Object).Exchanges.DetailsAsync(exchange);
+            await new CryptoWatchApi(_httpClientFactory).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();
