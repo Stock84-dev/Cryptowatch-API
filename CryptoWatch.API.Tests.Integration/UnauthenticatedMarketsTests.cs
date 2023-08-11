@@ -33,7 +33,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedDefaultListingMarketsRestEndpoint();
 
-        var marketListing = await new CryptoWatchRestApi(_httpClientFactory).Markets.ListAsync();
+        var marketListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.ListAsync();
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
@@ -81,7 +81,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string cursor = "TF8j1fnzBNxi7bQkOQgcFb2r9X_jzp0jq8PmiYcAnGzjlUHY93Sg7AdMzlzpvQ";
         _cryptoWatchServer.SetupUnauthenticatedMarketsListingFromCursorRestEndpoint();
 
-        var marketListing = await new CryptoWatchRestApi(_httpClientFactory).Markets.ListAsync(cursor);
+        var marketListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.ListAsync(cursor);
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
@@ -129,7 +129,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const int items = 3;
         _cryptoWatchServer.SetupUnauthenticatedThreeMarketsListingRestEndpoint();
 
-        var marketListing = await new CryptoWatchRestApi(_httpClientFactory).Markets.ListAsync(items);
+        var marketListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.ListAsync(items);
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
@@ -177,7 +177,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string cursor = "SdgMYB9J1JiK7ejL21NoCqHcRT1eb6tTAIXZ12jGbKzEiPa-xpLZOg";
         _cryptoWatchServer.SetupUnauthenticatedThreeMarketsWithCursorListingRestEndpoint();
 
-        var marketListing = await new CryptoWatchRestApi(_httpClientFactory).Markets.ListAsync(cursor, item);
+        var marketListing =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.ListAsync(cursor, item);
 
         marketListing.Should()
             .BeOfType<MarketCollection>();
@@ -225,7 +226,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         _cryptoWatchServer.SetupUnauthenticatedPairMarketDetailRestEndpoint();
 
-        var marketPairDetail = await new CryptoWatchRestApi(_httpClientFactory).Markets.DetailsAsync(exchange, pair);
+        var marketPairDetail =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.DetailsAsync(exchange, pair);
 
         marketPairDetail.Should()
             .BeOfType<MarketPairDetail>();
@@ -266,7 +268,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedMarketsPricesRestEndpoint();
 
-        var marketsPrices = await new CryptoWatchRestApi(_httpClientFactory).Markets.PriceAsync();
+        var marketsPrices = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.PriceAsync();
 
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
@@ -305,7 +307,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string cursor = "BDj0fwwHBUM7Rz4YNJvyhM1vMO5PyygjB-AAht0UbizZZ7_VqEB1JA";
         _cryptoWatchServer.SetupUnauthenticatedMarketsPricesWithCursorRestEndpoint();
 
-        var marketsPrices = await new CryptoWatchRestApi(_httpClientFactory).Markets.PriceAsync(cursor);
+        var marketsPrices = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.PriceAsync(cursor);
 
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
@@ -345,7 +347,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string cursor = "BDj0fwwHBUM7Rz4YNJvyhM1vMO5PyygjB-AAht0UbizZZ7_VqEB1JA";
         _cryptoWatchServer.SetupUnauthenticatedMarketsPricesWithCursorAndLimitOfThreeRestEndpoint();
 
-        var marketsPrices = await new CryptoWatchRestApi(_httpClientFactory).Markets.PriceAsync(cursor, items);
+        var marketsPrices =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.PriceAsync(cursor, items);
 
         marketsPrices.Should()
             .BeOfType<MarketPrices>();
@@ -389,7 +392,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         _cryptoWatchServer.SetupUnauthenticatedPairMarketDetailPriceRestEndpoint();
 
-        var marketPairPrice = await new CryptoWatchRestApi(_httpClientFactory).Markets.PriceAsync(exchange, pair);
+        var marketPairPrice =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.PriceAsync(exchange, pair);
 
         marketPairPrice.Should()
             .BeOfType<MarketPairPrice>();
@@ -416,7 +420,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string pair = "btcusd";
         _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairRestEndpoint();
 
-        var mostRecentTrades = await new CryptoWatchRestApi(_httpClientFactory).Markets.TradesAsync(exchange, pair);
+        var mostRecentTrades =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.TradesAsync(exchange, pair);
 
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
@@ -466,7 +471,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampRestEndpoint();
 
         var mostRecentTrades =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.TradesAsync(exchange, pair, cursor);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.TradesAsync(exchange, pair, cursor);
 
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
@@ -517,7 +522,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampAndLimitRestEndpoint();
 
         var mostRecentTrades =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.TradesAsync(exchange, pair, cursor, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.TradesAsync(exchange, pair, cursor,
+                limit);
 
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
@@ -566,7 +572,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedMarketPairSummaryRestEndpoint();
 
         var marketPairSummary =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.SummaryAsync(exchange, pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummaryAsync(exchange, pair);
 
         marketPairSummary.Should()
             .BeOfType<Summary>();
@@ -603,7 +609,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesRestEndpoint();
 
-        var allMarketsSummaries = await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync();
+        var allMarketsSummaries =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummariesAsync();
 
         allMarketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -663,7 +670,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const int limit = 3;
         _cryptoWatchServer.SetupUnauthenticatedMarketsSummariesWithLimitOf3RestEndpoint();
 
-        var allMarketsSummaries = await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync(limit);
+        var allMarketsSummaries =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummariesAsync(limit);
 
         allMarketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -725,7 +733,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedMarketsSummariesFromCursorWithLimitOf3RestEndpoint();
 
         var allMarketsSummaries =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync(cursor, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummariesAsync(cursor, limit);
 
         allMarketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -785,7 +793,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         const string keyBy = "id";
         _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdRestEndpoint();
 
-        var allMarketsSummaries = await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync(keyBy);
+        var allMarketsSummaries =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummariesAsync(keyBy);
 
         allMarketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -847,7 +856,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdFromCursorRestEndpoint();
 
         var allMarketsSummaries =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync(keyBy, cursor);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.SummariesAsync(keyBy, cursor);
 
         allMarketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -910,7 +919,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedAllMarketsSummariesByIdFromCursorWithLimitOf3RestEndpoint();
 
         var marketsSummaries =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.SummariesAsync(keyBy, cursor, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets
+                .SummariesAsync(keyBy, cursor, limit);
 
         marketsSummaries.Should()
             .BeOfType<Summaries>();
@@ -972,7 +982,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookRestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1009,7 +1019,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithLimitOf3RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
+                limit);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1046,7 +1057,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, depth);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
+                depth);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1084,7 +1096,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000AndLimitOf7RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, depth, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
+                depth, limit);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1121,7 +1134,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, span);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets
+                .OrderBookAsync(exchange, pair, span);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1159,7 +1173,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, span, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair, span,
+                limit);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1197,7 +1212,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, depth, span);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
+                depth, span);
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1238,7 +1254,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13AndLimitOf11_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookAsync(exchange, pair, depth, span,
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
+                depth, span,
                 limit);
 
         krakenBtcUsdOrderBook.Should()
@@ -1275,7 +1292,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookLiquidity_000RestEndpoint();
 
         var krakenBtcUsdOrderBookLiquidity =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OrderBookLiquidityAsync(exchange, pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookLiquidityAsync(exchange,
+                pair);
 
         krakenBtcUsdOrderBookLiquidity.Should()
             .BeOfType<OrderBookLiquidity>();
@@ -1320,7 +1338,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookCalculator_000RestEndpoint();
 
         var orderBookCalculatorAsync =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets
                 .OrderBookCalculatorAsync(exchange, pair, amount);
 
         orderBookCalculatorAsync.Should()
@@ -1377,7 +1395,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair);
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1448,7 +1467,7 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcFiveMinuteOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets
                 .OHLCCandlesticksAsync(exchange, pair, timeFrame);
 
         ohlcCandlesticks.Should()
@@ -1512,7 +1531,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, after);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, after);
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1583,7 +1603,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, after);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, after);
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1655,7 +1676,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, after,
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, after,
                 timeFrame);
 
         ohlcCandlesticks.Should()
@@ -1721,7 +1743,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, after,
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, after,
                 timeFrame);
 
         ohlcCandlesticks.Should()
@@ -1788,7 +1811,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, before,
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, before,
                 after, timeFrame);
 
         ohlcCandlesticks.Should()
@@ -1857,7 +1881,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, before,
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, before,
                 after, timeFrame);
 
         ohlcCandlesticks.Should()
@@ -1921,7 +1946,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcFiveMinuteTwoHourOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, timeFrame);
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1986,7 +2012,8 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedInvalidKrakenUsdBtcOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory).Markets.OHLCCandlesticksAsync(exchange, pair, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
+                pair, timeFrame);
         var x = () => ohlcCandlesticks.TimeBasedCandlestickHistories;
 
         ohlcCandlesticks.Should()

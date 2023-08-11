@@ -33,7 +33,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint();
 
-        var assetListing = await new CryptoWatchRestApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync();
 
         assetListing.Should()
@@ -80,7 +80,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const uint items = 5;
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint();
 
-        var assetListing = await new CryptoWatchRestApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync(items);
 
         assetListing.Should()
@@ -128,7 +128,8 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchRestApi(_httpClientFactory).Assets.DetailsAsync(asset);
+        var bitcoinAssetDetails =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.DetailsAsync(asset);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -203,7 +204,8 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchRestApi(_httpClientFactory).Assets.DetailsAsync(asset, items);
+        var bitcoinAssetDetails =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.DetailsAsync(asset, items);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -282,7 +284,8 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
                 DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
             });
 
-        var invalidCall = async () => await new CryptoWatchRestApi(_httpClientFactory).Assets.ListAsync();
+        var invalidCall = async () =>
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.ListAsync();
 
         await invalidCall.Should()
             .ThrowAsync<HttpRequestException>()
