@@ -9,8 +9,7 @@ namespace CryptoWatch.REST.API;
 public static class CryptoWatchApiServiceRegister
 {
     public static IHttpClientBuilder AddCryptoWatchHttpClient(this IServiceCollection serviceCollection) =>
-        serviceCollection.AddScoped<CryptoWatchRestApi>()
-            .AddHttpClient<CryptoWatchRestApi>(httpClient =>
+        serviceCollection.AddHttpClient<CryptoWatchRestApi>(httpClient =>
                 httpClient.BaseAddress = new Uri(CryptoWatchRestApi.RootUrl))
             .AddPolicyHandler(HttpPolicyExtensions
                 .HandleTransientHttpError()

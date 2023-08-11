@@ -14,12 +14,22 @@ public class DependencyInjectionServiceRegistrationTests
 
         serviceCollection.AddCryptoWatchHttpClient();
 
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        var cryptoWatchRestApi = () => serviceProvider.GetRequiredService<CryptoWatchRestApi>();
-        cryptoWatchRestApi.Should()
+        var cryptoWatchRestApiFactory = () => serviceCollection.BuildServiceProvider()
+            .GetRequiredService<CryptoWatchRestApi>();
+        cryptoWatchRestApiFactory.Should()
             .NotThrow()
             .And.Subject.Invoke()
             .Should()
             .BeOfType<CryptoWatchRestApi>();
+    }
+
+    [Fact]
+    public void Assert_Test()
+    {
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddCryptoWatchHttpClient();
+        var cryptoWatchRestApi = serviceCollection.BuildServiceProvider().GetRequiredService<CryptoWatchRestApi>();
+
+        cryptoWatchRestApi.Assets.ListAsync();
     }
 }
