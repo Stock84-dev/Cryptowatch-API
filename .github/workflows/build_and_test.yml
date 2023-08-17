@@ -30,4 +30,18 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal CryptoWatch.API.Tests.Integration
+      run: dotnet test -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover --no-build --verbosity normal CryptoWatch.API.Tests.Integration
+    - name: Create Test Coverage Badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+      id: create_coverage_badge
+      with:
+        label: Unit Test Coverage
+        color: brightgreen
+        path: CryptoWatch.API.Tests.Integration/TestResults/coverage.opencover.xml
+        gist-filename: code-coverage.json
+        gist-id: b610636f47cf0059a86e43b1ce32b48b09c5a37a
+        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}
+    - name: Print code coverage
+      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
+    - name: Print badge data
+      run: echo "Badge data ${{steps.test_step.outputs.badge}}"
