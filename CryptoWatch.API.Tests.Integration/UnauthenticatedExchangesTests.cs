@@ -13,10 +13,12 @@ public class UnauthenticatedExchangesTests : IAsyncLifetime
 
     public UnauthenticatedExchangesTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url)
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url)
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 

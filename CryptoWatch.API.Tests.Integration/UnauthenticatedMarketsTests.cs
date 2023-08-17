@@ -14,10 +14,12 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
 
     public UnauthenticatedMarketsTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url)
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url)
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -522,8 +524,12 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedMarketMostRecentTradesOfAPairWithTimestampAndLimitRestEndpoint();
 
         var mostRecentTrades =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.TradesAsync(exchange, pair, cursor,
-                limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.TradesAsync(
+                exchange,
+                pair,
+                cursor,
+                limit
+            );
 
         mostRecentTrades.Should()
             .BeOfType<MostRecentTrades>();
@@ -1019,8 +1025,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithLimitOf3RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
-                limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                limit
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1057,8 +1066,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
-                depth);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                depth
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1096,8 +1108,12 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithDepthOf60_000AndLimitOf7RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
-                depth, limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                depth,
+                limit
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1173,8 +1189,12 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair, span,
-                limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                span,
+                limit
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1212,8 +1232,12 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
-                depth, span);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                depth,
+                span
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1254,9 +1278,13 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .SetupUnauthenticatedKrakenUsdBtcOrderBookWithSpanOfDot875AndDepthOf13AndLimitOf11_000RestEndpoint();
 
         var krakenBtcUsdOrderBook =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(exchange, pair,
-                depth, span,
-                limit);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookAsync(
+                exchange,
+                pair,
+                depth,
+                span,
+                limit
+            );
 
         krakenBtcUsdOrderBook.Should()
             .BeOfType<OrderBook>();
@@ -1292,8 +1320,10 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOrderBookLiquidity_000RestEndpoint();
 
         var krakenBtcUsdOrderBookLiquidity =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookLiquidityAsync(exchange,
-                pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OrderBookLiquidityAsync(
+                exchange,
+                pair
+            );
 
         krakenBtcUsdOrderBookLiquidity.Should()
             .BeOfType<OrderBookLiquidity>();
@@ -1395,8 +1425,10 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1411,19 +1443,21 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(14)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1468,26 +1502,28 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
 
         var ohlcCandlesticks =
             await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets
-                .OHLCCandlesticksAsync(exchange, pair, timeFrame);
+                .OHLCCandlesticksAsync(exchange, pair, CancellationToken.None, timeFrame);
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(1)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1531,8 +1567,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, after);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                after
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1547,19 +1586,21 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(14)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1603,8 +1644,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, after);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                after
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1619,19 +1663,21 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(14)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1676,28 +1722,33 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, after,
-                timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                after,
+                timeFrame
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(1)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1743,28 +1794,33 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneMinuteOHLCAfter01_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, after,
-                timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                after,
+                timeFrame
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(1)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1811,28 +1867,34 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, before,
-                after, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                before,
+                after,
+                timeFrame
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(1)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1881,28 +1943,34 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcOneHourOHLCAfter01_01_2023Before02_01_2023RestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, before,
-                after, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                before,
+                after,
+                timeFrame
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
         ohlcCandlesticks.TimeBasedCandlestickHistories.Should()
             .HaveCount(1)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -1946,8 +2014,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedKrakenUsdBtcFiveMinuteTwoHourOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                timeFrame
+            );
 
         ohlcCandlesticks.Should()
             .BeOfType<CandlestickHistories>();
@@ -1956,19 +2027,21 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
             .And
             .HaveCount(2)
             .And.BeOfType<CandlestickHistories.TimeBasedCandlestickHistory[]>()
-            .And.AllSatisfy(x =>
-            {
-                var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
-                var closeTime = x.OpenHighLowCloseCandles.First()
-                    .CloseTime;
-                foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+            .And.AllSatisfy(
+                x =>
                 {
-                    openHighLowCloseCandle.CloseTime.Subtract(closeTime)
-                        .Should()
-                        .Be(candleTimeDelta);
-                    closeTime = openHighLowCloseCandle.CloseTime;
+                    var candleTimeDelta = TimeSpan.FromSeconds((int)x.TimeFrame);
+                    var closeTime = x.OpenHighLowCloseCandles.First()
+                        .CloseTime;
+                    foreach (var openHighLowCloseCandle in x.OpenHighLowCloseCandles.Skip(1))
+                    {
+                        openHighLowCloseCandle.CloseTime.Subtract(closeTime)
+                            .Should()
+                            .Be(candleTimeDelta);
+                        closeTime = openHighLowCloseCandle.CloseTime;
+                    }
                 }
-            });
+            );
         ohlcCandlesticks.TimeBasedCandlestickHistories[0]
             .OpenHighLowCloseCandles.Average(x => x.OpenPrice)
             .Should()
@@ -2012,8 +2085,11 @@ public class UnauthenticatedMarketsTests : IAsyncLifetime
         _cryptoWatchServer.SetupUnauthenticatedInvalidKrakenUsdBtcOHLCRestEndpoint();
 
         var ohlcCandlesticks =
-            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(exchange,
-                pair, timeFrame);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Markets.OHLCCandlesticksAsync(
+                exchange,
+                pair,
+                timeFrame
+            );
         var x = () => ohlcCandlesticks.TimeBasedCandlestickHistories;
 
         ohlcCandlesticks.Should()

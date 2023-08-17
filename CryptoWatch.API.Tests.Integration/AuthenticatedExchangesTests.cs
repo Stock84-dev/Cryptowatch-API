@@ -13,11 +13,13 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
 
     public AuthenticatedExchangesTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 

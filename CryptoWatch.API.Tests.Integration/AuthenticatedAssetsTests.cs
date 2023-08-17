@@ -13,11 +13,13 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
 
     public AuthenticatedAssetsTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -278,11 +280,13 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint();
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
+                }
+            );
 
         var invalidCall = async () =>
             await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.ListAsync();
@@ -290,5 +294,25 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         await invalidCall.Should()
             .ThrowAsync<HttpRequestException>()
             .WithMessage("Response status code does not indicate success: 400 (Bad Request).");
+    }
+
+    [Fact]
+    public async Task Asserts_InvalidlyRoute_Response()
+    {
+        _httpClientFactory.CreateClient(string.Empty)
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
+                }
+            );
+
+        var invalidCall = async () =>
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.ListAsync();
+
+        await invalidCall.Should()
+            .ThrowAsync<HttpRequestException>()
+            .WithMessage("Response status code does not indicate success: 404 (Not Found).");
     }
 }

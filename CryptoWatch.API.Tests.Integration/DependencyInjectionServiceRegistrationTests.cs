@@ -28,7 +28,8 @@ public class DependencyInjectionServiceRegistrationTests
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddCryptoWatchHttpClient();
-        var cryptoWatchRestApi = serviceCollection.BuildServiceProvider().GetRequiredService<CryptoWatchRestApi>();
+        var cryptoWatchRestApi = serviceCollection.BuildServiceProvider()
+            .GetRequiredService<CryptoWatchRestApi>();
 
         cryptoWatchRestApi.Assets.ListAsync();
     }

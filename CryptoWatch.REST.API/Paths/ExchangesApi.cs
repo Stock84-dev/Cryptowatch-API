@@ -10,9 +10,9 @@ public readonly struct ExchangesApi
 
     internal ExchangesApi(HttpClient httpClient) => _httpClient = httpClient;
 
-    public Task<Exchanges> ListAsync() =>
-        _httpClient.GetFromJsonAsync<Exchanges>($"{Route}");
+    public Task<Exchanges> ListAsync(CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<Exchanges>($"{Route}", cancellationToken);
 
-    public Task<Exchange> DetailsAsync(string exchange) =>
-        _httpClient.GetFromJsonAsync<Exchange>($"{Route}/{exchange}");
+    public Task<Exchange> DetailsAsync(string exchange, CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<Exchange>($"{Route}/{exchange}", cancellationToken);
 }

@@ -10,15 +10,15 @@ public readonly struct AssetsApi
 
     internal AssetsApi(HttpClient httpClient) => _httpClient = httpClient;
 
-    public Task<AssetCollection> ListAsync() =>
-        _httpClient.GetFromJsonAsync<AssetCollection>($"{Route}");
+    public Task<AssetCollection> ListAsync(CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<AssetCollection>($"{Route}", cancellationToken);
 
-    public Task<AssetCollection> ListAsync(uint limit) =>
-        _httpClient.GetFromJsonAsync<AssetCollection>($"{Route}?limit={limit}");
+    public Task<AssetCollection> ListAsync(uint limit, CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<AssetCollection>($"{Route}?limit={limit}", cancellationToken);
 
-    public Task<AssetDetail> DetailsAsync(string asset) =>
-        _httpClient.GetFromJsonAsync<AssetDetail>($"{Route}/{asset}");
+    public Task<AssetDetail> DetailsAsync(string asset, CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<AssetDetail>($"{Route}/{asset}", cancellationToken);
 
-    public Task<AssetDetail> DetailsAsync(string asset, uint limit) =>
-        _httpClient.GetFromJsonAsync<AssetDetail>($"{Route}/{asset}?limit={limit}");
+    public Task<AssetDetail> DetailsAsync(string asset, uint limit, CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<AssetDetail>($"{Route}/{asset}?limit={limit}", cancellationToken);
 }
