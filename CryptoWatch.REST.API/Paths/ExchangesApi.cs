@@ -6,15 +6,13 @@ namespace CryptoWatch.REST.API.Paths;
 public readonly struct ExchangesApi
 {
     private const string Route = "/exchanges";
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
 
-    internal ExchangesApi(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
+    internal ExchangesApi(HttpClient httpClient) => _httpClient = httpClient;
 
-    public Task<Exchanges> ListAsync() =>
-        _httpClientFactory.CreateClient()
-            .GetFromJsonAsync<Exchanges>($"{Route}");
+    public Task<Exchanges> ListAsync(CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<Exchanges>($"{Route}", cancellationToken);
 
-    public Task<Exchange> DetailsAsync(string exchange) =>
-        _httpClientFactory.CreateClient()
-            .GetFromJsonAsync<Exchange>($"{Route}/{exchange}");
+    public Task<Exchange> DetailsAsync(string exchange, CancellationToken cancellationToken = default) =>
+        _httpClient.GetFromJsonAsync<Exchange>($"{Route}/{exchange}", cancellationToken);
 }

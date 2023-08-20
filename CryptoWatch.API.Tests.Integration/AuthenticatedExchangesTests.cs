@@ -13,11 +13,13 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
 
     public AuthenticatedExchangesTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -33,7 +35,8 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupAuthenticatedExchangesDefaultListingRestEndpoint();
 
-        var exchangeDefaultListing = await new CryptoWatchApi(_httpClientFactory).Exchanges.ListAsync();
+        var exchangeDefaultListing =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Exchanges.ListAsync();
 
         exchangeDefaultListing.Should()
             .BeOfType<Exchanges>();
@@ -75,7 +78,7 @@ public class AuthenticatedExchangesTests : IAsyncLifetime
         _cryptoWatchServer.SetupAuthenticatedExchangesDefaultKrakenDetailingRestEndpoint();
 
         var exchangeDefaultDetailing =
-            await new CryptoWatchApi(_httpClientFactory).Exchanges.DetailsAsync(exchange);
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Exchanges.DetailsAsync(exchange);
 
         exchangeDefaultDetailing.Result.Should()
             .BeOfType<Exchange.ResultDetail>();

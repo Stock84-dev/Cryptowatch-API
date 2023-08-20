@@ -20,8 +20,10 @@ public sealed class TypesConsistencyTests
     public void Asserts_Base_TypeConsistency() =>
         typeof(Asset).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-                { typeof(int), typeof(string), typeof(string), typeof(string), typeof(bool), typeof(string) })
+            .And.HaveConstructor(
+                new[]
+                    { typeof(int), typeof(string), typeof(string), typeof(string), typeof(bool), typeof(string) }
+            )
             .And.HaveProperty<int>(nameof(Asset.Id))
             .And.HaveProperty<string>(nameof(Asset.Route))
             .And.HaveProperty<string>(nameof(Asset.Symbol))
@@ -48,11 +50,13 @@ public sealed class TypesConsistencyTests
             .And.HaveProperty<Allowance>(nameof(AssetDetail.Allowance));
         typeof(AssetDetail.ResultDetails).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(int), typeof(string), typeof(string), typeof(string), typeof(bool),
-                typeof(AssetDetail.Markets)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(int), typeof(string), typeof(string), typeof(string), typeof(bool),
+                    typeof(AssetDetail.Markets)
+                }
+            )
             .And.HaveProperty<int>(nameof(AssetDetail.ResultDetails.Id))
             .And.HaveProperty<string>(nameof(AssetDetail.ResultDetails.SymbolId))
             .And.HaveProperty<string>(nameof(AssetDetail.ResultDetails.Symbol))
@@ -66,8 +70,10 @@ public sealed class TypesConsistencyTests
             .And.HaveProperty<AssetDetail.Base[]>(nameof(AssetDetail.Markets.QuoteMarket));
         typeof(AssetDetail.Base).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-                { typeof(int), typeof(string), typeof(string), typeof(bool), typeof(string) })
+            .And.HaveConstructor(
+                new[]
+                    { typeof(int), typeof(string), typeof(string), typeof(bool), typeof(string) }
+            )
             .And.HaveProperty<int>(nameof(AssetDetail.Base.Id))
             .And.HaveProperty<string>(nameof(AssetDetail.Base.Exchange))
             .And.HaveProperty<string>(nameof(AssetDetail.Base.Pair))
@@ -93,11 +99,13 @@ public sealed class TypesConsistencyTests
             .And.HaveProperty<Allowance>(nameof(Exchange.Allowance));
         typeof(Exchange.ResultDetail).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(uint), typeof(string), typeof(string), typeof(bool),
-                typeof(Route)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(uint), typeof(string), typeof(string), typeof(bool),
+                    typeof(Route)
+                }
+            )
             .And.HaveProperty<uint>(nameof(Exchange.ResultDetail.Id))
             .And.HaveProperty<string>(nameof(Exchange.ResultDetail.Symbol))
             .And.HaveProperty<string>(nameof(Exchange.ResultDetail.Name))
@@ -155,11 +163,13 @@ public sealed class TypesConsistencyTests
 
         typeof(MarketPairDetail.ResultDetails).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(int), typeof(string), typeof(string), typeof(bool),
-                typeof(Routes)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(int), typeof(string), typeof(string), typeof(bool),
+                    typeof(Routes)
+                }
+            )
             .And.HaveProperty<int>(nameof(MarketPairDetail.ResultDetails.Id))
             .And.HaveProperty<string>(nameof(MarketPairDetail.ResultDetails.Exchange))
             .And.HaveProperty<string>(nameof(MarketPairDetail.ResultDetails.Pair))
@@ -234,18 +244,22 @@ public sealed class TypesConsistencyTests
 
         typeof(OrderBookCalculator.ResultDetail).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-                { typeof(OrderBookCalculator.BuyTransaction), typeof(OrderBookCalculator.SellTransaction) })
+            .And.HaveConstructor(
+                new[]
+                    { typeof(OrderBookCalculator.BuyTransaction), typeof(OrderBookCalculator.SellTransaction) }
+            )
             .And.HaveProperty<OrderBookCalculator.BuyTransaction>(nameof(OrderBookCalculator.ResultDetail.Buy))
             .And.HaveProperty<OrderBookCalculator.SellTransaction>(nameof(OrderBookCalculator.ResultDetail.Sell));
 
         typeof(OrderBookCalculator.BuyTransaction).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(double), typeof(double), typeof(double), typeof(double), typeof(double), typeof(double),
-                typeof(double)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(double), typeof(double), typeof(double), typeof(double), typeof(double), typeof(double),
+                    typeof(double)
+                }
+            )
             .And.HaveProperty<double>(nameof(OrderBookCalculator.BuyTransaction.AveragePrice))
             .And.HaveProperty<double>(nameof(OrderBookCalculator.BuyTransaction.AverageDelta))
             .And.HaveProperty<double>(nameof(OrderBookCalculator.BuyTransaction.AverageBps))
@@ -256,11 +270,13 @@ public sealed class TypesConsistencyTests
 
         typeof(OrderBookCalculator.SellTransaction).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(double), typeof(double), typeof(double), typeof(double), typeof(double), typeof(double),
-                typeof(double)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(double), typeof(double), typeof(double), typeof(double), typeof(double), typeof(double),
+                    typeof(double)
+                }
+            )
             .And.HaveProperty<double>(nameof(OrderBookCalculator.SellTransaction.AveragePrice))
             .And.HaveProperty<double>(nameof(OrderBookCalculator.SellTransaction.AverageDelta))
             .And.HaveProperty<double>(nameof(OrderBookCalculator.SellTransaction.AverageBps))
@@ -280,15 +296,19 @@ public sealed class TypesConsistencyTests
             .And.HaveProperty<Allowance>(nameof(OrderBookLiquidity.Allowance));
         typeof(OrderBookLiquidity.ResultDetails).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(Dictionary<string, Dictionary<int, double>>),
-                typeof(Dictionary<string, Dictionary<int, double>>)
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(Dictionary<string, Dictionary<int, double>>),
+                    typeof(Dictionary<string, Dictionary<int, double>>)
+                }
+            )
             .And.HaveProperty<Dictionary<string, Dictionary<int, double>>>(
-                nameof(OrderBookLiquidity.ResultDetails.Asks))
+                nameof(OrderBookLiquidity.ResultDetails.Asks)
+            )
             .And.HaveProperty<Dictionary<string, Dictionary<int, double>>>(
-                nameof(OrderBookLiquidity.ResultDetails.Bids));
+                nameof(OrderBookLiquidity.ResultDetails.Bids)
+            );
     }
 
     [Fact]
@@ -302,11 +322,13 @@ public sealed class TypesConsistencyTests
 
         typeof(PairDetails.ResultDetails).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-            {
-                typeof(int), typeof(string), typeof(Asset), typeof(Asset),
-                typeof(string), typeof(MarketDetails[])
-            })
+            .And.HaveConstructor(
+                new[]
+                {
+                    typeof(int), typeof(string), typeof(Asset), typeof(Asset),
+                    typeof(string), typeof(MarketDetails[])
+                }
+            )
             .And.HaveProperty<int>(nameof(PairDetails.ResultDetails.Id))
             .And.HaveProperty<string>(nameof(PairDetails.ResultDetails.Symbol))
             .And.HaveProperty<Asset>(nameof(PairDetails.ResultDetails.BasePair))
@@ -326,8 +348,10 @@ public sealed class TypesConsistencyTests
             .And.HaveProperty<Allowance>(nameof(Pairs.Allowance));
         typeof(Pairs.ResultDetails).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-                { typeof(int), typeof(string), typeof(Asset), typeof(Asset), typeof(string), typeof(string) })
+            .And.HaveConstructor(
+                new[]
+                    { typeof(int), typeof(string), typeof(Asset), typeof(Asset), typeof(string), typeof(string) }
+            )
             .And.HaveProperty<int>(nameof(Pairs.ResultDetails.Id))
             .And.HaveProperty<string>(nameof(Pairs.ResultDetails.Symbol))
             .And.HaveProperty<Asset>(nameof(Pairs.ResultDetails.Base))
@@ -367,8 +391,10 @@ public sealed class TypesConsistencyTests
     public void Asserts_Routes_TypeConsistency() =>
         typeof(Routes).Should()
             .NotHaveDefaultConstructor()
-            .And.HaveConstructor(new[]
-                { typeof(string), typeof(string), typeof(string), typeof(string), typeof(string) })
+            .And.HaveConstructor(
+                new[]
+                    { typeof(string), typeof(string), typeof(string), typeof(string), typeof(string) }
+            )
             .And.HaveProperty<string>(nameof(Routes.Price))
             .And.HaveProperty<string>(nameof(Routes.Summary))
             .And.HaveProperty<string>(nameof(Routes.Orderbook))

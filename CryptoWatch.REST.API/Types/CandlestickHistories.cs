@@ -18,26 +18,29 @@ public readonly struct CandlestickHistories
     [JsonPropertyName("allowance")] public Allowance Allowance { get; }
 
     [JsonIgnore]
-    public TimeBasedCandlestickHistory[] TimeBasedCandlestickHistories => Result.Select(x =>
-        {
-            x.Deconstruct(out var timeFrameStr, out var candles);
+    public TimeBasedCandlestickHistory[] TimeBasedCandlestickHistories => Result.Select(
+            x =>
+            {
+                x.Deconstruct(out var timeFrameStr, out var candles);
 
-            if (timeFrameStr is "604800_Monday")
-                return new TimeBasedCandlestickHistory(
-                    TimeFrame.mondayWeek, candles
-                        .Select(candle => new OpenHighLowCloseCandle(candle))
-                        .ToArray()
-                );
+                if (timeFrameStr is "604800_Monday")
+                    return new TimeBasedCandlestickHistory(
+                        TimeFrame.mondayWeek,
+                        candles
+                            .Select(candle => new OpenHighLowCloseCandle(candle))
+                            .ToArray()
+                    );
 
-            if (Enum.TryParse<TimeFrame>(timeFrameStr, out var timeFrame))
-                return new TimeBasedCandlestickHistory(
-                    timeFrame,
-                    candles.Select(candle => new OpenHighLowCloseCandle(candle))
-                        .ToArray()
-                );
+                if (Enum.TryParse<TimeFrame>(timeFrameStr, out var timeFrame))
+                    return new TimeBasedCandlestickHistory(
+                        timeFrame,
+                        candles.Select(candle => new OpenHighLowCloseCandle(candle))
+                            .ToArray()
+                    );
 
-            throw new InvalidEnumArgumentException(timeFrameStr);
-        })
+                throw new InvalidEnumArgumentException(timeFrameStr);
+            }
+        )
         .ToArray();
 
     public readonly struct TimeBasedCandlestickHistory

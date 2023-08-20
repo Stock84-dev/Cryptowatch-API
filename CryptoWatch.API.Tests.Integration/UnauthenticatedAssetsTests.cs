@@ -13,10 +13,12 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
 
     public UnauthenticatedAssetsTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url)
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url)
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -32,7 +34,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupUnauthenticatedAssetsDefaultListingRestEndpoint();
 
-        var assetListing = await new CryptoWatchApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync();
 
         assetListing.Should()
@@ -79,7 +81,7 @@ public sealed class UnauthenticatedAssetsTests : IAsyncLifetime
         const uint items = 5;
         _cryptoWatchServer.SetupUnauthenticatedAssetsSpecificAmountListingRestEndpoint(items);
 
-        var assetListing = await new CryptoWatchApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync(items);
 
         assetListing.Should()

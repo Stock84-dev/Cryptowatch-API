@@ -13,11 +13,13 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
 
     public AuthenticatedAssetsTests() =>
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "CXRJ2EJTOLGUF4RNY4CF" } }
+                }
+            );
 
     public Task InitializeAsync() => Task.CompletedTask;
 
@@ -33,7 +35,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsDefaultListingRestEndpoint();
 
-        var assetListing = await new CryptoWatchApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync();
 
         assetListing.Should()
@@ -80,7 +82,7 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const uint items = 5;
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetsSpecificAmountListingRestEndpoint();
 
-        var assetListing = await new CryptoWatchApi(_httpClientFactory).Assets
+        var assetListing = await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets
             .ListAsync(items);
 
         assetListing.Should()
@@ -128,7 +130,8 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory).Assets.DetailsAsync(asset);
+        var bitcoinAssetDetails =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.DetailsAsync(asset);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -203,7 +206,8 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
         const string asset = "btc";
         _cryptoWatchServer.SetupHeaderAuthenticatedAssetSpecificAmountDetailRestEndpoint();
 
-        var bitcoinAssetDetails = await new CryptoWatchApi(_httpClientFactory).Assets.DetailsAsync(asset, items);
+        var bitcoinAssetDetails =
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.DetailsAsync(asset, items);
 
         bitcoinAssetDetails.Should()
             .BeOfType<AssetDetail>();
@@ -276,16 +280,39 @@ public sealed class AuthenticatedAssetsTests : IAsyncLifetime
     {
         _cryptoWatchServer.SetupHeaderInvalidlyAuthenticatedAssetsDefaultListingRestEndpoint();
         _httpClientFactory.CreateClient(string.Empty)
-            .Returns(new HttpClient
-            {
-                BaseAddress = new Uri(_cryptoWatchServer.Url),
-                DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
-            });
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
+                }
+            );
 
-        var invalidCall = async () => await new CryptoWatchApi(_httpClientFactory).Assets.ListAsync();
+        var invalidCall = async () =>
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.ListAsync();
 
         await invalidCall.Should()
             .ThrowAsync<HttpRequestException>()
             .WithMessage("Response status code does not indicate success: 400 (Bad Request).");
+    }
+
+    [Fact]
+    public async Task Asserts_InvalidlyRoute_Response()
+    {
+        _httpClientFactory.CreateClient(string.Empty)
+            .Returns(
+                new HttpClient
+                {
+                    BaseAddress = new Uri(_cryptoWatchServer.Url),
+                    DefaultRequestHeaders = { { "X-CW-API-Key", "---" } }
+                }
+            );
+
+        var invalidCall = async () =>
+            await new CryptoWatchRestApi(_httpClientFactory.CreateClient()).Assets.ListAsync();
+
+        await invalidCall.Should()
+            .ThrowAsync<HttpRequestException>()
+            .WithMessage("Response status code does not indicate success: 404 (Not Found).");
     }
 }
