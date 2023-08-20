@@ -1,4 +1,7 @@
 # CryptoWatch REST API Client Library
+![GitHub](https://img.shields.io/github/license/Azgrom/Cryptowatch.API)
+![GitHub tag (with filter)](https://img.shields.io/github/v/tag/Azgrom/Cryptowatch.API)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Azgrom/b610636f47cf0059a86e43b1ce32b48b09c5a37a/raw/code-coverage.json)
 
 ## Brief Description
 This library provides a client to interact with the CryptoWatch REST API. You can access various information related to cryptocurrency markets including assets, exchanges, market data, and trading pairs.
@@ -36,9 +39,9 @@ var assets = await api.Assets.ListAsync();
 ```
 
 ## Step-by-step Guide
-1. Install the CryptoWatch REST API Client Library package to your project.
-2. Create an instance of the `CryptoWatchRestApi` class.
-3. Use various methods like `ListAsync()` to interact with different parts of the CryptoWatch API.
+1. Install the CryptoWatch REST API Client Library package to your project. It is available at nuget;
+2. Create an instance of the `CryptoWatchRestApi` class;
+3. Use various methods like `ListAsync()` to interact with different parts of the CryptoWatch API;
 
 ## Contributing
 
@@ -55,4 +58,10 @@ var assets = await api.Assets.ListAsync();
 - For the versions available, see the [tags on this repository](https://github.com/yourusername/your-project-name/tags).
 
 ## Notes
+- Ensure you have the necessary API credentials if your usage exceeds the public limits.
 - The library is designed to be used with a properly configured HTTP client.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
