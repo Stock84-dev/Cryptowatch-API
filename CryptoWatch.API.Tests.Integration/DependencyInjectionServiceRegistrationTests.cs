@@ -5,7 +5,7 @@ using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
 
-public class DependencyInjectionServiceRegistrationTests
+public sealed class DependencyInjectionServiceRegistrationTests
 {
     [Fact]
     public void Assert_RestApiHttpClient_Registration()

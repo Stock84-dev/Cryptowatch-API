@@ -7,7 +7,7 @@ using Xunit;
 
 namespace CryptoWatch.API.Tests.Integration;
 
-public class UnauthenticatedMarketsTests : IAsyncLifetime
+public sealed class UnauthenticatedMarketsTests : IAsyncLifetime
 {
     private readonly CryptoWatchServerApi _cryptoWatchServer = new();
     private readonly IHttpClientFactory _httpClientFactory = Substitute.For<IHttpClientFactory>();
