@@ -15,6 +15,8 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/Azgrom/Cryptowatch.API</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Azgrom/Cryptowatch.API/tree/master</RepositoryUrl>
+        <PackageIcon>cryptowat.ch.ico</PackageIcon>
+        <Description>A client for interacting with the CryptoWatch REST API</Description>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,6 +31,12 @@
 
     <ItemGroup>
         <None Include="../README.md" Pack="true" PackagePath="/" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\cryptowat.ch.ico">
+        <Link>cryptowat.ch.ico</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using WireMock.Server;
 
 namespace CryptoWatch.API.Tests.Integration;
 
-public class CryptoWatchServerApi : IDisposable
+public sealed class CryptoWatchServerApi : IDisposable
 {
     private const string AssetsRoute = "/assets";
     private const string ExchangesRoute = "/exchanges";

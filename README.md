@@ -11,7 +11,6 @@
 # CryptoWatch REST API Client Library
 ![GitHub](https://img.shields.io/github/license/Azgrom/Cryptowatch.API)
 ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/Azgrom/Cryptowatch.API)
-![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Azgrom/b610636f47cf0059a86e43b1ce32b48b09c5a37a/raw/code-coverage.json)
 
 This library provides a client to interact with the CryptoWatch REST API. You can access various information related to cryptocurrency markets including assets, exchanges, market data, and trading pairs.
 
