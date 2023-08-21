@@ -2,7 +2,8 @@ name: 'Automated Nuget Publishing'
 
 on:
   push:
-    branches: [ "master" ]
+    tags:
+      - 'v*'
 
 env:
   DOTNET_VERSION: '7.0.x'
@@ -23,9 +24,12 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore dependencies
+      - name: 'Restore dependencies'
         run: dotnet restore
-      - name: Pack
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
-      - name: Push
+      - name: 'Get Version'
+        id: get_version
+        uses: battila7/get-version-tag@v2
+      - name: 'Pack'
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      - name: 'Push'
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg --api-key ${{ secrets.NUGET_API }} --source ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
